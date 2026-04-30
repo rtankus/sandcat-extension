@@ -2149,6 +2149,9 @@
             "CLASSIS LAKE QUARRY"
           ]
         }
+      ],
+      "audit_notes": [
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     },
     "EIDW": {
@@ -7231,58 +7234,186 @@
       "IAPs": [
         {
           "name": "RNP RWY28L",
+          "type": "IAP",
           "runway": "RWY28L",
+          "category": "A/B/C/D",
           "waypoints": [
             {
-              "fix": "DUB"
+              "fix": "DUB",
+              "altitude": 3000,
+              "constraint": "exact",
+              "phase": "IAF"
+            },
+            {
+              "fix": "DW017",
+              "speed_limit": 210
+            },
+            {
+              "fix": "PIZSA",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "OBINU",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
             },
             {
               "fix": "LAPMO",
               "altitude": 3000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "speed_limit": 220,
+              "phase": "IF"
             },
             {
-              "fix": "MAXEV"
+              "fix": "MAXEV",
+              "phase": "FAF"
             },
             {
-              "fix": "RW28L"
+              "fix": "RW28L",
+              "phase": "MAPt"
             },
             {
               "fix": "GANET",
               "altitude": 3000,
-              "constraint": "at_or_below"
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA"
             },
             {
-              "fix": "DW034"
+              "fix": "DW034",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA"
             }
+          ],
+          "transitions": {
+            "DUB": [
+              "DUB",
+              "DW017",
+              "LAPMO",
+              "MAXEV",
+              "RW28L",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "PIZSA": [
+              "PIZSA",
+              "LAPMO",
+              "MAXEV",
+              "RW28L",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "OBINU": [
+              "OBINU",
+              "LAPMO",
+              "MAXEV",
+              "RW28L",
+              "GANET",
+              "DW034",
+              "DUB"
+            ]
+          },
+          "notes": [
+            "Completeness pass: includes all named branches from EIDW 24-26."
           ]
         },
         {
           "name": "ILS/LOC RWY28L",
+          "type": "IAP",
           "runway": "RWY28L",
+          "category": "A/B/C/D",
           "waypoints": [
+            {
+              "fix": "DUB",
+              "altitude": 3000,
+              "constraint": "exact",
+              "phase": "IAF"
+            },
+            {
+              "fix": "DW017",
+              "speed_limit": 210
+            },
+            {
+              "fix": "PIZSA",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "OBINU",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
             {
               "fix": "LAPMO",
               "altitude": 3000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "speed_limit": 220,
+              "phase": "IF"
             },
             {
-              "fix": "MAXEV"
+              "fix": "MAXEV",
+              "phase": "FAF"
             },
             {
-              "fix": "DW038"
+              "fix": "DW038",
+              "phase": "MAPt"
             },
             {
               "fix": "GANET",
               "altitude": 3000,
-              "constraint": "at_or_below"
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA"
             },
             {
-              "fix": "DW034"
-            },
-            {
-              "fix": "DUB"
+              "fix": "DW034",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA"
             }
+          ],
+          "transitions": {
+            "DUB": [
+              "DUB",
+              "DW017",
+              "LAPMO",
+              "MAXEV",
+              "DW038",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "PIZSA": [
+              "PIZSA",
+              "LAPMO",
+              "MAXEV",
+              "DW038",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "OBINU": [
+              "OBINU",
+              "LAPMO",
+              "MAXEV",
+              "DW038",
+              "GANET",
+              "DW034",
+              "DUB"
+            ]
+          },
+          "notes": [
+            "Completeness pass: includes all named branches from EIDW 24-27."
           ]
         },
         {
@@ -7356,33 +7487,100 @@
         },
         {
           "name": "ILS/LOC RWY28R",
+          "type": "IAP",
           "runway": "RWY28R",
+          "category": "A/B/C/D",
           "waypoints": [
             {
               "fix": "SIDUQ",
               "altitude": 3000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "phase": "IAF"
             },
             {
-              "fix": "DW017"
+              "fix": "DW017",
+              "speed_limit": 220
+            },
+            {
+              "fix": "PIZSA",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "OBINU",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
             },
             {
               "fix": "ABIVU",
+              "speed_limit": 210,
+              "phase": "IF"
+            },
+            {
+              "fix": "OKEDO",
+              "phase": "FAF"
+            },
+            {
+              "fix": "RW28R",
+              "phase": "MAPt"
+            },
+            {
+              "fix": "DW040",
+              "speed_limit": 200,
+              "phase": "MA"
+            },
+            {
+              "fix": "DW041",
               "altitude": 3000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA"
             },
             {
-              "fix": "OKEDO"
-            },
-            {
-              "fix": "DW040"
-            },
-            {
-              "fix": "DW041"
-            },
-            {
-              "fix": "DW042"
+              "fix": "DW042",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA"
             }
+          ],
+          "transitions": {
+            "SIDUQ": [
+              "SIDUQ",
+              "DW017",
+              "ABIVU",
+              "OKEDO",
+              "RW28R",
+              "DW040",
+              "DW041",
+              "DW042",
+              "SIDUQ"
+            ],
+            "PIZSA": [
+              "PIZSA",
+              "ABIVU",
+              "OKEDO",
+              "RW28R",
+              "DW040",
+              "DW041",
+              "DW042",
+              "SIDUQ"
+            ],
+            "OBINU": [
+              "OBINU",
+              "ABIVU",
+              "OKEDO",
+              "RW28R",
+              "DW040",
+              "DW041",
+              "DW042",
+              "SIDUQ"
+            ]
+          },
+          "notes": [
+            "Completeness pass: includes all named branches from EIDW 24-30.1."
           ]
         },
         {
@@ -7606,25 +7804,75 @@
             {
               "fix": "KERAV",
               "altitude": 5000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "phase": "IAF"
             },
             {
-              "fix": "ERUDA"
+              "fix": "ERUDA",
+              "phase": "transition"
             },
             {
-              "fix": "BAPDA"
+              "fix": "ULTAG",
+              "altitude": 5000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
             },
             {
-              "fix": "GARTI"
+              "fix": "UMDAR",
+              "phase": "transition"
             },
             {
-              "fix": "DW008"
+              "fix": "BAPDA",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "speed_limit": 180,
+              "phase": "IF"
+            },
+            {
+              "fix": "GARTI",
+              "phase": "FAF"
+            },
+            {
+              "fix": "DUB",
+              "phase": "SDF/NAVAID"
+            },
+            {
+              "fix": "DW008",
+              "phase": "MAPt"
             },
             {
               "fix": "DW007",
               "altitude": 3000,
-              "constraint": "at_or_below"
+              "constraint": "at_or_below",
+              "phase": "MA"
             }
+          ],
+          "type": "IAP",
+          "category": "A/B/C/D",
+          "transitions": {
+            "KERAV1T": [
+              "KERAV",
+              "ERUDA",
+              "BAPDA",
+              "GARTI",
+              "DUB",
+              "DW008",
+              "DW007",
+              "KERAV"
+            ],
+            "ULTAG1T": [
+              "ULTAG",
+              "UMDAR",
+              "BAPDA",
+              "GARTI",
+              "DUB",
+              "DW008",
+              "DW007",
+              "KERAV"
+            ]
+          },
+          "notes": [
+            "Completeness pass: EIDW 24-40 VOR RWY16 named fixes/navaids only; DME detail intentionally omitted."
           ]
         },
         {
@@ -7634,43 +7882,83 @@
             {
               "fix": "KERAV",
               "altitude": 6000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "phase": "IAF"
             },
             {
-              "fix": "AMDIL"
+              "fix": "SORIN",
+              "altitude": 5000,
+              "constraint": "exact",
+              "phase": "IAF/hold"
+            },
+            {
+              "fix": "AMDIL",
+              "phase": "transition"
             },
             {
               "fix": "INTOP",
               "altitude": 3000,
               "constraint": "at_or_above",
-              "speed_limit": 180
+              "speed_limit": 180,
+              "phase": "IF"
             },
             {
               "fix": "ABDOX",
               "altitude": 3000,
-              "constraint": "exact"
+              "constraint": "exact",
+              "phase": "FAF"
             },
             {
               "fix": "DW033",
               "altitude": 950,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "phase": "SDF"
             },
             {
-              "fix": "RW34"
+              "fix": "RW34",
+              "phase": "MAPt"
             },
             {
               "fix": "BAPDA",
               "altitude": 3000,
-              "constraint": "at_or_below"
+              "constraint": "at_or_below",
+              "phase": "MA"
             },
             {
               "fix": "DAP",
               "altitude": 5000,
-              "constraint": "at_or_above"
-            },
-            {
-              "fix": "SORIN"
+              "constraint": "at_or_above",
+              "phase": "MA/NAVAID"
             }
+          ],
+          "type": "IAP",
+          "category": "A/B/C/D",
+          "transitions": {
+            "KERAV": [
+              "KERAV",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW033",
+              "RW34",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ],
+            "SORIN": [
+              "SORIN",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW033",
+              "RW34",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ]
+          },
+          "notes": [
+            "Completeness pass: EIDW 24-41 RNP RWY34 includes KERAV and SORIN branches."
           ]
         },
         {
@@ -7680,39 +7968,85 @@
             {
               "fix": "KERAV",
               "altitude": 5000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "phase": "IAF"
             },
             {
-              "fix": "AMDIL"
+              "fix": "SORIN",
+              "altitude": 5000,
+              "constraint": "exact",
+              "phase": "IAF/hold"
             },
             {
-              "fix": "INTOP"
+              "fix": "AMDIL",
+              "phase": "transition"
             },
             {
-              "fix": "ABDOX"
+              "fix": "INTOP",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "speed_limit": 180,
+              "phase": "IF"
             },
             {
-              "fix": "DW025"
+              "fix": "ABDOX",
+              "phase": "FAF"
             },
             {
-              "fix": "DW027"
+              "fix": "DW025",
+              "phase": "SDF"
             },
             {
-              "fix": "DUB"
+              "fix": "DW027",
+              "phase": "MAPt"
+            },
+            {
+              "fix": "DUB",
+              "phase": "MA/NAVAID"
             },
             {
               "fix": "BAPDA",
               "altitude": 3000,
-              "constraint": "at_or_below"
+              "constraint": "at_or_below",
+              "phase": "MA"
             },
             {
               "fix": "DAP",
               "altitude": 5000,
-              "constraint": "at_or_above"
-            },
-            {
-              "fix": "SORIN"
+              "constraint": "at_or_above",
+              "phase": "MA/NAVAID"
             }
+          ],
+          "type": "IAP",
+          "category": "A/B/C/D",
+          "transitions": {
+            "KERAV": [
+              "KERAV",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW025",
+              "DW027",
+              "DUB",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ],
+            "SORIN": [
+              "SORIN",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW025",
+              "DW027",
+              "DUB",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ]
+          },
+          "notes": [
+            "Completeness pass: EIDW 24-42 VOR RWY34 named fixes/navaids only; DME/radials intentionally omitted."
           ]
         },
         {
@@ -7723,26 +8057,34 @@
             {
               "fix": "LAPMO",
               "altitude": 3000,
-              "constraint": "at_or_above",
-              "speed_limit": 220
+              "constraint": "exact",
+              "phase": "IF"
             },
             {
-              "fix": "MAXEV"
+              "fix": "MAXEV",
+              "phase": "FAF"
             },
             {
-              "fix": "DAP"
+              "fix": "DAP",
+              "phase": "NAVAID"
             },
             {
               "fix": "GANET",
               "altitude": 3000,
               "constraint": "at_or_below",
-              "speed_limit": 220
+              "speed_limit": 220,
+              "phase": "MA/MATP"
             },
             {
               "fix": "DUB",
               "altitude": 5000,
-              "constraint": "at_or_above"
+              "constraint": "at_or_above",
+              "phase": "MA/NAVAID"
             }
+          ],
+          "category": "A/B/C/D",
+          "notes": [
+            "Completeness pass: EIDW 24-45 VOR T RWY28L named fixes/navaids only; DME detail intentionally omitted."
           ]
         },
         {
@@ -7753,48 +8095,364 @@
             {
               "fix": "DUB",
               "altitude": 3000,
-              "constraint": "exact"
+              "constraint": "exact",
+              "phase": "IAF"
             },
             {
               "fix": "DW035",
-              "speed_limit": 210
+              "speed_limit": 210,
+              "phase": "transition"
             },
             {
               "fix": "PIZSA",
               "altitude": 3000,
               "constraint": "at_or_above",
-              "speed_limit": 220
+              "speed_limit": 220,
+              "phase": "IAF"
             },
             {
               "fix": "OBINU",
               "altitude": 3000,
               "constraint": "at_or_above",
-              "speed_limit": 220
+              "speed_limit": 220,
+              "phase": "IAF"
             },
             {
               "fix": "OXPOH",
               "altitude": 3000,
               "constraint": "at_or_above",
-              "speed_limit": 210
+              "speed_limit": 210,
+              "phase": "IF"
             },
             {
-              "fix": "UVZUZ"
+              "fix": "UVZUZ",
+              "phase": "FAF"
             },
             {
-              "fix": "RW28D"
+              "fix": "RW28D",
+              "phase": "MAPt"
             },
             {
               "fix": "GANET",
               "altitude": 3000,
               "constraint": "at_or_below",
-              "speed_limit": 200
+              "speed_limit": 200,
+              "phase": "MA"
             },
             {
               "fix": "DW034",
               "altitude": 3000,
               "constraint": "at_or_below",
-              "speed_limit": 200
+              "speed_limit": 200,
+              "phase": "MA"
             }
+          ],
+          "category": "A/B/C/D",
+          "transitions": {
+            "DUB": [
+              "DUB",
+              "DW035",
+              "OXPOH",
+              "UVZUZ",
+              "RW28D",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "PIZSA": [
+              "PIZSA",
+              "OXPOH",
+              "UVZUZ",
+              "RW28D",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "OBINU": [
+              "OBINU",
+              "OXPOH",
+              "UVZUZ",
+              "RW28D",
+              "GANET",
+              "DW034",
+              "DUB"
+            ]
+          },
+          "notes": [
+            "Completeness pass: EIDW 24-46 RNP T RWY28L includes DUB/DW035, PIZSA and OBINU branches plus OXPOH, UVZUZ, RW28D."
+          ]
+        },
+        {
+          "name": "RNP RWY 28L",
+          "type": "IAP",
+          "runway": "RWY28L",
+          "category": "A/B/C/D",
+          "waypoints": [
+            {
+              "fix": "DUB",
+              "altitude": 3000,
+              "constraint": "exact",
+              "phase": "IAF",
+              "lat": "532957.8N",
+              "lon": "0061825.6W",
+              "speed_limit": 200
+            },
+            {
+              "fix": "DW017",
+              "speed_limit": 210,
+              "phase": "transition",
+              "lat": "533039.7N",
+              "lon": "0055538.6W"
+            },
+            {
+              "fix": "PIZSA",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF",
+              "lat": "532844.3N",
+              "lon": "0054833.6W"
+            },
+            {
+              "fix": "OBINU",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "IAF",
+              "lat": "532001.7N",
+              "lon": "0054931.2W"
+            },
+            {
+              "fix": "LAPMO",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "speed_limit": 220,
+              "phase": "IF",
+              "lat": "532411.0N",
+              "lon": "0055644.1W"
+            },
+            {
+              "fix": "MAXEV",
+              "phase": "FAF",
+              "lat": "532433.5N",
+              "lon": "0060317.3W"
+            },
+            {
+              "fix": "RW28L",
+              "phase": "MAPt",
+              "lat": "532512.9N",
+              "lon": "0061502.1W"
+            },
+            {
+              "fix": "GANET",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA",
+              "lat": "532606.5N",
+              "lon": "0063133.8W"
+            },
+            {
+              "fix": "DW034",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "speed_limit": 200,
+              "phase": "MA",
+              "lat": "533037.4N",
+              "lon": "0063342.6W"
+            }
+          ],
+          "transitions": {
+            "DUB": [
+              "DUB",
+              "DW017",
+              "LAPMO",
+              "MAXEV",
+              "RW28L",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "PIZSA": [
+              "PIZSA",
+              "LAPMO",
+              "MAXEV",
+              "RW28L",
+              "GANET",
+              "DW034",
+              "DUB"
+            ],
+            "OBINU": [
+              "OBINU",
+              "LAPMO",
+              "MAXEV",
+              "RW28L",
+              "GANET",
+              "DW034",
+              "DUB"
+            ]
+          },
+          "notes": [
+            "Alias retained for compatibility; same corrected EIDW AD 2.24-26 data as RNP RWY28L."
+          ]
+        },
+        {
+          "name": "RNP RWY10R",
+          "type": "IAP",
+          "runway": "RWY10R",
+          "category": "A/B/C/D",
+          "waypoints": [
+            {
+              "fix": "UMOWI",
+              "altitude": 4000,
+              "constraint": "at_or_above",
+              "phase": "IAF",
+              "lat": "532002.9N",
+              "lon": "0060859.1W",
+              "speed_limit": 200
+            },
+            {
+              "fix": "OSLEX",
+              "altitude": 5000,
+              "constraint": "at_or_above",
+              "speed_limit": 220,
+              "phase": "IAF",
+              "lat": "532155.8N",
+              "lon": "0064144.5W"
+            },
+            {
+              "fix": "RAQAR",
+              "altitude": 4000,
+              "constraint": "at_or_above",
+              "speed_limit": 220,
+              "phase": "IF",
+              "lat": "532636.1N",
+              "lon": "0064101.2W"
+            },
+            {
+              "fix": "GANET",
+              "phase": "FAF",
+              "lat": "532606.5N",
+              "lon": "0063133.8W"
+            },
+            {
+              "fix": "RW10R",
+              "phase": "MAPt",
+              "lat": "532520.7N",
+              "lon": "0061724.3W"
+            },
+            {
+              "fix": "DW031",
+              "speed_limit": 200,
+              "phase": "MA",
+              "lat": "532425.9N",
+              "lon": "0060029.2W"
+            }
+          ],
+          "transitions": {
+            "UMOWI": [
+              "UMOWI",
+              "OSLEX",
+              "RAQAR",
+              "GANET",
+              "RW10R",
+              "DW031",
+              "UMOWI"
+            ],
+            "OSLEX": [
+              "OSLEX",
+              "RAQAR",
+              "GANET",
+              "RW10R",
+              "DW031",
+              "UMOWI"
+            ],
+            "RAQAR": [
+              "RAQAR",
+              "GANET",
+              "RW10R",
+              "DW031",
+              "UMOWI"
+            ]
+          },
+          "notes": [
+            "Corrected from EIDW AD 2.24-35.1: RAQAR is a tabled entry branch; not IFBAP."
+          ]
+        },
+        {
+          "name": "ILS/LOC RWY16",
+          "type": "IAP",
+          "runway": "RWY16",
+          "category": "A/B/C/D",
+          "waypoints": [
+            {
+              "fix": "KERAV",
+              "altitude": "FL060",
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "ERUDA",
+              "phase": "transition"
+            },
+            {
+              "fix": "ULTAG",
+              "altitude": "FL060",
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "UMDAR",
+              "phase": "transition"
+            },
+            {
+              "fix": "BAPDA",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "speed_limit": 180,
+              "phase": "IF"
+            },
+            {
+              "fix": "GARTI",
+              "phase": "FAF"
+            },
+            {
+              "fix": "DW003",
+              "phase": "SDF"
+            },
+            {
+              "fix": "DW008",
+              "phase": "MAPt"
+            },
+            {
+              "fix": "DW007",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "phase": "MA"
+            }
+          ],
+          "transitions": {
+            "KERAV1T": [
+              "KERAV",
+              "ERUDA",
+              "BAPDA",
+              "GARTI",
+              "DW003",
+              "DW008",
+              "DW007",
+              "KERAV"
+            ],
+            "ULTAG1T": [
+              "ULTAG",
+              "UMDAR",
+              "BAPDA",
+              "GARTI",
+              "DW003",
+              "DW008",
+              "DW007",
+              "KERAV"
+            ]
+          },
+          "notes": [
+            "Completeness pass: EIDW 24-39 ILS CAT I / LOC RWY16."
           ]
         }
       ],
@@ -7834,7 +8492,9 @@
             "BRITTAS",
             "DONADEA WOOD",
             "STRAFFAN",
-            "NAAS RACECOURSE"
+            "NAAS RACECOURSE",
+            "MARLEY PARK HOUSE",
+            "DUNBOYNE"
           ],
           "visual_holds": [
             "BROADMEADOWS BRIDGE",
@@ -7846,6 +8506,37 @@
       ],
       "excluded_charts": [
         "ATC Surveillance Minimum Altitude Chart - not procedural"
+      ],
+      "audit_notes": [
+        "Patched EIDW branching IAP omissions after audit: 24-26 RNP RWY28L now includes DUB/DW017, PIZSA, OBINU branches; 24-27 ILS/LOC RWY28L and 24-30.1 ILS/LOC RWY28R similarly corrected; RNP RWY10R branch name corrected to RAQAR.",
+        "Patched EIDW AD 2.24-39: added ILS/LOC RWY16 with KERAV1T and ULTAG1T branches, BAPDA/GARTI/DW003/DW008/DW007.",
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
+      ],
+      "navaids": [
+        {
+          "name": "DUB DVOR/DME",
+          "frequency": "114.9",
+          "channel": "CH96X"
+        },
+        {
+          "name": "DAP DVOR/DME",
+          "frequency": "111.20",
+          "channel": "CH49X"
+        },
+        {
+          "name": "BAL DVOR/DME",
+          "frequency": "115.8",
+          "channel": "CH105X"
+        },
+        {
+          "name": "WST DVOR/DME",
+          "frequency": "114.7",
+          "channel": "CH94X"
+        },
+        {
+          "name": "KLY NDB",
+          "frequency": "378"
+        }
       ]
     },
     "EIDL": {
@@ -7871,7 +8562,9 @@
               "constraint": "at_or_above"
             },
             {
-              "fix": "OXHEN"
+              "fix": "OXHEN",
+              "altitude": 3000,
+              "constraint": "at_or_above"
             },
             {
               "fix": "TAFOG"
@@ -7884,11 +8577,6 @@
             },
             {
               "fix": "DL105"
-            },
-            {
-              "fix": "OXHEN",
-              "altitude": 3000,
-              "constraint": "at_or_above"
             },
             {
               "fix": "DL103",
@@ -7922,7 +8610,9 @@
               "constraint": "at_or_above"
             },
             {
-              "fix": "FIXBE"
+              "fix": "FIXBE",
+              "altitude": 3000,
+              "constraint": "at_or_above"
             },
             {
               "fix": "OBCEL"
@@ -7938,11 +8628,6 @@
             },
             {
               "fix": "DL112"
-            },
-            {
-              "fix": "FIXBE",
-              "altitude": 3000,
-              "constraint": "at_or_above"
             },
             {
               "fix": "DL107",
@@ -8018,6 +8703,9 @@
             "KINCASSLAGH TOWER"
           ]
         }
+      ],
+      "audit_notes": [
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     },
     "EIKN": {
@@ -8593,7 +9281,8 @@
         "Precision approach terrain chart EIKN 24-3 ignored"
       ],
       "audit_notes": [
-        "EIKN 24-1 through 24-9 rechecked against uploaded PDFs; no additional unique procedures needed because SIDs, STARs, frequencies, and RWY26 RNP/ILS Z are already present."
+        "EIKN 24-1 through 24-9 rechecked against uploaded PDFs; no additional unique procedures needed because SIDs, STARs, frequencies, and RWY26 RNP/ILS Z are already present.",
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     },
     "EIKY": {
@@ -9196,7 +9885,9 @@
             "JOHN CRONIN ROUNDABOUT",
             "CURROW HILL",
             "KILLARNEY",
-            "CASTLEISLAND"
+            "CASTLEISLAND",
+            "KILLORGLIN",
+            "ABBEYFEALE"
           ],
           "visual_holds": [
             "JOHN CRONIN ROUNDABOUT",
@@ -9219,6 +9910,15 @@
       ],
       "excluded_charts": [
         "EIKY obstacle chart ignored"
+      ],
+      "navaids": [
+        {
+          "name": "KER NDB",
+          "frequency": "334"
+        }
+      ],
+      "audit_notes": [
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     },
     "EINN": {
@@ -10258,12 +10958,23 @@
             "BUNRATTY CASTLE",
             "DROMORE CASTLE",
             "GORTGLASS LOUGH",
-            "KILLADYSERT CHURCH"
+            "KILLADYSERT CHURCH",
+            "DROMOLAND CASTLE"
           ],
           "visual_holds": [
             "CONEY ISLAND",
             "BUNRATTY CASTLE"
-          ]
+          ],
+          "coordinates": {
+            "CONEY ISLAND": {
+              "lat": "52\u00b042'43.34\"N",
+              "lon": "009\u00b000'20.70\"W"
+            },
+            "BUNRATTY CASTLE": {
+              "lat": "52\u00b041'48.80\"N",
+              "lon": "008\u00b048'44.28\"W"
+            }
+          }
         }
       ],
       "elevation_ft": 46,
@@ -10302,6 +11013,20 @@
         "Apron/docking chart ignored",
         "Obstacle chart ignored",
         "Precision approach terrain chart ignored"
+      ],
+      "navaids": [
+        {
+          "name": "SHA DVOR/DME",
+          "frequency": "113.3",
+          "channel": "CH80X"
+        },
+        {
+          "name": "FOY NDB",
+          "frequency": "395"
+        }
+      ],
+      "audit_notes": [
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     },
     "EISG": {
@@ -10547,7 +11272,13 @@
           "type": "VAC",
           "waypoints": [
             "DRUMCLIFF CHURCH",
-            "BELTRA"
+            "BELTRA",
+            "GRANGE",
+            "BALLYMOTE",
+            "SLIGO",
+            "TUBBERCURRY",
+            "COLLOONEY",
+            "BALLYSADARE"
           ],
           "visual_holds": [
             "DRUMCLIFF CHURCH",
@@ -10555,12 +11286,12 @@
           ],
           "coordinates": {
             "DRUMCLIFF CHURCH": {
-              "lat": "54°19'41.79\"N",
-              "lon": "008°30'43.78\"W"
+              "lat": "54\u00b019'41.79\"N",
+              "lon": "008\u00b030'43.78\"W"
             },
             "BELTRA": {
-              "lat": "54°13'14.07\"N",
-              "lon": "008°37'22.39\"W"
+              "lat": "54\u00b013'14.07\"N",
+              "lon": "008\u00b037'22.39\"W"
             }
           }
         }
@@ -10580,6 +11311,16 @@
       ],
       "excluded_charts": [
         "Obstacle chart ignored"
+      ],
+      "navaids": [
+        {
+          "name": "SLG NDB/DME",
+          "frequency": "384 / 109.0",
+          "channel": "CH27X"
+        }
+      ],
+      "audit_notes": [
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     },
     "EIWF": {
@@ -10864,12 +11605,12 @@
           ],
           "coordinates": {
             "BELLE LAKE": {
-              "lat": "52°11'35.56\"N",
-              "lon": "007°01'42.64\"W"
+              "lat": "52\u00b011'35.56\"N",
+              "lon": "007\u00b001'42.64\"W"
             },
             "TRAMORE RACECOURSE": {
-              "lat": "52°10'21.65\"N",
-              "lon": "007°08'55.62\"W"
+              "lat": "52\u00b010'21.65\"N",
+              "lon": "007\u00b008'55.62\"W"
             }
           }
         }
@@ -10899,6 +11640,24 @@
       ],
       "excluded_charts": [
         "Obstacle chart ignored"
+      ],
+      "navaids": [
+        {
+          "name": "WTD NDB",
+          "frequency": "368"
+        },
+        {
+          "name": "CML NDB",
+          "frequency": "387"
+        },
+        {
+          "name": "IWD DME",
+          "frequency": "110.9",
+          "channel": "CH46X"
+        }
+      ],
+      "audit_notes": [
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     },
     "EIWT": {
@@ -10944,10 +11703,18 @@
           "channel": "CH94X",
           "lat": "53 21 09.98N",
           "lon": "006 29 38.14W"
+        },
+        {
+          "name": "WST DVOR/DME",
+          "frequency": "114.70",
+          "channel": "CH94X"
         }
       ],
       "excluded_charts": [
         "Obstacle chart ignored"
+      ],
+      "audit_notes": [
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
       ]
     }
   }

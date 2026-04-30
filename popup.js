@@ -1980,6 +1980,14 @@ for (const a of list) {
       a.__chData = null;
     }
   }
+  if (ident.startsWith("EI") && !a.__eiData) {
+    try {
+      a.__eiData = await getIrelandProceduresForAirport(ident);
+    } catch (e) {
+      console.warn("Ireland preload failed:", ident, e);
+      a.__eiData = null;
+    }
+  }
 }
 /* -----------------------------
    IAP FILTER
@@ -2002,7 +2010,9 @@ if (hideNoApp) {
 
     const hasSwissIap = (a.__chData?.procedures?.approaches?.length || 0) > 0;
 
-    return hasUsIap || hasAusIap || hasSwissIap;
+    const hasIrelandIap = (a.__eiData?.IAPs?.length || 0) > 0;
+
+    return hasUsIap || hasAusIap || hasSwissIap || hasIrelandIap;
   });
 }
 
@@ -2045,6 +2055,16 @@ if (!chData && airportIdent.startsWith("LS")) {
     a.__chData = chData;
   } catch (e) {
     console.warn("Swiss fetch failed:", airportIdent, e);
+  }
+}
+
+let eiData = a.__eiData || null;
+if (!eiData && airportIdent.startsWith("EI")) {
+  try {
+    eiData = await getIrelandProceduresForAirport(airportIdent);
+    a.__eiData = eiData;
+  } catch (e) {
+    console.warn("Ireland fetch failed:", airportIdent, e);
   }
 }
 
@@ -2202,6 +2222,29 @@ if (chComms.length) {
   }
 }
 
+// 🇮🇪 Ireland AIP comms
+const eiComms = a.__eiData?.frequencies || eiData?.frequencies || [];
+if (eiComms.length) {
+  const eiTitle = document.createElement("div");
+  eiTitle.innerHTML = `<strong>Ireland AIP</strong>`;
+  eiTitle.style.marginTop = "8px";
+  facilityContent.appendChild(eiTitle);
+  const seenEi = new Set();
+  for (const c of eiComms) {
+    const label = String(c.name || c.type || "").trim();
+    const freq = String(c.frequency || "").trim();
+    if (!label || !freq) continue;
+    const key = `${label}_${freq}`;
+    if (seenEi.has(key)) continue;
+    seenEi.add(key);
+    const div = document.createElement("div");
+    div.className = "facilityItem";
+    div.innerText = `${label} — ${freq}`;
+    facilityContent.appendChild(div);
+    FACILITY_FREQ_INDEX.push({ freq, label, airport: airportIdent });
+  }
+}
+
     // ✅ Always add OurAirports (dedup later if you want)
     if (ourAirports.length) {
 
@@ -2231,7 +2274,7 @@ if (chComms.length) {
 
     }
 
-if (!usedAirNav && !ourAirports.length && !ausComms.length) {
+if (!usedAirNav && !ourAirports.length && !ausComms.length && !eiComms.length) {
   facilityContent.innerHTML = "No facility data found.";
 }
 
@@ -2293,6 +2336,8 @@ for (const sid of (chData?.procedures?.sids || [])) {
   dpWrap.appendChild(swissProcChip(sid, "SID"));
 }
 
+renderIrelandProcsByRunway(dpWrap, eiData?.SIDs || [], "SID");
+
 if (!deps.length && !dpWrap.children.length) {
   dpWrap.textContent = "(none found)";
 }
@@ -2326,6 +2371,8 @@ if (ausData?.procedures) {
 for (const star of (chData?.procedures?.stars || [])) {
   stWrap.appendChild(swissProcChip(star, "STAR"));
 }
+
+renderIrelandProcsByRunway(stWrap, eiData?.STARs || [], "STAR");
 
 if (!arrs.length && !stWrap.children.length) {
   stWrap.textContent = "(none found)";
@@ -2396,6 +2443,8 @@ if (chData?.procedures?.approaches?.length) {
   }
 }
 
+renderIrelandIAPsByRunwayPair(apWrap, eiData?.IAPs || []);
+
 if (!aps.length && !apWrap.children.length) {
   apWrap.textContent =
     airportIdent === centerIdentUpper
@@ -2408,6 +2457,24 @@ const apPanel = document.createElement("div");
 apPanel.className = "section-panel approaches";
 apPanel.appendChild(apWrap);
 proc.appendChild(apPanel);
+
+/* ---------------- Visual Approaches ---------------- */
+if (eiData?.visual_approaches?.length) {
+  const vacLabel = document.createElement("div");
+  vacLabel.className = "section-title";
+  vacLabel.textContent = "Visual Approaches";
+  proc.appendChild(vacLabel);
+
+  const vacWrap = document.createElement("div");
+  for (const vac of eiData.visual_approaches) {
+    vacWrap.appendChild(irelandProcChip(vac, "VAC"));
+  }
+
+  const vacPanel = document.createElement("div");
+  vacPanel.className = "section-panel";
+  vacPanel.appendChild(vacWrap);
+  proc.appendChild(vacPanel);
+}
 
 console.log("ARRIVALS RAW:", a.arrivals);
 
@@ -3287,6 +3354,15 @@ async function getSwissProceduresForAirport(icao) {
   });
 }
 
+async function getIrelandProceduresForAirport(icao) {
+  return new Promise(resolve => {
+    chrome.runtime.sendMessage(
+      { type: "GET_IRELAND_PROCEDURES", icao },
+      response => { resolve(response?.data || null); }
+    );
+  });
+}
+
 function swissProcChip(proc, procType) {
   const label = proc.name || "(unnamed)";
   const fixes = (proc.waypoints || [])
@@ -3309,6 +3385,284 @@ function swissProcChip(proc, procType) {
     await renderFixListInPopover(label, cleanFixes);
   });
   return span;
+}
+
+function formatIrelandChipLabel(proc, procType) {
+  const name = proc.name || "(unnamed)";
+  if (procType === "IAP" || procType === "VAC") return name;
+  // SID/STAR: "ELTIG1M CAT A/B RWY07" → "ELTIG 1M CAT A/B RWY 07"
+  const fix = name.slice(0, 5);
+  const suffix = name.slice(5).trim();
+  const cat = proc.category ? ` CAT ${proc.category}` : "";
+  const rwyRaw = (proc.runway || "").replace(/^RWY/i, "").trim();
+  const rwy = rwyRaw ? ` RWY ${rwyRaw}` : "";
+  return `${fix}${suffix ? " " + suffix : ""}${cat}${rwy}`;
+}
+
+function formatAltConstraint(w) {
+  if (!w.altitude && w.altitude !== 0) return null;
+  const alt = w.altitude;
+  const sym = w.constraint === "at_or_above" ? "≥" :
+              w.constraint === "at_or_below" ? "≤" : "";
+  return `${sym}${alt}`.trim();
+}
+
+async function renderIrelandFixListInPopover(title, waypoints) {
+  const pop = document.getElementById("fixPopover");
+  const titleEl = document.getElementById("fixPopoverTitle");
+  const content = document.getElementById("fixPopoverContent");
+
+  titleEl.textContent = title;
+  content.innerHTML = "";
+
+  const seen = new Set();
+  for (const w of waypoints) {
+    const fx = String(w.fix || "").trim().toUpperCase();
+    if (!fx) continue;
+    const nav = NAVAIDS?.[fx] || null;
+    const altLabel = formatAltConstraint(w);
+
+    const row = document.createElement("div");
+    row.className = "fixRow";
+    row.style.cursor = "pointer";
+
+    const left = document.createElement("div");
+    left.className = "fixCode";
+    left.textContent = fx;
+
+    const right = document.createElement("div");
+    right.className = "fixMeta";
+
+    const parts = [];
+    if (nav?.name) parts.push(nav.name.toUpperCase());
+    if (altLabel) parts.push(altLabel);
+    right.textContent = parts.join(" · ");
+
+    if (nav) {
+      row.classList.add("isNav");
+      row.title = `${nav.type || "NAVAID"}${nav.freq ? " • " + nav.freq : ""}`;
+    } else {
+      row.title = "Fix/Waypoint";
+    }
+
+    row.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      await copyWithFeedback(row, nav?.name ? nav.name.toUpperCase() : fx);
+      row.classList.add("copied");
+      const orig = right.textContent;
+      right.textContent = "Copied ✓";
+      setTimeout(() => { right.textContent = orig; row.classList.remove("copied"); }, 800);
+    });
+
+    row.appendChild(left);
+    row.appendChild(right);
+    if (!seen.has(fx)) {
+      content.appendChild(row);
+      seen.add(fx);
+    }
+  }
+
+  pop.classList.remove("hidden");
+}
+
+function irelandProcChip(proc, procType) {
+  const label = proc.name || "(unnamed)";
+  const chipLabel = formatIrelandChipLabel(proc, procType);
+
+  // VAC waypoints are strings, not objects
+  const waypoints = procType === "VAC"
+    ? (proc.waypoints || []).map(w => typeof w === "string" ? { fix: w } : w)
+    : (proc.waypoints || []);
+
+  const fixes = waypoints.map(w => String(w.fix || "").trim().toUpperCase()).filter(Boolean);
+  const span = makeChip(chipLabel, "pointer");
+
+  span.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    if (!fixes.length) {
+      openFixPopover(span, label, "No waypoints.");
+      return;
+    }
+    const cleanFixes = [...new Set(fixes)];
+    for (const fx of cleanFixes) {
+      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+      FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: label, procDisplay: label });
+    }
+    openFixPopover(span, label, " ");
+    await renderIrelandFixListInPopover(label, waypoints);
+  });
+  return span;
+}
+
+function renderIrelandProcsByRunway(container, procs, procType) {
+  if (!procs.length) return;
+
+  const groups = new Map();
+  for (const proc of procs) {
+    const rwy = (proc.runway || "ALL").replace(/^RWY/i, "").trim() || "ALL";
+    if (!groups.has(rwy)) groups.set(rwy, []);
+    groups.get(rwy).push(proc);
+  }
+
+  const sorted = [...groups.keys()].sort((a, b) => {
+    if (a === "ALL") return 1;
+    if (b === "ALL") return -1;
+    return parseInt(a) - parseInt(b) || a.localeCompare(b);
+  });
+
+  const selected = container.dataset.selectedRwyKey || sorted[0];
+  container.dataset.selectedRwyKey = selected;
+
+  const selectorRow = document.createElement("div");
+  selectorRow.className = "rwy-selector";
+
+  for (const rwy of sorted) {
+    const label = rwy === "ALL" ? "All" : rwy;
+    const btn = makeButtonChip(label, selected === rwy);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      container.dataset.selectedRwyKey = rwy;
+      container.innerHTML = "";
+      renderIrelandProcsByRunway(container, procs, procType);
+    });
+    selectorRow.appendChild(btn);
+  }
+
+  container.appendChild(selectorRow);
+
+  const rwyProcs = groups.get(selected) || [];
+  const block = document.createElement("div");
+  block.className = "rwy-block";
+
+  const h = document.createElement("div");
+  h.className = "rwy-header";
+  h.textContent = selected === "ALL" ? `All Runways (${rwyProcs.length})` : `RWY ${selected} (${rwyProcs.length})`;
+  block.appendChild(h);
+
+  const wrap = document.createElement("div");
+  for (const proc of rwyProcs) wrap.appendChild(irelandProcChip(proc, procType));
+  block.appendChild(wrap);
+  container.appendChild(block);
+}
+
+function reciprocalRunway(rwy) {
+  const m = String(rwy).match(/^(\d{1,2})([LRC]?)$/i);
+  if (!m) return null;
+  let num = ((parseInt(m[1], 10) - 1 + 18) % 36) + 1;
+  const suf = m[2].toUpperCase();
+  const recSuf = suf === "L" ? "R" : suf === "R" ? "L" : suf;
+  return String(num).padStart(2, "0") + recSuf;
+}
+
+function buildIrelandRunwayPairs(procs) {
+  const rwySet = new Set(
+    procs.map(p => (p.runway || "").replace(/^RWY/i, "").trim()).filter(Boolean)
+  );
+
+  const seen = new Set();
+  const pairs = [];
+
+  for (const rwy of [...rwySet].sort()) {
+    const rec = reciprocalRunway(rwy);
+    const key = [rwy, rec || ""].sort((a, b) => parseInt(a) - parseInt(b) || a.localeCompare(b)).join("/");
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    const end1 = key.split("/")[0];
+    const end2 = key.split("/")[1];
+    pairs.push({ pairKey: key, end1, end2, label: key });
+  }
+
+  return pairs.sort((a, b) => parseInt(a.end1) - parseInt(b.end1) || a.pairKey.localeCompare(b.pairKey));
+}
+
+function renderIrelandIAPsByRunwayPair(container, iaps) {
+  if (!iaps.length) return;
+
+  const byRunway = new Map();
+  const other = [];
+
+  for (const proc of iaps) {
+    const rwy = (proc.runway || "").replace(/^RWY/i, "").trim();
+    if (rwy) {
+      if (!byRunway.has(rwy)) byRunway.set(rwy, []);
+      byRunway.get(rwy).push(proc);
+    } else {
+      other.push(proc);
+    }
+  }
+
+  const pairs = buildIrelandRunwayPairs(iaps);
+
+  if (!pairs.length) {
+    for (const proc of iaps) container.appendChild(irelandProcChip(proc, "IAP"));
+    return;
+  }
+
+  const selected = container.dataset.selectedPairKey || pairs[0].pairKey;
+  container.dataset.selectedPairKey = selected;
+
+  const selectorRow = document.createElement("div");
+  selectorRow.className = "rwy-selector";
+
+  for (const p of pairs) {
+    const btn = makeButtonChip(p.label, selected === p.pairKey);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      container.dataset.selectedPairKey = p.pairKey;
+      container.innerHTML = "";
+      renderIrelandIAPsByRunwayPair(container, iaps);
+    });
+    selectorRow.appendChild(btn);
+  }
+
+  container.appendChild(selectorRow);
+
+  const content = document.createElement("div");
+  const sel = pairs.find(x => x.pairKey === selected) || pairs[0];
+  const ends = [sel.end1, sel.end2].filter(Boolean);
+  let any = false;
+
+  for (const end of ends) {
+    const procs = byRunway.get(end) || [];
+    if (!procs.length) continue;
+    any = true;
+
+    const block = document.createElement("div");
+    block.className = "rwy-block";
+
+    const h = document.createElement("div");
+    h.className = "rwy-header";
+    h.textContent = `RWY ${end} (${procs.length})`;
+    block.appendChild(h);
+
+    const wrap = document.createElement("div");
+    for (const proc of procs) wrap.appendChild(irelandProcChip(proc, "IAP"));
+    block.appendChild(wrap);
+    content.appendChild(block);
+  }
+
+  if (!any) {
+    const none = document.createElement("div");
+    none.style.opacity = "0.75";
+    none.textContent = "(no approaches tagged to this runway pair)";
+    content.appendChild(none);
+  }
+
+  if (other.length) {
+    const h = document.createElement("div");
+    h.style.fontWeight = "700";
+    h.style.marginTop = "10px";
+    h.textContent = `Other (${other.length})`;
+    content.appendChild(h);
+    const wrap = document.createElement("div");
+    for (const proc of other) wrap.appendChild(irelandProcChip(proc, "IAP"));
+    content.appendChild(wrap);
+  }
+
+  container.appendChild(content);
 }
 
 
@@ -3725,8 +4079,8 @@ if (lbxKeyEl) {
       if (optFixesFinder) optFixesFinder.checked = !!settings.fixesfinder;
       if (optForeflight) optForeflight.checked = !!settings.foreflight;
       if (optSkyVector) optSkyVector.checked = !!settings.skyvector;
-      if (speedSlider && settings.adsbSpeed) speedSlider.value = settings.adsbSpeed;
-      if (speedText && settings.adsbSpeed) speedText.value = settings.adsbSpeed;
+      if (speedSlider && settings.adsbSpeed != null) speedSlider.value = settings.adsbSpeed;
+      if (speedText && settings.adsbSpeed != null) speedText.value = settings.adsbSpeed;
     }
   }
 );
@@ -3833,7 +4187,7 @@ const optFixesFinder = document.getElementById("opt_fixesfinder");
         opennav: optOpenNav?.checked,
         airnav: optAirNav?.checked,
         fixesfinder: optFixesFinder?.checked,
-        adsbSpeed: Number(speedSlider?.value || 1),
+        adsbSpeed: Number(speedSlider?.value ?? 500),
         foreflight: optForeflight?.checked,
         skyvector: optSkyVector?.checked,
       }
@@ -3857,7 +4211,7 @@ const optFixesFinder = document.getElementById("opt_fixesfinder");
     });
 
     speedText.addEventListener("input", () => {
-      const v = Number(speedText.value || 1);
+      const v = Number(speedText.value ?? 1);
       if (!isNaN(v)) {
         speedSlider.value = v;
         saveLBXSettings();

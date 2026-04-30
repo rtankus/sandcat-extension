@@ -98,6 +98,8 @@ let AUS_PROC_BY_ICAO = {};
 
 let SWISS_AD2_DB = {};
 
+let IRELAND_PROC_DB = {};
+
 let AUS_VFR_VISUAL_WAYPOINTS = [];
 
 // ==========================================
@@ -197,6 +199,20 @@ async function loadAustraliaProcedures() {
 }
 
 loadAustraliaProcedures();
+
+async function loadIrelandProcedures() {
+  try {
+    const url = chrome.runtime.getURL("ireland_procedures.json");
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed: ${res.status}`);
+    const raw = await res.json();
+    IRELAND_PROC_DB = raw.airports || {};
+    console.log(`Loaded Ireland procedures: ${Object.keys(IRELAND_PROC_DB).length} airports`);
+  } catch (err) {
+    console.error("Ireland procedure load failed:", err);
+  }
+}
+loadIrelandProcedures();
 
 async function loadAusVfrVisualWaypoints() {
   try {
@@ -3456,6 +3472,12 @@ if (msg?.type === "GET_SWISS_PROCEDURES") {
   return true;
 }
 
+if (msg?.type === "GET_IRELAND_PROCEDURES") {
+  const icao = String(msg.icao || "").toUpperCase();
+  sendResponse({ ok: true, icao, data: IRELAND_PROC_DB[icao] || null });
+  return true;
+}
+
       if (msg?.type === "GET_GLOBAL_COUNTRIES") {
   await ensureGlobalDataLoaded();
   sendResponse({
@@ -4561,43 +4583,46 @@ function clampPopupSpeed(v) {
 // Tab Helpers
 // =============================
 
-function openOrReuseTabBackgroundAsync(url, storageKey, patterns = []) {
+function openOrReuseTabBackgroundAsync(url, storageKey, patterns = [], preferPattern = false) {
   return new Promise((resolve) => {
 
-    chrome.storage.local.get([storageKey], (res) => {
-      const saved = res[storageKey];
+    const create = () => {
+      chrome.tabs.create({ url, active: false }, (tab) => {
+        if (tab?.id != null)
+          chrome.storage.local.set({ [storageKey]: tab.id });
+        resolve(tab?.id);
+      });
+    };
 
-      const create = () => {
-        chrome.tabs.create({ url, active: false }, (tab) => {
-          if (tab?.id != null)
-            chrome.storage.local.set({ [storageKey]: tab.id });
-          resolve(tab?.id);
-        });
-      };
+    const update = (id) => {
+      chrome.tabs.update(id, { url, active: false }, (tab) => {
+        if (chrome.runtime.lastError || !tab) {
+          findOrCreate();
+          return;
+        }
+        chrome.storage.local.set({ [storageKey]: id });
+        resolve(id);
+      });
+    };
 
-      const update = (id) => {
-        chrome.tabs.update(id, { url, active: false }, (tab) => {
-          if (chrome.runtime.lastError || !tab) {
-            findOrCreate();
-            return;
-          }
-          chrome.storage.local.set({ [storageKey]: id });
-          resolve(id);
-        });
-      };
+    const findOrCreate = () => {
+      if (!patterns.length) return create();
+      chrome.tabs.query({ url: patterns }, (tabs) => {
+        const existing = tabs?.[0];
+        if (existing?.id != null) update(existing.id);
+        else create();
+      });
+    };
 
-      const findOrCreate = () => {
-        if (!patterns.length) return create();
-        chrome.tabs.query({ url: patterns }, (tabs) => {
-          const existing = tabs?.[0];
-          if (existing?.id != null) update(existing.id);
-          else create();
-        });
-      };
-
-      if (typeof saved === "number") update(saved);
-      else findOrCreate();
-    });
+    if (preferPattern) {
+      findOrCreate();
+    } else {
+      chrome.storage.local.get([storageKey], (res) => {
+        const saved = res[storageKey];
+        if (typeof saved === "number") update(saved);
+        else findOrCreate();
+      });
+    }
 
   });
 }
@@ -4914,7 +4939,8 @@ async function runSelectedActions(rawText, settings) {
     await openOrReuseTabBackgroundAsync(
       `https://skyvector.com/airport/${icao}`,
       SKYVECTOR_TAB_KEY,
-      ["*://skyvector.com/*"]
+      ["*://skyvector.com/*"],
+      true
     );
   }
 
