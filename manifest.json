@@ -1,0 +1,90 @@
+{
+  "manifest_version": 3,
+  "name": "SandCat",
+  "version": "1.4.0",
+  "homepage_url": "https://rtankus.github.io/sandcat-privacy/",
+  "permissions": [
+  "storage",
+  "tabs",
+  "scripting",
+  "clipboardRead",
+  "activeTab"
+],
+  "host_permissions": [
+    "https://davidmegginson.github.io/*",
+    "https://www.faa.gov/*",
+    "https://aeronav.faa.gov/*",
+    "https://nfdc.faa.gov/*",
+    "https://*.labelbox.com/*",
+    "https://www.airnav.com/*",
+    "https://opennav.com/*",
+    "https://plan.foreflight.com/*",
+    "https://globe.adsbexchange.com/*",
+    "https://ourairports.com/*",
+    "https://skyvector.com/*",
+    "https://raw.githubusercontent.com/*"
+  ],
+
+  "icons": {
+  "16": "sandcat-icon-16.png",
+  "32": "sandcat-icon-32.png",
+  "48": "sandcat-icon-48.png",
+  "128": "sandcat-icon-128.png"
+},
+  "action": {
+    "default_title": "SandCat",
+    "default_icon":{
+    "16": "sandcat-icon-16.png",
+    "32": "sandcat-icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+{
+  "resources": [
+    "cifp.zip",
+    "popup.html",
+    "adsb_hook.js",
+    "adsb_bridge.js",
+        "sandcat-icon-32.png",
+              "airports.js",
+      "search.js",
+      "aircraft-hints.json",
+      "aircraft-locations.json",
+          "waypoints.json",
+    "navaids.js",
+    "waypoints.csv",
+    "navaids.csv",
+    "aus_waypoints_complete.json",
+    "swiss_ad2_sandcat.json",
+    "australia_vfr_visual_waypoints.json",
+    "ireland_procedures.json"
+  ],
+  "matches": ["<all_urls>"],
+  "allFrames": true
+}
+],
+"content_scripts": [
+  {
+    "matches": ["<all_urls>"],
+    "js": ["labelbox_grab_id.js", "adsb_bridge.js"],
+    "run_at": "document_idle",
+    "all_frames": true
+  },
+  {
+    "matches": ["https://skyvector.com/*"],
+    "js": ["skyvector_fetch_spy.js"],
+    "run_at": "document_start",
+    "world": "MAIN",
+    "all_frames": false
+  },
+  {
+    "matches": ["https://skyvector.com/*"],
+    "js": ["skyvector_overlay.js"],
+    "run_at": "document_idle",
+    "all_frames": false
+  }
+]
+}
