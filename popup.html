@@ -1124,6 +1124,29 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
 .fixRow.copied {
   background: rgba(0,150,255,.15);
 }
+
+.flight-loading-row {
+  color: #94a3b8;
+  gap: 8px;
+  align-items: center;
+  cursor: default;
+}
+.flight-loading-row:hover {
+  background: #1e293b;
+}
+@keyframes sandcat-spin {
+  to { transform: rotate(360deg); }
+}
+.flight-loading-spinner {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #334155;
+  border-top-color: #22c55e;
+  border-radius: 50%;
+  animation: sandcat-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
 #routeAnalysis{
   background:#111827;
   border-radius:10px;

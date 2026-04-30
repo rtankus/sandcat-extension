@@ -3183,7 +3183,8 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     "adsb_active_flight_destination",
     "adsb_active_flight_callsign",
     "adsb_active_flight_icao",
-    "adsb_active_flight_fixes_at"
+    "adsb_active_flight_fixes_at",
+    "adsb_flight_loading"
   ]);
 
   chrome.runtime.sendMessage({
@@ -3248,14 +3249,18 @@ if(msg.type === "ADSB_AIRCRAFT_SELECTED"){
   const icao = msg.icao;
   if(!icao) return;
 
-  // Deduplicate: ignore re-selection of the same aircraft (hook can fire multiple times)
+  // Deduplicate: ignore rapid re-fires of the same aircraft from the hook.
+  // Reset to null on failure so the user can retry by clicking again.
   if (lastProcessedIcao === icao.toLowerCase()) return;
   lastProcessedIcao = icao.toLowerCase();
 
   const tabId = _sender?.tab?.id;
-  if (!tabId) return;
+  if (!tabId) {
+    lastProcessedIcao = null;
+    return;
+  }
 
-  // 🔥 CLEAR OLD FLIGHT IMMEDIATELY
+  // CLEAR OLD FLIGHT IMMEDIATELY and signal loading state
   await chrome.storage.local.set({
     adsb_active_flight_fixes: [],
     adsb_active_flight_route: null,
@@ -3264,7 +3269,8 @@ if(msg.type === "ADSB_AIRCRAFT_SELECTED"){
     adsb_active_flight_callsign: msg.callsign || null,
     adsb_active_flight_icao: msg.icao,
     adsb_active_flight_vfr_waypoints: [],
-    adsb_active_flight_fixes_at: Date.now()
+    adsb_active_flight_fixes_at: Date.now(),
+    adsb_flight_loading: true
   });
 
 chrome.storage.local.set({
@@ -3279,6 +3285,9 @@ chrome.runtime.sendMessage({
 
   if(!routeData.ok){
     console.log("Route extraction failed:", routeData.error);
+    lastProcessedIcao = null; // allow retry on next click
+    await chrome.storage.local.set({ adsb_flight_loading: false });
+    chrome.runtime.sendMessage({ type: "ACTIVE_FLIGHT_UPDATED" }).catch(()=>{});
     return;
   }
 
@@ -3287,6 +3296,8 @@ chrome.runtime.sendMessage({
   const prev = await chrome.storage.local.get("adsb_active_flight_route");
 
   if(prev.adsb_active_flight_route === result.routeString){
+    await chrome.storage.local.set({ adsb_flight_loading: false });
+    chrome.runtime.sendMessage({ type: "ACTIVE_FLIGHT_UPDATED" }).catch(()=>{});
     return;
   }
 
@@ -3302,7 +3313,8 @@ chrome.runtime.sendMessage({
     adsb_active_flight_callsign: msg.callsign || null,
     adsb_active_flight_icao: msg.icao,
     adsb_active_flight_vfr_waypoints: result.vfrWaypoints || [],
-    adsb_active_flight_fixes_at: Date.now()
+    adsb_active_flight_fixes_at: Date.now(),
+    adsb_flight_loading: false
   });
 
   chrome.runtime.sendMessage({

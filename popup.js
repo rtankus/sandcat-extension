@@ -3063,7 +3063,8 @@ async function refreshActiveFlightPanel() {
     "adsb_active_flight_destination",
     "adsb_active_flight_fixes",
     "adsb_active_flight_freqs",
-    "adsb_active_flight_vfr_waypoints"
+    "adsb_active_flight_vfr_waypoints",
+    "adsb_flight_loading"
   ]);
 
   if (renderId !== ACTIVE_ROUTE_RENDER) return;
@@ -3091,9 +3092,13 @@ async function refreshActiveFlightPanel() {
   );
 
 if (!fixes.length) {
-  routeBox.innerHTML = "<div class='routeFix'>No active flight</div>";
-  renderFlightFreqs(null);
-  renderFlightAirports(null, "");
+  if (data.adsb_flight_loading) {
+    routeBox.innerHTML = "<div class='routeFix flight-loading-row'><span class='flight-loading-spinner'></span>Fetching flight data…</div>";
+  } else {
+    routeBox.innerHTML = "<div class='routeFix'>No active flight</div>";
+    renderFlightFreqs(null);
+    renderFlightAirports(null, "");
+  }
   return;
 }
 
@@ -4392,7 +4397,8 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
     changes.adsb_active_flight_callsign ||
     changes.adsb_active_flight_origin ||
     changes.adsb_active_flight_destination ||
-    changes.adsb_active_flight_vfr_waypoints
+    changes.adsb_active_flight_vfr_waypoints ||
+    changes.adsb_flight_loading
   ) {
     refreshActiveFlightPanel().catch(err => {
       console.error("Active flight panel refresh failed:", err);
