@@ -59,31 +59,16 @@ const KEY_REGEX =
   };
 
   function parseKeyParts(rawKey) {
-    // Dashed month format: ...-Apr-14-2026-1318Z_...
     const m = rawKey.match(
       /-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{1,2})-(\d{4})-(\d{4}Z)/i
     );
-    if (m) {
-      return {
-        month: MONTH_NAMES[m[1].toLowerCase()] || m[1],
-        day: m[2],
-        year: m[3],
-        time: m[4].toUpperCase()
-      };
-    }
-    // IATA compact format: SJC-20260414131831_... (YYYYMMDDHHMMSS)
-    const mc = rawKey.match(/\b[A-Za-z]{2,4}-(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})\d{2}_/i);
-    if (mc) {
-      const MONTH_FULL = ["January","February","March","April","May","June",
-                          "July","August","September","October","November","December"];
-      return {
-        month: MONTH_FULL[Number(mc[2]) - 1] || mc[2],
-        day: String(Number(mc[3])),
-        year: mc[1],
-        time: `${mc[4]}${mc[5]}Z`
-      };
-    }
-    return null;
+    if (!m) return null;
+    return {
+      month: MONTH_NAMES[m[1].toLowerCase()] || m[1],
+      day: m[2],
+      year: m[3],
+      time: m[4].toUpperCase()
+    };
   }
 
   const INJECTED_ID = "sc-lb-key-display";
@@ -113,43 +98,39 @@ const KEY_REGEX =
   function injectDisplay(icao, airportName, parts) {
     const middle = findToolbarMiddle();
     if (!middle) return;
-    const container = middle.parentElement;
-    if (!container) return;
 
-    // Info element — appended into the left button group, right after the timer
-    const detailsBtn = document.querySelector('[data-cy="data-row-details-button"]');
-    const leftGroup = detailsBtn
-      ? [...container.children].find(c => c.contains(detailsBtn))
-      : null;
+    let wrapper = document.getElementById(INJECTED_ID);
+    if (!wrapper) {
+      wrapper = document.createElement("div");
+      wrapper.id = INJECTED_ID;
+      wrapper.style.cssText = [
+        "display:flex", "flex-direction:row", "align-items:center",
+        "gap:10px", "white-space:nowrap", "user-select:none"
+      ].join(";");
 
-    let info = document.getElementById(INJECTED_ID);
-    if (!info) {
-      info = document.createElement("div");
-      info.id = INJECTED_ID;
+      // Info block (clickable to open/restore overlay)
+      const info = document.createElement("div");
+      info.className = "sc-lb-info";
       info.style.cssText = [
-        "display:flex", "flex-direction:column", "align-items:flex-start",
-        "justify-content:center", "line-height:1.4", "cursor:pointer",
-        "white-space:nowrap", "user-select:none", "padding:0 8px"
+        "display:flex", "flex-direction:column", "align-items:center",
+        "justify-content:center", "line-height:1.4", "cursor:pointer"
       ].join(";");
       info.addEventListener("click", () => {
         if (!isSandCatExpanded()) {
           chrome.runtime.sendMessage({ type: "OPEN_SANDCAT_OVERLAY" });
         }
       });
-      (leftGroup || container).appendChild(info);
-    }
 
-    // Button element — inserted as sibling AFTER the middle div
-    let btn = document.getElementById("sc-lb-open-btn");
-    if (!btn) {
-      btn = document.createElement("button");
-      btn.id = "sc-lb-open-btn";
+      // "Open Selected Now" button
+      const btn = document.createElement("button");
+      btn.className = "sc-lb-open-btn";
       btn.textContent = "Open Selected Now";
       btn.style.cssText = [
         "font-size:11px", "font-weight:500", "color:#fff",
         "background:rgba(255,255,255,0.1)", "border:1px solid rgba(255,255,255,0.25)",
         "border-radius:6px", "padding:3px 10px", "cursor:pointer",
-        "white-space:nowrap", "line-height:1.6", "user-select:none"
+        "white-space:nowrap", "line-height:1.6",
+        "transition:background 0.15s"
       ].join(";");
       btn.addEventListener("mouseenter", () => {
         btn.style.background = "rgba(255,255,255,0.2)";
@@ -168,21 +149,26 @@ const KEY_REGEX =
           settings: lbx_settings || {}
         });
       });
-      container.insertBefore(btn, middle.nextSibling);
+
+      wrapper.appendChild(info);
+      wrapper.appendChild(btn);
+      middle.appendChild(wrapper);
     }
 
     const topLine = airportName ? `${icao} · ${airportName}` : (icao || "—");
     const dateLine = parts ? `${parts.month} ${parts.day} ${parts.year} · ${parts.time}` : "";
 
-    info.innerHTML = `
-      <span style="font-size:13px;font-weight:600;color:#fff;">${topLine}</span>
-      <span style="font-size:11px;color:#aaa;">${dateLine}</span>
-    `;
+    const info = wrapper.querySelector(".sc-lb-info");
+    if (info) {
+      info.innerHTML = `
+        <span style="font-size:13px;font-weight:600;color:#fff;">${topLine}</span>
+        <span style="font-size:11px;color:#aaa;">${dateLine}</span>
+      `;
+    }
   }
 
   function clearDisplay() {
     document.getElementById(INJECTED_ID)?.remove();
-    document.getElementById("sc-lb-open-btn")?.remove();
   }
 
   async function updateDisplay(rawKey) {
@@ -192,7 +178,7 @@ const KEY_REGEX =
     const icao = firstToken.replace(/[^A-Za-z]/g, "").toUpperCase().slice(0, 4);
 
     let airportName = null;
-    if (icao.length >= 3) {
+    if (icao.length === 4) {
       try {
         const resp = await new Promise(resolve =>
           chrome.runtime.sendMessage({ type: "GET_AIRPORT_NAME_ICAO", icao }, resolve)
@@ -311,7 +297,6 @@ function writeIfChanged(key, reason) {
       }
     );
   });
-  updateDisplay(k);
 }
 
   // Try to derive a stable “DR identity” from URL.
@@ -589,19 +574,89 @@ console.warn("[LB GK] Timed out waiting for NEW key.");
   injectSegmentWrapCSS();
   installInlineEdit();
 
-  chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === "local" && changes[STORAGE_KEY]) {
-      updateDisplay(changes[STORAGE_KEY].newValue || "");
-    }
-  });
+  function saveToLabelbox(text) {
+    const ta = document.querySelector('textarea[data-allow-alt-arrows="true"]');
+    if (!ta) return;
+    const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set;
+    setter.call(ta, text);
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+    const checkBtn = [...document.querySelectorAll('button')]
+      .find(b => b.textContent.trim() === 'done');
+    if (checkBtn) checkBtn.click();
+  }
 
-  setInterval(() => {
-    if (!document.getElementById(INJECTED_ID)) {
-      chrome.storage.local.get([STORAGE_KEY], res => {
-        if (res[STORAGE_KEY]) updateDisplay(res[STORAGE_KEY]);
-      });
+  function injectInlineEditor(content) {
+    if (document.querySelector('.sc-inline-edit-ta')) return;
+
+    const originalText = content.textContent.trim();
+    const rect = content.getBoundingClientRect();
+
+    // Append to body so the textarea is outside vis-timeline's DOM hierarchy —
+    // vis-timeline has document-level capture listeners that intercept events on
+    // any child of the timeline, so we bypass them by living at the body level.
+    const ta = document.createElement('textarea');
+    ta.className = 'sc-inline-edit-ta';
+    ta.value = originalText;
+    ta.style.cssText = [
+      `position:fixed`, `left:${rect.left}px`, `top:${rect.top}px`,
+      `width:${rect.width}px`, `min-height:${rect.height}px`,
+      `z-index:99999`, `cursor:text`, `overflow:hidden`,
+    ].join(';');
+    document.body.appendChild(ta);
+    ta.style.height = 'auto';
+    ta.style.height = ta.scrollHeight + 'px';
+    ta.addEventListener('input', () => {
+      ta.style.height = 'auto';
+      ta.style.height = ta.scrollHeight + 'px';
+    });
+    ta.focus();
+
+    let committed = false;
+    function commit() {
+      if (committed) return;
+      committed = true;
+      const newText = ta.value.trim();
+      ta.remove();
+      if (newText && newText !== originalText) saveToLabelbox(newText);
     }
-  }, 2000);
+
+    ta.addEventListener('keydown', ev => {
+      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); commit(); }
+      if (ev.key === 'Escape') { committed = true; ta.remove(); }
+    });
+    ta.addEventListener('blur', commit, { once: true });
+  }
+
+  function installInlineEdit() {
+    const itemObs = new MutationObserver(mutations => {
+      for (const m of mutations) {
+        if (m.attributeName !== 'class') continue;
+        const item = m.target;
+        if (!item.classList.contains('vis-item')) continue;
+        const content = item.querySelector('.vis-item-content');
+        if (!content) continue;
+        if (item.classList.contains('vis-selected')) {
+          injectInlineEditor(content);
+        } else {
+          document.querySelector('.sc-inline-edit-ta')?.remove();
+        }
+      }
+    });
+
+    function observeItems() {
+      document.querySelectorAll('.vis-item').forEach(item =>
+        itemObs.observe(item, { attributes: true, attributeFilter: ['class'] })
+      );
+    }
+
+    observeItems();
+
+    const containerObs = new MutationObserver(observeItems);
+    const container = document.querySelector('.vis-foreground') || document.body;
+    containerObs.observe(container, { childList: true, subtree: true });
+  }
+
+  installInlineEdit();
 
   // Extra delayed attempts (Labelbox boot can be slow)
   setTimeout(() => readAndStore("delay_1s"), 1000);
