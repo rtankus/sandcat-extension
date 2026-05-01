@@ -75,6 +75,13 @@
     "all_frames": true
   },
   {
+    "matches": ["https://editor.labelbox.com/*"],
+    "js": ["labelbox_seek_hook.js"],
+    "run_at": "document_start",
+    "world": "MAIN",
+    "all_frames": true
+  },
+  {
     "matches": ["https://skyvector.com/*"],
     "js": ["skyvector_fetch_spy.js"],
     "run_at": "document_start",

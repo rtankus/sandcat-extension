@@ -898,7 +898,7 @@ async function fetchBytes(url) {
   return new Uint8Array(buf);
 }
 function unzipTextFiles(zipBytes) {
-  if (typeof fflate === "undefined") throw new Error("fflate not loaded (fflate.js missing or not importScripts’d).");
+  if (typeof fflate === "undefined") throw new Error("fflate not loaded (fflate.js missing or not importScripts'd).");
   const files = fflate.unzipSync(zipBytes);
   const out = {};
   for (const [name, bytes] of Object.entries(files)) out[name] = new TextDecoder("utf-8").decode(bytes);
@@ -4595,10 +4595,22 @@ function parseReplayFromGlobalKey(rawText) {
   if (!raw) return null;
 const foreign = parseGlobalKeyAirportDateTime(rawText);
 if (foreign) return foreign;
+
+  // ---------- IATA COMPACT FORMAT ----------
+  // SJC-20260414131831_31_VAD_v2.wav  (ICAO/IATA-YYYYMMDDHHMMSS_NN_...)
+  let m = raw.match(/\b[A-Za-z]{2,4}-(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})\d{2}_/i);
+  if (m) {
+    return {
+      replay: `${m[1]}-${m[2]}-${m[3]}-${m[4]}:${m[5]}`,
+      airport: extractICAOFromKey(raw) || null,
+      format: "iata_compact"
+    };
+  }
+
   // ---------- NEW FORMAT ----------
   // 250914_0726_115.wav
   // YYMMDD_HHMM_...
-  let m = raw.match(/\b(\d{2})(\d{2})(\d{2})_(\d{2})(\d{2})_\d+\.wav\b/i);
+  m = raw.match(/\b(\d{2})(\d{2})(\d{2})_(\d{2})(\d{2})_\d+\.wav\b/i);
   if (m) {
     const yy = Number(m[1]);
     const year = String(yy >= 70 ? 1900 + yy : 2000 + yy); // safe pivot
@@ -4883,6 +4895,14 @@ async function applyAdsbexchangeReplaySpeed(tabId, popupSpeedVal) {
           }
 
           fire(bestV);
+
+          // Immediately re-pause: speed-change events can trigger auto-play,
+          // and at 500x even 0.2s = ~1 min of replay advancement.
+          const pauseBtn = document.getElementById("replayPlay");
+          if (pauseBtn && pauseBtn.textContent.trim().toLowerCase() === "pause") {
+            pauseBtn.click();
+          }
+
           return { ok: true };
         }
       }, (r) => resolve(r?.[0]?.result));
@@ -4996,30 +5016,46 @@ async function runSelectedActions(rawText, settings) {
 
     if (typeof tabId === "number") {
 
-      // ✅ New replay => allow autopause again until user presses play
-      // (If you want “once per tab ever”, remove this reset.)
+      // New replay => allow autopause again until user presses play
       ADSB_AUTOPAUSE_DISABLED_BY_TAB.set(tabId, false);
 
+      // Small delay so Chrome starts navigating before we poll for "complete"
+      // (tab may still show "complete" for the old URL right after update)
+      await new Promise(r => setTimeout(r, 300));
       await waitForTabComplete(tabId);
+
+      // Install permanent pause + user-play detector immediately after page load,
+      // before ADSB has a chance to auto-play and advance the replay clock.
+      await chrome.scripting.executeScript({
+        target: { tabId },
+        world: "MAIN",
+        func: () => {
+          // Idempotent per page-load; window properties reset on navigation.
+          if (window.__ADSB_PERMANENT_PAUSE_INSTALLED__) return;
+          window.__ADSB_PERMANENT_PAUSE_INSTALLED__ = true;
+          window.__ADSB_DISABLE_AUTOPAUSE__ = false;
+
+          const iv = setInterval(() => {
+            if (window.__ADSB_DISABLE_AUTOPAUSE__ === true) {
+              clearInterval(iv);
+              window.__ADSB_PERMANENT_PAUSE_INSTALLED__ = false;
+              return;
+            }
+            const btn = document.getElementById("replayPlay");
+            if (!btn) return;
+            if (btn.textContent.trim().toLowerCase() === "pause") btn.click();
+          }, 150);
+        }
+      });
+
+      await installAdsbUserPlayDetector(tabId);
 
       const ready = await waitForAdsbReplayUI(tabId);
       const replay = replayKeyFromUrl(url);
       await forceAdsbDateFinal(tabId, replay);
+
       if (ready) {
-
-        // Install the user detector ASAP
-        await installAdsbUserPlayDetector(tabId);
-
-        // Make sure page flag is sane on load
-        await chrome.scripting.executeScript({
-          target: { tabId },
-          world: "MAIN",
-          func: () => { window.__ADSB_DISABLE_AUTOPAUSE__ = false; }
-        });
-
-        await adsbForcePausedFor(tabId, 6000);
         await applyAdsbexchangeReplaySpeed(tabId, settings.adsbSpeed);
-        await adsbForcePausedFor(tabId, 4000);
       }
     }
   }

@@ -2274,7 +2274,7 @@ if (eiComms.length) {
 
     }
 
-if (!usedAirNav && !ourAirports.length && !ausComms.length && !eiComms.length) {
+if (!usedAirNav && !ourAirports.length && !ausComms.length && !chComms.length && !eiComms.length) {
   facilityContent.innerHTML = "No facility data found.";
 }
 

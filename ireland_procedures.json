@@ -8377,6 +8377,15 @@
               "BAPDA",
               "DAP",
               "SORIN"
+            ],
+            "INTOP": [
+              "INTOP",
+              "ABDOX",
+              "DW033",
+              "RW34",
+              "BAPDA",
+              "DAP",
+              "SORIN"
             ]
           },
           "notes": [
@@ -8477,7 +8486,7 @@
           "name": "Visual Approach Chart - ICAO",
           "type": "VAC",
           "waypoints": [
-            "LUSK",
+            
             "RUSH",
             "SKERRIES",
             "ASHBOURNE",
@@ -8579,6 +8588,11 @@
               "constraint": "at_or_above"
             },
             {
+              "fix": "DL102",
+              "altitude": 3700,
+              "constraint": "at_or_above"
+            },
+            {
               "fix": "OXHEN",
               "altitude": 3000,
               "constraint": "at_or_above"
@@ -8605,6 +8619,7 @@
         {
           "name": "NDB RWY02",
           "runway": "RWY02",
+          "category":"A/B/C",
           "waypoints": [
             {
               "fix": "NABBA"
@@ -8620,6 +8635,7 @@
         {
           "name": "RNP RWY20",
           "runway": "RWY20",
+          "category": "A/B/C",
           "waypoints": [
             {
               "fix": "DL106",
@@ -10564,12 +10580,6 @@
               "constraint": "at_or_above"
             },
             {
-              "fix": "TERDU",
-              "altitude": "FL060",
-              "constraint": "at_or_above",
-              "phase": "IAF"
-            },
-            {
               "fix": "ELPOM",
               "altitude": 3000,
               "constraint": "at_or_above",
@@ -10978,10 +10988,6 @@
             "KILLADYSERT CHURCH",
             "DROMOLAND CASTLE"
           ],
-          "visual_holds": [
-            "CONEY ISLAND",
-            "BUNRATTY CASTLE"
-          ],
           "coordinates": {
             "CONEY ISLAND": {
               "lat": "52\u00b042'43.34\"N",
@@ -10992,37 +10998,6 @@
               "lon": "008\u00b048'44.28\"W"
             }
           }
-        }
-      ],
-      "elevation_ft": 46,
-      "runways": [
-        {
-          "runway": "06",
-          "bearing": "057",
-          "threshold_elevation_ft": 46
-        },
-        {
-          "runway": "24",
-          "bearing": "237",
-          "threshold_elevation_ft": 15
-        }
-      ],
-      "mva_sectors": [
-        {
-          "sector": 1,
-          "altitude": 2300
-        },
-        {
-          "sector": 2,
-          "altitude": 3000
-        },
-        {
-          "sector": 3,
-          "altitude": 4000
-        },
-        {
-          "sector": 4,
-          "altitude": 4400
         }
       ],
       "excluded_charts": [
