@@ -47,7 +47,19 @@ chrome.storage.onChanged.addListener((changes) => {
 
 });
 
-importScripts("fflate.js", "csv.js", "db.js", "geo.js");let ADSB_TAB_ID = null;
+importScripts("fflate.js", "csv.js", "db.js", "geo.js", "airports.js");
+
+let _AIRPORTS_QUICK_MAP = null;
+function getAirportsQuickMap() {
+  if (_AIRPORTS_QUICK_MAP) return _AIRPORTS_QUICK_MAP;
+  _AIRPORTS_QUICK_MAP = new Map();
+  if (typeof AIRPORTS !== "undefined") {
+    for (const a of AIRPORTS) _AIRPORTS_QUICK_MAP.set(a.id, a);
+  }
+  return _AIRPORTS_QUICK_MAP;
+}
+
+let ADSB_TAB_ID = null;
 const ADSB_TAB_KEY = "adsb_tab_id";
 const OPENNAV_TAB_KEY = "opennav_tab_id";
 const AIRNAV_TAB_KEY = "airnav_tab_id";
@@ -99,6 +111,21 @@ let AUS_PROC_BY_ICAO = {};
 let SWISS_AD2_DB = {};
 
 let IRELAND_PROC_DB = {};
+
+let OURAIRPORTS_NAMES = {};
+
+async function loadOurAirportsNames() {
+  try {
+    const url = chrome.runtime.getURL("airport_names.json");
+    const res = await fetch(url);
+    OURAIRPORTS_NAMES = await res.json();
+    console.log(`OurAirports names loaded: ${Object.keys(OURAIRPORTS_NAMES).length}`);
+  } catch (err) {
+    console.error("Failed to load airport_names.json:", err);
+  }
+}
+
+loadOurAirportsNames();
 
 let AUS_VFR_VISUAL_WAYPOINTS = [];
 
@@ -3159,6 +3186,25 @@ async function buildFlightFreqs(origin, destination, enrouteAirports) {
 }
 
 
+/* -------------------- Fix coordinate resolver -------------------- */
+
+function resolveFixCoordinates(fixIdents) {
+  const fixMap = new Map();
+  for (const f of MASTER_FIX_INDEX) {
+    if (!fixMap.has(f[0])) fixMap.set(f[0], f);
+  }
+  const out = [];
+  for (const ident of fixIdents) {
+    const nav = NAVAID_INDEX?.[ident];
+    if (nav?.lat != null) { out.push({ ident, lat: nav.lat, lon: nav.lon }); continue; }
+    const apt = AIRPORT_MAP.get(ident);
+    if (apt?.lat != null) { out.push({ ident, lat: apt.lat, lon: apt.lon }); continue; }
+    const fix = fixMap.get(ident);
+    if (fix) { out.push({ ident, lat: fix[1], lon: fix[2] }); }
+  }
+  return out;
+}
+
 /* -------------------- Message handling -------------------- */
 
 
@@ -3178,6 +3224,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 
   await chrome.storage.local.remove([
     "adsb_active_flight_fixes",
+    "adsb_active_flight_waypoints",
     "adsb_active_flight_route",
     "adsb_active_flight_origin",
     "adsb_active_flight_destination",
@@ -3200,6 +3247,7 @@ if (msg.type === "DETECT_FIX_SEQUENCE") {
 
   await chrome.storage.local.set({
     adsb_active_flight_fixes: result.fixes,
+    adsb_active_flight_waypoints: resolveFixCoordinates(result.fixes),
     adsb_active_flight_route: result.routeString,
     adsb_active_flight_vfr_waypoints: result.vfrWaypoints || [],
     adsb_active_flight_fixes_at: Date.now()
@@ -3249,9 +3297,14 @@ if(msg.type === "ADSB_AIRCRAFT_SELECTED"){
   const icao = msg.icao;
   if(!icao) return;
 
+  console.log("[SC BG] ADSB_AIRCRAFT_SELECTED:", icao, "| lastProcessedIcao:", lastProcessedIcao);
+
   // Deduplicate: ignore rapid re-fires of the same aircraft from the hook.
   // Reset to null on failure so the user can retry by clicking again.
-  if (lastProcessedIcao === icao.toLowerCase()) return;
+  if (lastProcessedIcao === icao.toLowerCase()) {
+    console.log("[SC BG] Deduplicated — same ICAO already processed:", icao);
+    return;
+  }
   lastProcessedIcao = icao.toLowerCase();
 
   const tabId = _sender?.tab?.id;
@@ -3263,6 +3316,7 @@ if(msg.type === "ADSB_AIRCRAFT_SELECTED"){
   // CLEAR OLD FLIGHT IMMEDIATELY and signal loading state
   await chrome.storage.local.set({
     adsb_active_flight_fixes: [],
+    adsb_active_flight_waypoints: [],
     adsb_active_flight_route: null,
     adsb_active_flight_origin: null,
     adsb_active_flight_destination: null,
@@ -3305,6 +3359,7 @@ chrome.runtime.sendMessage({
 
   await chrome.storage.local.set({
     adsb_active_flight_fixes: result.fixes,
+    adsb_active_flight_waypoints: resolveFixCoordinates(result.fixes),
     adsb_active_flight_route: result.routeString,
     adsb_active_flight_origin: result.origin,
     adsb_active_flight_destination: result.destination,
@@ -3349,6 +3404,7 @@ if (msg?.type === "RECONSTRUCT_ADSB_ROUTE") {
 const trackReduced2 = reduceTrack(routeData.points, 0.3).slice(0, 800).map(p => ({ lat: p.lat, lon: p.lon }));
 await chrome.storage.local.set({
   adsb_active_flight_fixes: result.fixes,
+  adsb_active_flight_waypoints: resolveFixCoordinates(result.fixes),
   adsb_active_flight_route: result.routeString,
   adsb_active_flight_callsign: msg.callsign || null,
   adsb_active_flight_origin: result.origin,
@@ -3952,6 +4008,31 @@ if (msg?.type === "GET_PROC_FIXES_BY_NAME") {
 
   sendResponse({ ok: true, fixes: found });
   return true;
+}
+
+if (msg?.type === "GET_AIRPORT_NAME_ICAO") {
+  const icao = String(msg.icao || "").toUpperCase().trim();
+  if (!icao) { sendResponse({ ok: false }); return; }
+  const name = OURAIRPORTS_NAMES[icao]
+    || AIRPORT_MAP.get(icao)?.n
+    || getAirportsQuickMap().get(icao)?.n
+    || null;
+  sendResponse({ ok: true, name });
+  return;
+}
+
+if (msg?.type === "OPEN_SANDCAT_OVERLAY") {
+  const tabId = _sender?.tab?.id;
+  if (!tabId) { sendResponse({ ok: false }); return; }
+  chrome.tabs.sendMessage(tabId, { type: "FORCE_OPEN_OVERLAY" }, () => {
+    void chrome.runtime.lastError;
+  });
+  chrome.scripting.executeScript({
+    target: { tabId },
+    files: ["inject_overlay.js"]
+  }).catch(() => {});
+  sendResponse({ ok: true });
+  return;
 }
 
 if (msg?.type === "LB_AIRPORT_FOUND") {

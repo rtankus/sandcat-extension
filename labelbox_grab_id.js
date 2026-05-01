@@ -48,6 +48,144 @@ const KEY_REGEX =
     "i"
   );
 
+  const MONTH_NAMES = {
+    jan:"January", feb:"February", mar:"March", apr:"April",
+    may:"May", jun:"June", jul:"July", aug:"August",
+    sep:"September", oct:"October", nov:"November", dec:"December"
+  };
+
+  function parseKeyParts(rawKey) {
+    const m = rawKey.match(
+      /-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{1,2})-(\d{4})-(\d{4}Z)/i
+    );
+    if (!m) return null;
+    return {
+      month: MONTH_NAMES[m[1].toLowerCase()] || m[1],
+      day: m[2],
+      year: m[3],
+      time: m[4].toUpperCase()
+    };
+  }
+
+  const INJECTED_ID = "sc-lb-key-display";
+
+  function findToolbarMiddle() {
+    const editBtn = document.querySelector('[data-cy="edit-label-btn"]');
+    const detailsBtn = document.querySelector('[data-cy="data-row-details-button"]');
+    if (!editBtn || !detailsBtn) return null;
+    let el = editBtn.parentElement;
+    while (el && el !== document.body) {
+      if (el.contains(detailsBtn)) {
+        for (const child of el.children) {
+          if (!child.contains(editBtn) && !child.contains(detailsBtn)) return child;
+        }
+        return null;
+      }
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  function isSandCatExpanded() {
+    const root = document.getElementById("overlayRoot");
+    return root && root.style.display !== "none" && root.dataset.collapsed !== "true";
+  }
+
+  function injectDisplay(icao, airportName, parts) {
+    const middle = findToolbarMiddle();
+    if (!middle) return;
+
+    let wrapper = document.getElementById(INJECTED_ID);
+    if (!wrapper) {
+      wrapper = document.createElement("div");
+      wrapper.id = INJECTED_ID;
+      wrapper.style.cssText = [
+        "display:flex", "flex-direction:row", "align-items:center",
+        "gap:10px", "white-space:nowrap", "user-select:none"
+      ].join(";");
+
+      // Info block (clickable to open/restore overlay)
+      const info = document.createElement("div");
+      info.className = "sc-lb-info";
+      info.style.cssText = [
+        "display:flex", "flex-direction:column", "align-items:center",
+        "justify-content:center", "line-height:1.4", "cursor:pointer"
+      ].join(";");
+      info.addEventListener("click", () => {
+        if (!isSandCatExpanded()) {
+          chrome.runtime.sendMessage({ type: "OPEN_SANDCAT_OVERLAY" });
+        }
+      });
+
+      // "Open Selected Now" button
+      const btn = document.createElement("button");
+      btn.className = "sc-lb-open-btn";
+      btn.textContent = "Open Selected Now";
+      btn.style.cssText = [
+        "font-size:11px", "font-weight:500", "color:#fff",
+        "background:rgba(255,255,255,0.1)", "border:1px solid rgba(255,255,255,0.25)",
+        "border-radius:6px", "padding:3px 10px", "cursor:pointer",
+        "white-space:nowrap", "line-height:1.6",
+        "transition:background 0.15s"
+      ].join(";");
+      btn.addEventListener("mouseenter", () => {
+        btn.style.background = "rgba(255,255,255,0.2)";
+      });
+      btn.addEventListener("mouseleave", () => {
+        btn.style.background = "rgba(255,255,255,0.1)";
+      });
+      btn.addEventListener("click", async () => {
+        const { lb_pageKey, lbx_settings } = await new Promise(resolve =>
+          chrome.storage.local.get(["lb_pageKey", "lbx_settings"], resolve)
+        );
+        if (!lb_pageKey) return;
+        chrome.runtime.sendMessage({
+          type: "RUN_AUTOLAUNCH",
+          rawText: lb_pageKey,
+          settings: lbx_settings || {}
+        });
+      });
+
+      wrapper.appendChild(info);
+      wrapper.appendChild(btn);
+      middle.appendChild(wrapper);
+    }
+
+    const topLine = airportName ? `${icao} · ${airportName}` : (icao || "—");
+    const dateLine = parts ? `${parts.month} ${parts.day} ${parts.year} · ${parts.time}` : "";
+
+    const info = wrapper.querySelector(".sc-lb-info");
+    if (info) {
+      info.innerHTML = `
+        <span style="font-size:13px;font-weight:600;color:#fff;">${topLine}</span>
+        <span style="font-size:11px;color:#aaa;">${dateLine}</span>
+      `;
+    }
+  }
+
+  function clearDisplay() {
+    document.getElementById(INJECTED_ID)?.remove();
+  }
+
+  async function updateDisplay(rawKey) {
+    if (!rawKey) { clearDisplay(); return; }
+    const parts = parseKeyParts(rawKey);
+    const firstToken = rawKey.split("-")[0] || "";
+    const icao = firstToken.replace(/[^A-Za-z]/g, "").toUpperCase().slice(0, 4);
+
+    let airportName = null;
+    if (icao.length === 4) {
+      try {
+        const resp = await new Promise(resolve =>
+          chrome.runtime.sendMessage({ type: "GET_AIRPORT_NAME_ICAO", icao }, resolve)
+        );
+        if (resp?.ok && resp.name) airportName = resp.name;
+      } catch { /* background sleeping */ }
+    }
+
+    injectDisplay(icao || null, airportName, parts);
+  }
+
   const DEBUG = false; // set true for console logs
 
   const norm = (s) => (s || "").toString().replace(/\s+/g, " ").trim();
@@ -155,6 +293,7 @@ function writeIfChanged(key, reason) {
       }
     );
   });
+  updateDisplay(k);
 }
 
   // Try to derive a stable “DR identity” from URL.
@@ -326,6 +465,20 @@ console.warn("[LB GK] Timed out waiting for NEW key.");
   });
 
   installHistoryHooks();
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "local" && changes[STORAGE_KEY]) {
+      updateDisplay(changes[STORAGE_KEY].newValue || "");
+    }
+  });
+
+  setInterval(() => {
+    if (!document.getElementById(INJECTED_ID)) {
+      chrome.storage.local.get([STORAGE_KEY], res => {
+        if (res[STORAGE_KEY]) updateDisplay(res[STORAGE_KEY]);
+      });
+    }
+  }, 2000);
 
   // Extra delayed attempts (Labelbox boot can be slow)
   setTimeout(() => readAndStore("delay_1s"), 1000);

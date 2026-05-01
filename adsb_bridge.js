@@ -26,11 +26,15 @@
 
     if (!msg) return;
     if (msg.source !== "adsb_hook") return;
-    if (!msg.icao) return;
+    if (!msg.icao || msg.icao === "undefined") return;
 
-    console.log("Forwarding aircraft to background:", msg.icao);
+    console.log("[SC Bridge] Received from hook, forwarding to BG:", msg.icao);
 
-    chrome.runtime.sendMessage(msg);
+    chrome.runtime.sendMessage(msg).then(() => {
+      console.log("[SC Bridge] BG received message for:", msg.icao);
+    }).catch(err => {
+      console.warn("[SC Bridge] sendMessage FAILED (SW dead?):", err?.message);
+    });
 
   });
 

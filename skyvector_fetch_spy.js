@@ -5,6 +5,7 @@
 
   var _bbox = null;
   var _trackPts = [];
+  var _waypointPts = [];
   var _rafId = null;
 
   function mercY(lat) {
@@ -45,7 +46,15 @@
       };
     });
 
-    window.postMessage({ __sandcatPixels: pts }, '*');
+    var wpts = _waypointPts.map(function (p) {
+      return {
+        x: (p.lon - _bbox.lon1) / (_bbox.lon2 - _bbox.lon1) * W,
+        y: (mercY(p.lat) - my2) / mySpan * H,
+        ident: p.ident
+      };
+    });
+
+    window.postMessage({ __sandcatPixels: pts, __sandcatWaypointPixels: wpts }, '*');
   }
 
   function schedProject() {
@@ -74,6 +83,10 @@
     if (e.source !== window) return;
     if (e.data && e.data.__sandcatTrack !== undefined) {
       _trackPts = e.data.__sandcatTrack || [];
+      schedProject();
+    }
+    if (e.data && e.data.__sandcatWaypoints !== undefined) {
+      _waypointPts = e.data.__sandcatWaypoints || [];
       schedProject();
     }
     // Re-project on demand (e.g. after toggle)

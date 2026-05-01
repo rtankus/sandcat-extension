@@ -6,18 +6,22 @@
 
   let canvas, ctx;
   let trackPoints = [];
+  let waypointPoints = [];
   let callsign = '';
   let visible = true;
 
   // ── Receive projected pixels from MAIN-world spy ──────────────────────────
   window.addEventListener('message', (e) => {
     if (e.source !== window) return;
-    if (e.data?.__sandcatPixels) draw(e.data.__sandcatPixels);
+    if (e.data?.__sandcatPixels) draw(e.data.__sandcatPixels, e.data.__sandcatWaypointPixels || []);
   });
 
   // ── Send track to MAIN-world spy (triggers reprojection) ──────────────────
   function sendTrack() {
-    window.postMessage({ __sandcatTrack: visible ? trackPoints : [] }, '*');
+    window.postMessage({
+      __sandcatTrack: visible ? trackPoints : [],
+      __sandcatWaypoints: visible ? waypointPoints : []
+    }, '*');
   }
 
   // ── Canvas setup ──────────────────────────────────────────────────────────
@@ -111,11 +115,15 @@
   }
 
   // ── Drawing ───────────────────────────────────────────────────────────────
-  function draw(pixels) {
+  function draw(pixels, waypointPixels) {
     if (!canvas || !ctx) return;
     syncCanvasSize();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (!visible || !pixels || pixels.length < 2) return;
+    if (!visible) return;
+    if (!pixels || pixels.length < 2) {
+      if (waypointPixels?.length) drawWaypointDots(waypointPixels);
+      return;
+    }
 
     const pts = pixels;
 
@@ -162,6 +170,38 @@
       ctx.fillStyle = 'rgba(34,197,94,0.95)';
       ctx.fillText(callsign, mid.x + 10, mid.y - 7);
     }
+
+    if (waypointPixels?.length) drawWaypointDots(waypointPixels);
+  }
+
+  function drawWaypointDots(wpts) {
+    for (const p of wpts) {
+      // Diamond
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.beginPath();
+      ctx.moveTo(0, -5); ctx.lineTo(5, 0); ctx.lineTo(0, 5); ctx.lineTo(-5, 0);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(251,191,36,0.9)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([]);
+      ctx.stroke();
+      ctx.restore();
+
+      // Label
+      if (p.ident) {
+        ctx.font = 'bold 9px monospace';
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+        ctx.strokeText(p.ident, p.x + 7, p.y - 3);
+        ctx.fillStyle = 'rgba(251,191,36,1)';
+        ctx.fillText(p.ident, p.x + 7, p.y - 3);
+      }
+    }
   }
 
   function drawArrow(x, y, angle) {
@@ -187,10 +227,11 @@
   // ── Storage ───────────────────────────────────────────────────────────────
   function loadFromStorage() {
     chrome.storage.local.get(
-      ['adsb_active_flight_track', 'adsb_active_flight_callsign'],
+      ['adsb_active_flight_track', 'adsb_active_flight_callsign', 'adsb_active_flight_waypoints'],
       (data) => {
-        trackPoints = data.adsb_active_flight_track || [];
-        callsign    = data.adsb_active_flight_callsign || '';
+        trackPoints    = data.adsb_active_flight_track || [];
+        callsign       = data.adsb_active_flight_callsign || '';
+        waypointPoints = data.adsb_active_flight_waypoints || [];
         updateHudLabel();
         sendTrack();
       }
@@ -198,11 +239,13 @@
   }
 
   chrome.storage.onChanged.addListener((changes) => {
-    if ('adsb_active_flight_track' in changes || 'adsb_active_flight_callsign' in changes) {
+    if ('adsb_active_flight_track' in changes || 'adsb_active_flight_callsign' in changes || 'adsb_active_flight_waypoints' in changes) {
       if ('adsb_active_flight_track' in changes)
         trackPoints = changes.adsb_active_flight_track.newValue || [];
       if ('adsb_active_flight_callsign' in changes)
         callsign = changes.adsb_active_flight_callsign.newValue || '';
+      if ('adsb_active_flight_waypoints' in changes)
+        waypointPoints = changes.adsb_active_flight_waypoints.newValue || [];
       updateHudLabel();
       sendTrack();
     }

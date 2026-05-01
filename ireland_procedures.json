@@ -7798,258 +7798,6 @@
           ]
         },
         {
-          "name": "VOR RWY16",
-          "runway": "RWY16",
-          "waypoints": [
-            {
-              "fix": "KERAV",
-              "altitude": 5000,
-              "constraint": "at_or_above",
-              "phase": "IAF"
-            },
-            {
-              "fix": "ERUDA",
-              "phase": "transition"
-            },
-            {
-              "fix": "ULTAG",
-              "altitude": 5000,
-              "constraint": "at_or_above",
-              "phase": "IAF"
-            },
-            {
-              "fix": "UMDAR",
-              "phase": "transition"
-            },
-            {
-              "fix": "BAPDA",
-              "altitude": 3000,
-              "constraint": "at_or_above",
-              "speed_limit": 180,
-              "phase": "IF"
-            },
-            {
-              "fix": "GARTI",
-              "phase": "FAF"
-            },
-            {
-              "fix": "DUB",
-              "phase": "SDF/NAVAID"
-            },
-            {
-              "fix": "DW008",
-              "phase": "MAPt"
-            },
-            {
-              "fix": "DW007",
-              "altitude": 3000,
-              "constraint": "at_or_below",
-              "phase": "MA"
-            }
-          ],
-          "type": "IAP",
-          "category": "A/B/C/D",
-          "transitions": {
-            "KERAV1T": [
-              "KERAV",
-              "ERUDA",
-              "BAPDA",
-              "GARTI",
-              "DUB",
-              "DW008",
-              "DW007",
-              "KERAV"
-            ],
-            "ULTAG1T": [
-              "ULTAG",
-              "UMDAR",
-              "BAPDA",
-              "GARTI",
-              "DUB",
-              "DW008",
-              "DW007",
-              "KERAV"
-            ]
-          },
-          "notes": [
-            "Completeness pass: EIDW 24-40 VOR RWY16 named fixes/navaids only; DME detail intentionally omitted."
-          ]
-        },
-        {
-          "name": "RNP RWY34",
-          "runway": "RWY34",
-          "waypoints": [
-            {
-              "fix": "KERAV",
-              "altitude": 6000,
-              "constraint": "at_or_above",
-              "phase": "IAF"
-            },
-            {
-              "fix": "SORIN",
-              "altitude": 5000,
-              "constraint": "exact",
-              "phase": "IAF/hold"
-            },
-            {
-              "fix": "AMDIL",
-              "phase": "transition"
-            },
-            {
-              "fix": "INTOP",
-              "altitude": 3000,
-              "constraint": "at_or_above",
-              "speed_limit": 180,
-              "phase": "IF"
-            },
-            {
-              "fix": "ABDOX",
-              "altitude": 3000,
-              "constraint": "exact",
-              "phase": "FAF"
-            },
-            {
-              "fix": "DW033",
-              "altitude": 950,
-              "constraint": "at_or_above",
-              "phase": "SDF"
-            },
-            {
-              "fix": "RW34",
-              "phase": "MAPt"
-            },
-            {
-              "fix": "BAPDA",
-              "altitude": 3000,
-              "constraint": "at_or_below",
-              "phase": "MA"
-            },
-            {
-              "fix": "DAP",
-              "altitude": 5000,
-              "constraint": "at_or_above",
-              "phase": "MA/NAVAID"
-            }
-          ],
-          "type": "IAP",
-          "category": "A/B/C/D",
-          "transitions": {
-            "KERAV": [
-              "KERAV",
-              "AMDIL",
-              "INTOP",
-              "ABDOX",
-              "DW033",
-              "RW34",
-              "BAPDA",
-              "DAP",
-              "SORIN"
-            ],
-            "SORIN": [
-              "SORIN",
-              "AMDIL",
-              "INTOP",
-              "ABDOX",
-              "DW033",
-              "RW34",
-              "BAPDA",
-              "DAP",
-              "SORIN"
-            ]
-          },
-          "notes": [
-            "Completeness pass: EIDW 24-41 RNP RWY34 includes KERAV and SORIN branches."
-          ]
-        },
-        {
-          "name": "VOR RWY34",
-          "runway": "RWY34",
-          "waypoints": [
-            {
-              "fix": "KERAV",
-              "altitude": 5000,
-              "constraint": "at_or_above",
-              "phase": "IAF"
-            },
-            {
-              "fix": "SORIN",
-              "altitude": 5000,
-              "constraint": "exact",
-              "phase": "IAF/hold"
-            },
-            {
-              "fix": "AMDIL",
-              "phase": "transition"
-            },
-            {
-              "fix": "INTOP",
-              "altitude": 3000,
-              "constraint": "at_or_above",
-              "speed_limit": 180,
-              "phase": "IF"
-            },
-            {
-              "fix": "ABDOX",
-              "phase": "FAF"
-            },
-            {
-              "fix": "DW025",
-              "phase": "SDF"
-            },
-            {
-              "fix": "DW027",
-              "phase": "MAPt"
-            },
-            {
-              "fix": "DUB",
-              "phase": "MA/NAVAID"
-            },
-            {
-              "fix": "BAPDA",
-              "altitude": 3000,
-              "constraint": "at_or_below",
-              "phase": "MA"
-            },
-            {
-              "fix": "DAP",
-              "altitude": 5000,
-              "constraint": "at_or_above",
-              "phase": "MA/NAVAID"
-            }
-          ],
-          "type": "IAP",
-          "category": "A/B/C/D",
-          "transitions": {
-            "KERAV": [
-              "KERAV",
-              "AMDIL",
-              "INTOP",
-              "ABDOX",
-              "DW025",
-              "DW027",
-              "DUB",
-              "BAPDA",
-              "DAP",
-              "SORIN"
-            ],
-            "SORIN": [
-              "SORIN",
-              "AMDIL",
-              "INTOP",
-              "ABDOX",
-              "DW025",
-              "DW027",
-              "DUB",
-              "BAPDA",
-              "DAP",
-              "SORIN"
-            ]
-          },
-          "notes": [
-            "Completeness pass: EIDW 24-42 VOR RWY34 named fixes/navaids only; DME/radials intentionally omitted."
-          ]
-        },
-        {
           "name": "VOR T RWY28L",
           "runway": "RWY28L",
           "type": "IAP",
@@ -8412,14 +8160,20 @@
             },
             {
               "fix": "GARTI",
+              "altitude": 3000,
+              "constraint": "at_or_above",
               "phase": "FAF"
             },
             {
               "fix": "DW003",
+              "altitude": 1570,
+              "constraint": "at_or_above",
               "phase": "SDF"
             },
             {
               "fix": "DW008",
+              "altitude": 590,
+              "constraint": "at_or_above",
               "phase": "MAPt"
             },
             {
@@ -8452,7 +8206,269 @@
             ]
           },
           "notes": [
-            "Completeness pass: EIDW 24-39 ILS CAT I / LOC RWY16."
+            "Corrected from EIDW AD 2.24-39.1/39.2.",
+            "Separate ILS CAT I / LOC RWY16 approach; not nested under VOR RWY16.",
+            "DME/radial-only details omitted; named fixes/navaids retained."
+          ]
+        },
+        {
+          "name": "VOR RWY16",
+          "type": "IAP",
+          "runway": "RWY16",
+          "category": "A/B/C/D",
+          "waypoints": [
+            {
+              "fix": "KERAV",
+              "altitude": "FL060",
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "ERUDA",
+              "phase": "transition"
+            },
+            {
+              "fix": "ULTAG",
+              "altitude": "FL060",
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "UMDAR",
+              "phase": "transition"
+            },
+            {
+              "fix": "BAPDA",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "speed_limit": 180,
+              "phase": "IF"
+            },
+            {
+              "fix": "GARTI",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "phase": "FAF"
+            },
+            {
+              "fix": "DUB",
+              "altitude": 1570,
+              "constraint": "at_or_above",
+              "phase": "SDF/NAVAID"
+            },
+            {
+              "fix": "DW008",
+              "altitude": 610,
+              "constraint": "at_or_above",
+              "phase": "MAPt"
+            },
+            {
+              "fix": "DW007",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "phase": "MA"
+            }
+          ],
+          "transitions": {
+            "KERAV1T": [
+              "KERAV",
+              "ERUDA",
+              "BAPDA",
+              "GARTI",
+              "DUB",
+              "DW008",
+              "DW007",
+              "KERAV"
+            ],
+            "ULTAG1T": [
+              "ULTAG",
+              "UMDAR",
+              "BAPDA",
+              "GARTI",
+              "DUB",
+              "DW008",
+              "DW007",
+              "KERAV"
+            ]
+          },
+          "notes": [
+            "Corrected from EIDW AD 2.24-40.1/40.2.",
+            "Separate VOR RWY16 approach; not combined with ILS/LOC RWY16.",
+            "DME/radial-only details omitted; named fixes/navaids retained."
+          ]
+        },
+        {
+          "name": "RNP RWY34",
+          "type": "IAP",
+          "runway": "RWY34",
+          "category": "A/B/C/D",
+          "waypoints": [
+            {
+              "fix": "KERAV",
+              "altitude": 6000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "SORIN",
+              "altitude": 5000,
+              "constraint": "exact",
+              "phase": "IAF/hold"
+            },
+            {
+              "fix": "AMDIL",
+              "phase": "transition"
+            },
+            {
+              "fix": "INTOP",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "speed_limit": 180,
+              "phase": "IF"
+            },
+            {
+              "fix": "ABDOX",
+              "altitude": 3000,
+              "constraint": "exact",
+              "phase": "FAF"
+            },
+            {
+              "fix": "DW033",
+              "altitude": 950,
+              "constraint": "at_or_above",
+              "phase": "SDF"
+            },
+            {
+              "fix": "RW34",
+              "phase": "MAPt"
+            },
+            {
+              "fix": "BAPDA",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "phase": "MA"
+            },
+            {
+              "fix": "DAP",
+              "altitude": 5000,
+              "constraint": "at_or_above",
+              "phase": "MA/NAVAID"
+            }
+          ],
+          "transitions": {
+            "KERAV": [
+              "KERAV",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW033",
+              "RW34",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ],
+            "SORIN": [
+              "SORIN",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW033",
+              "RW34",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ]
+          },
+          "notes": [
+            "Separate RNP RWY34 approach from EIDW AD 2.24-41."
+          ]
+        },
+        {
+          "name": "VOR RWY34",
+          "type": "IAP",
+          "runway": "RWY34",
+          "category": "A/B/C/D",
+          "waypoints": [
+            {
+              "fix": "KERAV",
+              "altitude": 5000,
+              "constraint": "at_or_above",
+              "phase": "IAF"
+            },
+            {
+              "fix": "SORIN",
+              "altitude": 5000,
+              "constraint": "exact",
+              "phase": "IAF/hold"
+            },
+            {
+              "fix": "AMDIL",
+              "phase": "transition"
+            },
+            {
+              "fix": "INTOP",
+              "altitude": 3000,
+              "constraint": "at_or_above",
+              "speed_limit": 180,
+              "phase": "IF"
+            },
+            {
+              "fix": "ABDOX",
+              "phase": "FAF"
+            },
+            {
+              "fix": "DW025",
+              "phase": "SDF"
+            },
+            {
+              "fix": "DW027",
+              "phase": "MAPt"
+            },
+            {
+              "fix": "DUB",
+              "phase": "MA/NAVAID"
+            },
+            {
+              "fix": "BAPDA",
+              "altitude": 3000,
+              "constraint": "at_or_below",
+              "phase": "MA"
+            },
+            {
+              "fix": "DAP",
+              "altitude": 5000,
+              "constraint": "at_or_above",
+              "phase": "MA/NAVAID"
+            }
+          ],
+          "transitions": {
+            "KERAV": [
+              "KERAV",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW025",
+              "DW027",
+              "DUB",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ],
+            "SORIN": [
+              "SORIN",
+              "AMDIL",
+              "INTOP",
+              "ABDOX",
+              "DW025",
+              "DW027",
+              "DUB",
+              "BAPDA",
+              "DAP",
+              "SORIN"
+            ]
+          },
+          "notes": [
+            "Separate VOR RWY34 approach from EIDW AD 2.24-42."
           ]
         }
       ],
@@ -8510,7 +8526,8 @@
       "audit_notes": [
         "Patched EIDW branching IAP omissions after audit: 24-26 RNP RWY28L now includes DUB/DW017, PIZSA, OBINU branches; 24-27 ILS/LOC RWY28L and 24-30.1 ILS/LOC RWY28R similarly corrected; RNP RWY10R branch name corrected to RAQAR.",
         "Patched EIDW AD 2.24-39: added ILS/LOC RWY16 with KERAV1T and ULTAG1T branches, BAPDA/GARTI/DW003/DW008/DW007.",
-        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix."
+        "Fix completeness pass: ensured named fixes/navaids/VRPs from uploaded charts are represented; DME/radial-only details intentionally omitted unless part of a named fix.",
+        "Corrected separate approach objects: EIDW 24-39 ILS/LOC RWY16 is separate from 24-40 VOR RWY16; RNP/VOR RWY34 also kept separate."
       ],
       "navaids": [
         {

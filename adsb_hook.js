@@ -2,15 +2,17 @@
 
 if (location.hostname.includes("adsbexchange.com")) {
 
+  // Always reset lastIcao on each bridge injection so re-selecting the same
+  // aircraft after a page soft-nav (where the hook's closure persists) works.
+  window.__adsbLastIcao = null;
+
   if (window.__adsbStoreHook) {
-    console.log("ADSB hook already installed");
+    console.log("[SC Hook] Already installed — lastIcao reset for re-selection");
   } else {
 
     window.__adsbStoreHook = true;
 
-    console.log("ADS-B aircraft URL hook installed");
-
-    let lastIcao = null;
+    console.log("[SC Hook] Installed");
 
     function detectAircraft(){
 
@@ -18,6 +20,9 @@ if (location.hostname.includes("adsbexchange.com")) {
 
     const params = new URLSearchParams(location.search);
     let icaoRaw = params.get("icao");
+
+    // Ignore literal "undefined" string from malformed ADSB URL params
+    if (icaoRaw === "undefined") icaoRaw = null;
 
     let callsign = null;
 
@@ -47,15 +52,21 @@ if (location.hostname.includes("adsbexchange.com")) {
 
     } catch(e){}
 
-    if (!icaoRaw) return;
+    if (!icaoRaw) {
+      if (window.__adsbLastIcao !== null) {
+        console.log("[SC Hook] Deselected — lastIcao was:", window.__adsbLastIcao);
+        window.__adsbLastIcao = null;
+      }
+      return;
+    }
 
     const clean = icaoRaw.toLowerCase();
 
-    if (clean !== lastIcao) {
+    if (clean !== window.__adsbLastIcao) {
 
-      lastIcao = clean;
+      window.__adsbLastIcao = clean;
 
-      console.log("Plane selected from URL:", clean, "callsign:", callsign);
+      console.log("[SC Hook] NEW selection → posting:", clean, "callsign:", callsign);
 
       window.postMessage({
         source: "adsb_hook",
@@ -66,7 +77,7 @@ if (location.hostname.includes("adsbexchange.com")) {
 
     }
 
-  } catch(e){}
+  } catch(e){ console.warn("[SC Hook] detectAircraft error:", e); }
 
 }
 
@@ -84,7 +95,7 @@ if (location.hostname.includes("adsbexchange.com")) {
 
     };
 
-    // 🔥 CRITICAL: run once immediately after load
+    // Run once immediately after load
     setTimeout(detectAircraft, 1000);
 
   }
