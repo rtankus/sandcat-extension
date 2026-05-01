@@ -460,7 +460,7 @@ console.warn("[LB GK] Timed out waiting for NEW key.");
     }, 350);
   }
 
-  const obs = new MutationObserver(() => { injectSegmentWrapCSS(); schedule("mutation"); });
+  const obs = new MutationObserver(() => { schedule("mutation"); });
   obs.observe(document.documentElement || document.body, {
     childList: true,
     subtree: true,
@@ -469,26 +469,6 @@ console.warn("[LB GK] Timed out waiting for NEW key.");
 
   installHistoryHooks();
 
-  function injectSegmentWrapCSS() {
-    const ID = "sc-lb-segment-wrap";
-    if (document.getElementById(ID)) return;
-    const style = document.createElement("style");
-    style.id = ID;
-    style.textContent = `
-      .vis-item-content { white-space: normal !important; }
-      .vis-item.vis-range { height: auto !important; overflow: visible !important; }
-      .vis-tooltip { display: none !important; }
-      .sc-inline-edit-ta {
-        position: absolute; z-index: 9999; resize: none; top: 0; left: 0;
-        font: inherit; padding: 2px 4px; box-sizing: border-box;
-        border: 2px solid #4a90e2; border-radius: 3px;
-        background: rgba(20,30,40,0.95); color: #fff; width: 100%;
-        overflow: hidden; cursor: text !important; pointer-events: all !important;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
   function saveToLabelbox(text) {
     const ta = document.querySelector('textarea[data-allow-alt-arrows="true"]');
     if (!ta) return;
@@ -499,164 +479,6 @@ console.warn("[LB GK] Timed out waiting for NEW key.");
       .find(b => b.textContent.trim() === 'done');
     if (checkBtn) checkBtn.click();
   }
-
-  function injectInlineEditor(content) {
-    if (document.querySelector('.sc-inline-edit-ta')) return;
-
-    const originalText = content.textContent.trim();
-    const rect = content.getBoundingClientRect();
-
-    // Append to body so the textarea is outside vis-timeline's DOM hierarchy —
-    // vis-timeline has document-level capture listeners that intercept events on
-    // any child of the timeline, so we bypass them by living at the body level.
-    const ta = document.createElement('textarea');
-    ta.className = 'sc-inline-edit-ta';
-    ta.value = originalText;
-    ta.style.cssText = [
-      `position:fixed`, `left:${rect.left}px`, `top:${rect.top}px`,
-      `width:${rect.width}px`, `min-height:${rect.height}px`,
-      `z-index:99999`, `cursor:text`, `overflow:hidden`,
-    ].join(';');
-    document.body.appendChild(ta);
-    ta.style.height = 'auto';
-    ta.style.height = ta.scrollHeight + 'px';
-    ta.addEventListener('input', () => {
-      ta.style.height = 'auto';
-      ta.style.height = ta.scrollHeight + 'px';
-    });
-    ta.focus();
-
-    let committed = false;
-    function commit() {
-      if (committed) return;
-      committed = true;
-      const newText = ta.value.trim();
-      ta.remove();
-      if (newText && newText !== originalText) saveToLabelbox(newText);
-    }
-
-    ta.addEventListener('keydown', ev => {
-      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); commit(); }
-      if (ev.key === 'Escape') { committed = true; ta.remove(); }
-    });
-    ta.addEventListener('blur', commit, { once: true });
-  }
-
-  function installInlineEdit() {
-    const itemObs = new MutationObserver(mutations => {
-      for (const m of mutations) {
-        if (m.attributeName !== 'class') continue;
-        const item = m.target;
-        if (!item.classList.contains('vis-item')) continue;
-        const content = item.querySelector('.vis-item-content');
-        if (!content) continue;
-        if (item.classList.contains('vis-selected')) {
-          injectInlineEditor(content);
-        } else {
-          document.querySelector('.sc-inline-edit-ta')?.remove();
-        }
-      }
-    });
-
-    function observeItems() {
-      document.querySelectorAll('.vis-item').forEach(item =>
-        itemObs.observe(item, { attributes: true, attributeFilter: ['class'] })
-      );
-    }
-
-    observeItems();
-
-    const containerObs = new MutationObserver(observeItems);
-    const container = document.querySelector('.vis-foreground') || document.body;
-    containerObs.observe(container, { childList: true, subtree: true });
-  }
-
-  injectSegmentWrapCSS();
-  installInlineEdit();
-
-  function saveToLabelbox(text) {
-    const ta = document.querySelector('textarea[data-allow-alt-arrows="true"]');
-    if (!ta) return;
-    const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value').set;
-    setter.call(ta, text);
-    ta.dispatchEvent(new Event('input', { bubbles: true }));
-    const checkBtn = [...document.querySelectorAll('button')]
-      .find(b => b.textContent.trim() === 'done');
-    if (checkBtn) checkBtn.click();
-  }
-
-  function injectInlineEditor(content) {
-    if (document.querySelector('.sc-inline-edit-ta')) return;
-
-    const originalText = content.textContent.trim();
-    const rect = content.getBoundingClientRect();
-
-    // Append to body so the textarea is outside vis-timeline's DOM hierarchy —
-    // vis-timeline has document-level capture listeners that intercept events on
-    // any child of the timeline, so we bypass them by living at the body level.
-    const ta = document.createElement('textarea');
-    ta.className = 'sc-inline-edit-ta';
-    ta.value = originalText;
-    ta.style.cssText = [
-      `position:fixed`, `left:${rect.left}px`, `top:${rect.top}px`,
-      `width:${rect.width}px`, `min-height:${rect.height}px`,
-      `z-index:99999`, `cursor:text`, `overflow:hidden`,
-    ].join(';');
-    document.body.appendChild(ta);
-    ta.style.height = 'auto';
-    ta.style.height = ta.scrollHeight + 'px';
-    ta.addEventListener('input', () => {
-      ta.style.height = 'auto';
-      ta.style.height = ta.scrollHeight + 'px';
-    });
-    ta.focus();
-
-    let committed = false;
-    function commit() {
-      if (committed) return;
-      committed = true;
-      const newText = ta.value.trim();
-      ta.remove();
-      if (newText && newText !== originalText) saveToLabelbox(newText);
-    }
-
-    ta.addEventListener('keydown', ev => {
-      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); commit(); }
-      if (ev.key === 'Escape') { committed = true; ta.remove(); }
-    });
-    ta.addEventListener('blur', commit, { once: true });
-  }
-
-  function installInlineEdit() {
-    const itemObs = new MutationObserver(mutations => {
-      for (const m of mutations) {
-        if (m.attributeName !== 'class') continue;
-        const item = m.target;
-        if (!item.classList.contains('vis-item')) continue;
-        const content = item.querySelector('.vis-item-content');
-        if (!content) continue;
-        if (item.classList.contains('vis-selected')) {
-          injectInlineEditor(content);
-        } else {
-          document.querySelector('.sc-inline-edit-ta')?.remove();
-        }
-      }
-    });
-
-    function observeItems() {
-      document.querySelectorAll('.vis-item').forEach(item =>
-        itemObs.observe(item, { attributes: true, attributeFilter: ['class'] })
-      );
-    }
-
-    observeItems();
-
-    const containerObs = new MutationObserver(observeItems);
-    const container = document.querySelector('.vis-foreground') || document.body;
-    containerObs.observe(container, { childList: true, subtree: true });
-  }
-
-  installInlineEdit();
 
   // Extra delayed attempts (Labelbox boot can be slow)
   setTimeout(() => readAndStore("delay_1s"), 1000);
