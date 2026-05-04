@@ -1,0 +1,529 @@
+{
+  "icao": "EHLE",
+  "name": "Lelystad/Lelystad",
+  "frequencies": {
+    "delivery": [
+      "123.680"
+    ],
+    "tower": [
+      "135.180"
+    ],
+    "arrival": [
+      "134.530"
+    ],
+    "mil": [
+      "128.355",
+      "125.930"
+    ],
+    "schiphol_approach_departure": [
+      "119.055",
+      "121.205"
+    ],
+    "atis": [
+      "120.730"
+    ],
+    "emergency": [
+      "121.500",
+      "243.000"
+    ]
+  },
+  "sids": [
+    {
+      "name": "AMGOD 1L",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE114",
+        "ERMUR",
+        "ASNOM",
+        "PETCA",
+        "KOKIP",
+        "AMGOD"
+      ]
+    },
+    {
+      "name": "BERGI 1Q",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE114",
+        "ERMUR",
+        "EDOXO",
+        "LE141",
+        "LE142",
+        "BERGI"
+      ]
+    },
+    {
+      "name": "IDRID 2L",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE114",
+        "ERMUR",
+        "ASNOM",
+        "PETCA",
+        "LE141",
+        "BAHSI",
+        "VOLLA",
+        "IDRID"
+      ]
+    },
+    {
+      "name": "GRONY 1L",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE114",
+        "ERMUR",
+        "LE146",
+        "LE147",
+        "GRONY"
+      ]
+    },
+    {
+      "name": "VOLLA 2Q",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE114",
+        "ERMUR",
+        "EDOXO",
+        "LE141",
+        "LE142",
+        "BERGI",
+        "AMGOD"
+      ]
+    },
+    {
+      "name": "ARNEM 1L",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE120",
+        "ARBEP",
+        "LE148",
+        "LE149",
+        "ARNEM"
+      ]
+    },
+    {
+      "name": "INKET 1L",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE120",
+        "ARBEP",
+        "LE148",
+        "LE149",
+        "BRIAR",
+        "IPMUR",
+        "NEPTU",
+        "PELUB",
+        "INKET"
+      ]
+    },
+    {
+      "name": "KUDAD 1L",
+      "runway": "RWY05",
+      "waypoints": [
+         "LE112",
+        "LE113",
+        "LE120",
+        "ARBEP",
+        "LE148",
+        "LE149",
+        "BRIAR",
+        "IPMUR",
+        "NEPTU",
+        "PELUB",
+        "WILEM",
+        "LE139",
+        "KUDAD"
+      ]
+    },
+    {
+      "name": "NAPRO 1L",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE120",
+        "ARBEP",
+        "LE148",
+        "LE149",
+        "ARNEM",
+        "LE145",
+        "NAPRO"
+      ]
+    },
+    {
+      "name": "RUMER 1L",
+      "runway": "RWY05",
+      "waypoints": [
+        "LE112",
+        "LE113",
+        "LE120",
+        "ARBEP",
+        "LE148",
+        "LE149",
+        "ARNEM",
+        "LE145",
+        "BASGU",
+        "RUMER"
+      ]
+    },
+    {
+      "name": "AMGOD 1M",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE107",
+        "ERMUR",
+        "ASNOM",
+        "PETCA",
+        "KOKIP",
+        "AMGOD"
+      ]
+    },
+    {
+      "name": "BERGI 1U",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE107",
+        "LE152",
+        "ERMUR",
+        "EDOXO",
+        "LE141",
+        "LE142",
+        "BERGI"
+      ]
+    },
+    {
+      "name": "IDRID 2M",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE107",
+        "ERMUR",
+        "ASNOM",
+        "PETCA",
+        "LE141",
+        "BAHSI",
+        "VOLLA",
+        "IDRID"
+      ]
+    },
+    {
+      "name": "GRONY 1M",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE107",
+        "LE152",
+        "ERMUR",
+        "LE146",
+        "LE147",
+        "GRONY"
+      ]
+    },
+    {
+      "name": "VOLLA 2U",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE107",
+        "ERMUR",
+        "EDOXO",
+        "LE141",
+        "LE142",
+        "BERGI",
+        "AMGOD"
+      ]
+    },
+    {
+      "name": "ARNEM 2M",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE152",
+        "ZITFA",
+        "LE148",
+        "LE149",
+        "ARNEM"
+      ]
+    },
+    {
+      "name": "INKET 2M",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE152",
+        "ZITFA",
+        "LE148",
+        "LE149",
+        "BRIAR",
+        "IPMUR",
+        "NEPTU",
+        "PELUB",
+        "INKET"
+      ]
+    },
+    {
+      "name": "KUDAD 2M",
+      "runway": "RWY23",
+      "waypoints": [
+         "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE152",
+        "ZITFA",
+        "LE148",
+        "LE149",
+        "BRIAR",
+        "IPMUR",
+        "NEPTU",
+        "PELUB",
+        "WILEM",
+        "LE139",
+        "KUDAD"
+      ]
+    },
+    {
+      "name": "NAPRO 2M",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE152",
+        "ZITFA",
+        "LE148",
+        "LE149",
+        "ARNEM",
+        "LE145",
+        "NAPRO"
+      ]
+    },
+    {
+      "name": "RUMER 2M",
+      "runway": "RWY23",
+      "waypoints": [
+        "LE101",
+        "LE102",
+        "ASBES",
+        "DOTIX",
+        "LE152",
+        "ZITFA",
+        "LE148",
+        "LE149",
+        "ARNEM",
+        "LE145",
+        "BASGU",
+        "RUMER"
+      ]
+    }
+  ],
+  "stars": [],
+  "iaps": [
+    {
+      "name": "ILS/LOC RWY05",
+      "runway": "RWY05",
+      "waypoints": [
+        {
+          "fix": "UPLOS",
+          "altitude": 1700,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "LE134",
+          "altitude": 1700,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR05"
+        },
+        {
+          "fix": "LE112"
+        },
+        {
+          "fix": "LE113"
+        },
+        {
+          "fix": "LE150"
+        },
+        {
+          "fix": "ASBES",
+          "altitude": 3000,
+          "constraint": "at"
+        }
+      ],
+      "transitions": {
+        "EKNON": [
+          "EKNON",
+          "LE118",
+          "ASBES",
+          "LE103",
+          "LE137",
+          "XIDES",
+          "UPLOS"
+        ],
+        "BADEX": [
+          "BADEX",
+          "NILMI",
+          "LE118",
+          "ASBES",
+          "LE103",
+          "LE137",
+          "XIDES",
+          "UPLOS"
+        ]
+      }
+    },
+    {
+      "name": "RNP RWY05",
+      "runway": "RWY05",
+      "waypoints": [
+        {
+          "fix": "UPLOS",
+          "altitude": 1700,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "LE134",
+          "altitude": 1700,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR05"
+        },
+        {
+          "fix": "LE112"
+        },
+        {
+          "fix": "LE113"
+        },
+        {
+          "fix": "LE150"
+        },
+        {
+          "fix": "ASBES",
+          "altitude": 3000,
+          "constraint": "at"
+        }
+      ],
+      "transitions": {
+        "EKNON": [
+          "EKNON",
+          "LE118",
+          "ASBES",
+          "LE103",
+          "LE137",
+          "XIDES",
+          "UPLOS"
+        ],
+        "BADEX": [
+          "BADEX",
+          "NILMI",
+          "LE118",
+          "ASBES",
+          "LE103",
+          "LE137",
+          "XIDES",
+          "UPLOS"
+        ]
+      }
+    },
+    {
+      "name": "RNP RWY23",
+      "runway": "RWY23",
+      "waypoints": [
+        {
+          "fix": "KUVOS",
+          "altitude": 3000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "LE124",
+          "altitude": 3000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR23"
+        },
+        {
+          "fix": "LE101"
+        },
+        {
+          "fix": "LE102",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "ASBES",
+          "altitude": 3000,
+          "constraint": "at"
+        },
+        {
+          "fix": "LE151"
+        },
+        {
+          "fix": "KUVOS",
+          "altitude": 3000,
+          "constraint": "at_or_above"
+        }
+      ],
+      "transitions": {
+        "EKNON": [
+          "EKNON",
+          "LE122",
+          "IDGOK",
+          "KUVOS"
+        ],
+        "BADEX": [
+          "BADEX",
+          "NILMI",
+          "LE110",
+          "IDGOK",
+          "KUVOS"
+        ]
+      }
+    }
+  ],
+  "counts": {
+    "sids": 20,
+    "stars": 0,
+    "iaps": 3
+  }
+}

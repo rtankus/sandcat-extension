@@ -333,7 +333,6 @@ iframe.addEventListener("load", () => {
 
 const EDGE = 18;
 const MIN_W = 400;
-const MIN_H = 300;
 
 const edgeLayer = document.createElement("div");
 // after header/scaleWrapper appended
@@ -664,6 +663,190 @@ overlay.style.top = Math.max(0, newTop) + "px";
 );
 
   } // closes injectOverlay()
-  
+
+
+function createKeyDisplayOverlay() {
+  if (document.getElementById("scKeyDisplay")) return;
+
+  const MONTH_FULL = {
+    jan:"January", feb:"February", mar:"March", apr:"April", may:"May", jun:"June",
+    jul:"July", aug:"August", sep:"September", oct:"October", nov:"November", dec:"December"
+  };
+  const MONTH_NUM = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const FACILITY_MAP = {
+    gnd:"Ground", twr:"Tower", app:"Approach", appr:"Approach", dep:"Departure",
+    radar:"Radar", ctr:"Center", center:"Center", centre:"Center", arr:"Arrival",
+    del:"Delivery", clnc:"Clearance", clr:"Clearance", atis:"ATIS",
+    fin:"Final", final:"Final", ctrl:"Control"
+  };
+
+  function parseKey(raw) {
+    if (!raw) return null;
+    const compact = raw.match(/^([A-Za-z]{2,4})-(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})\d{2}_/);
+    if (compact) {
+      return {
+        icao: compact[1].toUpperCase(), facilities: [],
+        month: MONTH_NUM[parseInt(compact[3], 10) - 1] || compact[3],
+        day: parseInt(compact[4], 10), year: compact[2],
+        time: compact[5] + compact[6] + "Z"
+      };
+    }
+    const dateM = raw.match(/-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{1,2})-(\d{4})-(\d{4}Z)/i);
+    if (!dateM) return null;
+    const tokens = raw.substring(0, dateM.index).split("-");
+    return {
+      icao: tokens[0].replace(/\d+$/, "").toUpperCase(),
+      facilities: tokens.slice(1).map(t => FACILITY_MAP[t.toLowerCase()]).filter(Boolean),
+      month: MONTH_FULL[dateM[1].toLowerCase()] || dateM[1],
+      day: parseInt(dateM[2], 10), year: dateM[3], time: dateM[4].toUpperCase()
+    };
+  }
+
+  const card = document.createElement("div");
+  card.id = "scKeyDisplay";
+  card.style.cssText = [
+    "position:fixed", "bottom:20px", "right:20px", "z-index:2147483646",
+    "background:rgba(13,14,20,0.93)", "backdrop-filter:blur(10px)",
+    "-webkit-backdrop-filter:blur(10px)",
+    "border:1px solid rgba(255,255,255,0.10)", "border-radius:12px",
+    "padding:12px 14px 10px 14px", "min-width:220px", "max-width:300px",
+    "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",
+    "box-shadow:0 6px 24px rgba(0,0,0,0.55),0 1px 3px rgba(0,0,0,0.3)",
+    "display:none", "cursor:move", "user-select:none"
+  ].join(";");
+
+  const closeBtn = document.createElement("button");
+  closeBtn.id = "scKeyClose";
+  closeBtn.textContent = "×";
+  closeBtn.style.cssText = [
+    "position:absolute", "top:6px", "right:8px", "background:none", "border:none",
+    "color:rgba(255,255,255,0.35)", "font-size:16px", "line-height:1",
+    "cursor:pointer", "padding:2px 4px", "border-radius:4px"
+  ].join(";");
+  closeBtn.addEventListener("mouseenter", () => { closeBtn.style.color = "rgba(255,255,255,0.75)"; });
+  closeBtn.addEventListener("mouseleave", () => { closeBtn.style.color = "rgba(255,255,255,0.35)"; });
+  function notifyGkVisibility(visible) {
+    overlayIframe?.contentWindow?.postMessage({ type: "GK_OVERLAY_VISIBLE", visible }, "*");
+  }
+
+  closeBtn.addEventListener("click", (e) => { e.stopPropagation(); card.style.display = "none"; notifyGkVisibility(false); });
+
+  const content = document.createElement("div");
+  content.id = "scKeyContent";
+  card.appendChild(closeBtn);
+  card.appendChild(content);
+  document.body.appendChild(card);
+
+  let dragging = false, ox = 0, oy = 0;
+  card.addEventListener("pointerdown", (e) => {
+    if (e.target === closeBtn || e.target.id === "scKeyLaunch") return;
+    dragging = true;
+    card.setPointerCapture(e.pointerId);
+    const r = card.getBoundingClientRect();
+    ox = e.clientX - r.left;
+    oy = e.clientY - r.top;
+  });
+  card.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    card.style.left = (e.clientX - ox) + "px";
+    card.style.top = (e.clientY - oy) + "px";
+    card.style.right = "auto";
+    card.style.bottom = "auto";
+  });
+  card.addEventListener("pointerup", () => {
+    if (!dragging) return;
+    dragging = false;
+    try {
+      chrome.storage.local.set({ keyOverlayPosition: { top: card.offsetTop, left: card.offsetLeft } });
+    } catch(e) {}
+  });
+
+  const lookupName = (icao) => new Promise(resolve =>
+    chrome.runtime.sendMessage({ type: "GET_AIRPORT_NAME_ICAO", icao }, (r) => resolve(r?.ok ? r.name : null))
+  );
+
+  async function updateDisplay(raw) {
+    const parsed = parseKey(raw);
+    if (!parsed) { card.style.display = "none"; return; }
+
+    let airportName = "";
+    try {
+      airportName = await lookupName(parsed.icao) || "";
+      if (!airportName && parsed.icao.length === 3) {
+        airportName = await lookupName("K" + parsed.icao) || "";
+      }
+    } catch(e) {}
+
+    const nameHtml = `<div style="font-size:13px;font-weight:600;color:#e8e8f0;line-height:1.35;padding-right:14px">${airportName || parsed.icao}</div>`;
+    const servHtml = parsed.facilities.length
+      ? `<div style="font-size:11.5px;color:#7eb8f5;margin-top:3px;font-weight:500">${parsed.facilities.join(" · ")}</div>`
+      : "";
+    const dateHtml = `<div style="font-size:10.5px;color:rgba(255,255,255,0.4);margin-top:7px;display:flex;justify-content:space-between;align-items:center"><span>${parsed.month} ${parsed.day}, ${parsed.year}</span><span style="font-weight:500;color:rgba(255,255,255,0.55)">${parsed.time}</span><span id="scKeyLaunch" title="Open Selected Now" style="cursor:pointer;opacity:0.5;font-size:11px;padding:1px 4px;border-radius:4px;transition:opacity 0.15s">▶</span></div>`;
+
+    content.innerHTML = nameHtml + servHtml + dateHtml;
+
+    const launchBtn = content.querySelector("#scKeyLaunch");
+    if (launchBtn) {
+      launchBtn.addEventListener("mouseenter", () => { launchBtn.style.opacity = "1"; });
+      launchBtn.addEventListener("mouseleave", () => { launchBtn.style.opacity = "0.5"; });
+      launchBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const { lbx_settings, lb_pageKey, lb_manualKey } = await chrome.storage.local.get(["lbx_settings", "lb_pageKey", "lb_manualKey"]);
+        const rawText = (lb_pageKey || lb_manualKey || "").trim();
+        if (!rawText) return;
+        const s = lbx_settings || {};
+        chrome.runtime.sendMessage({ type: "RUN_AUTOLAUNCH", rawText, settings: {
+          adsb: s.adsb ?? true, opennav: s.opennav ?? false, airnav: s.airnav ?? false,
+          foreflight: s.foreflight ?? false, fixesfinder: s.fixesfinder ?? false,
+          skyvector: s.skyvector ?? false, adsbSpeed: s.adsbSpeed ?? 500
+        }});
+      });
+    }
+
+    card.style.display = "block";
+    notifyGkVisibility(true);
+  }
+
+  chrome.storage.local.get(["lb_pageKey", "lb_manualKey", "keyOverlayPosition"], (data) => {
+    if (data.keyOverlayPosition) {
+      const maxLeft = window.innerWidth - 240;
+      const maxTop = window.innerHeight - 80;
+      card.style.bottom = "auto";
+      card.style.right = "auto";
+      card.style.top = Math.min(Math.max(0, data.keyOverlayPosition.top), maxTop) + "px";
+      card.style.left = Math.min(Math.max(0, data.keyOverlayPosition.left), maxLeft) + "px";
+    }
+    updateDisplay(data.lb_pageKey || data.lb_manualKey || "");
+  });
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== "local" || (!changes.lb_pageKey && !changes.lb_manualKey)) return;
+    chrome.storage.local.get(["lb_pageKey", "lb_manualKey"], (data) => {
+      updateDisplay(data.lb_pageKey || data.lb_manualKey || "");
+    });
+  });
+
+  function clampToViewport() {
+    if (card.style.display === "none") return;
+    const maxLeft = window.innerWidth - card.offsetWidth - 8;
+    const maxTop = window.innerHeight - card.offsetHeight - 8;
+    if (card.style.left) card.style.left = Math.min(Math.max(0, parseInt(card.style.left)), maxLeft) + "px";
+    if (card.style.top) card.style.top = Math.min(Math.max(0, parseInt(card.style.top)), maxTop) + "px";
+  }
+  window.addEventListener("resize", clampToViewport);
+}
+
+createKeyDisplayOverlay();
+
+window.addEventListener("message", (e) => {
+  if (e.data?.type === "SHOW_GK_OVERLAY") {
+    const card = document.getElementById("scKeyDisplay");
+    if (card) { card.style.display = "block"; overlayIframe?.contentWindow?.postMessage({ type: "GK_OVERLAY_VISIBLE", visible: true }, "*"); }
+  }
+  if (e.data?.type === "GET_GK_VISIBILITY") {
+    const card = document.getElementById("scKeyDisplay");
+    overlayIframe?.contentWindow?.postMessage({ type: "GK_OVERLAY_VISIBLE", visible: card?.style.display !== "none" && !!card }, "*");
+  }
+});
 
 })(); // closes IIFE

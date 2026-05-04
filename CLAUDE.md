@@ -26,7 +26,9 @@ After editing any JS file, click the reload icon on the extensions page, then re
 
 - **`popup.html` / `popup.js`** — the UI rendered inside the overlay iframe. Handles airport search, procedure display, route fix streaming, and active flight panels.
 
-- **`labelbox_grab_id.js`** — content script injected on all pages. Only activates on `editor.labelbox.com`. Watches for Labelbox data-row changes, extracts a global key (audio filename), and writes it to `chrome.storage.local["lb_pageKey"]`.
+- **`labelbox_grab_id.js`** — isolated-world content script on all pages. Only activates on `editor.labelbox.com`. Watches for Labelbox data-row changes via URL mutations and MutationObserver, extracts a global key (audio `.wav` filename), and writes it to `chrome.storage.local["lb_pageKey"]`. Also listens for `postMessage` from `labelbox_seek_hook.js` with `source: 'sc_lb_fetch'`.
+
+- **`labelbox_seek_hook.js`** — MAIN world content script on `editor.labelbox.com`, runs at `document_start`. (1) Wraps `EventTarget.prototype.addEventListener` to prevent accidental seek when clicking speaker rows in the vis.js waveform. (2) Intercepts `window.__APOLLO_CLIENT__` being set (via `Object.defineProperty`) to hook `client.cache.read`, extracting the global key from any DataRow cached result and forwarding via `postMessage`. Also wraps `window.fetch` to catch global keys from fresh network responses before they hit the Apollo cache.
 
 - **`adsb_bridge.js`** — content script injected on all pages. Injects `adsb_hook.js` into the page's MAIN world, then relays aircraft-selection messages from the hook to `background.js`.
 
@@ -50,7 +52,7 @@ All cross-context communication goes through `chrome.runtime.sendMessage` / `chr
 | `adsb_active_flight_origin/destination` | background | Departure/arrival ICAO |
 | `adsb_active_flight_callsign` | background | Flight callsign |
 | `overlayPosition` / `overlaySize` / `overlayMinimized` | inject_overlay | Persisted overlay state |
-| `lbx_settings` | popup | User toggle settings (adsb, opennav, etc.) |
+| `lbx_settings` | popup | User toggle settings: `adsb`, `opennav`, `airnav`, `fixesfinder`, `foreflight`, `skyvector`, `autodetails`, `adsbSpeed` |
 | `dataLastUpdated` | background | Timestamp of last GitHub data pull |
 
 ### Data layer
@@ -89,3 +91,6 @@ Static bundled data can be refreshed from the GitHub repo (`rtankus/sandcat-exte
 - `background.js` is a service worker: no DOM access, use `importScripts` not ES module `import`.
 - The overlay iframe (`popup.html`) communicates with the injected page script exclusively via `window.postMessage`; it cannot call `chrome.runtime` APIs directly for cross-script calls — those go through `inject_overlay.js` as a relay.
 - Two SkyVector scripts must run in different worlds: `skyvector_fetch_spy.js` in `MAIN` (to wrap `fetch` before the page caches it) and `skyvector_overlay.js` in the isolated world (to access `chrome.storage`).
+- The same MAIN/isolated split applies to Labelbox: `labelbox_seek_hook.js` runs in MAIN (needs access to `window.fetch` and `window.__APOLLO_CLIENT__` before the page caches them), `labelbox_grab_id.js` runs isolated (needs `chrome.storage` and `chrome.runtime`). They communicate via `window.postMessage` with a `source` discriminator field.
+- MAIN world scripts cannot use any `chrome.*` APIs. Isolated world scripts cannot access page globals like `window.fetch` or page-owned objects.
+- When wrapping `fetch` or any page global, the MAIN script must run at `document_start` — after `document_idle` the page has already captured its own reference and the wrapper is bypassed.

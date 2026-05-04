@@ -1,0 +1,360 @@
+{
+  "icao": "EHBK",
+  "name": "Maastricht/Maastricht Aachen",
+  "frequencies": {
+    "delivery": [
+      "121.830"
+    ],
+    "approach": [
+      "123.980"
+    ],
+    "tower": [
+      "119.480"
+    ],
+    "atis": [
+      "124.580"
+    ],
+    "emergency": [
+      "121.500"
+    ]
+  },
+  "sids": [
+    {
+      "name": "PESER 4A",
+      "runway": "RWY03",
+      "waypoints": [
+        "RIVER",
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "SOPVI",
+        "OSGOS",
+        "MAS",
+        "BK317",
+        "BK316",
+        "BK315"
+      ]
+    },
+    {
+      "name": "TENLI 2A",
+      "runway": "RWY03",
+      "waypoints": [
+        "TENLI",
+        "NIHOF",
+        "BASGU",
+        "RUMER",
+        "SOPVI",
+        "OSGOS",
+        "MAS",
+        "BK317",
+        "BK316",
+        "BK315"
+      ]
+    },
+    {
+      "name": "OSGOS 2A",
+      "runway": "RWY03",
+      "waypoints": [
+        "OSGOS",
+        "MAS",
+        "BK317",
+        "BK316",
+        "BK315"
+      ]
+    },
+    {
+      "name": "NETEX 2A",
+      "runway": "RWY03",
+      "waypoints": [
+        "NETEX",
+        "PIMIP",
+        "MAS",
+        "BK317",
+        "BK316",
+        "BK315"
+      ]
+    },
+    {
+      "name": "LNO 4A",
+      "runway": "RWY03",
+      "waypoints": [
+        "LNO",
+        "ULPEN",
+        "BK318",
+        "BK319",
+        "BK315"
+      ]
+    },
+    {
+      "name": "NVO 3A",
+      "runway": "RWY03",
+      "waypoints": [
+        "NVO",
+        "ELBED",
+        "BK319",
+        "BK315"
+      ]
+    },
+    {
+      "name": "PESER 4B",
+      "runway": "RWY21",
+      "waypoints": [
+        "RIVER",
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "SOPVI",
+        "OSGOS",
+        "MAS",
+        "BK320"
+      ]
+    },
+    {
+      "name": "TENLI 2B",
+      "runway": "RWY21",
+      "waypoints": [
+        "TENLI",
+        "NIHOF",
+        "BASGU",
+        "RUMER",
+        "SOPVI",
+        "OSGOS",
+        "MAS",
+        "BK320"
+      ]
+    },
+    {
+      "name": "OSGOS 2B",
+      "runway": "RWY21",
+      "waypoints": [
+        "OSGOS",
+        "MAS",
+        "BK320"
+      ]
+    },
+    {
+      "name": "NETEX 2B",
+      "runway": "RWY21",
+      "waypoints": [
+        "NETEX",
+        "PIMIP",
+        "MAS",
+        "BK320"
+      ]
+    },
+    {
+      "name": "LNO 3B",
+      "runway": "RWY21",
+      "waypoints": [
+        "LNO",
+        "ULPEN",
+        "BK320"
+      ]
+    },
+    {
+      "name": "NVO 3B",
+      "runway": "RWY21",
+      "waypoints": [
+        "NVO",
+        "ELBED",
+        "BK319",
+        "BK320"
+      ]
+    }
+  ],
+  "stars": [
+    {
+      "name": "RUMER 1T",
+      "runway": "RWY03",
+      "iaf": "ANZUL",
+      "waypoints": [
+        "RUMER",
+        "SOPVI",
+        "OSGOS",
+        "BOGRU",
+        "ANZUL"
+      ]
+    },
+    {
+      "name": "OSGOS 1T",
+      "runway": "RWY03",
+      "iaf": "ANZUL",
+      "waypoints": [
+        "OSGOS",
+        "BOGRU",
+        "ANZUL"
+      ]
+    },
+    {
+      "name": "NETEX 1T",
+      "runway": "RWY03",
+      "iaf": "ANZUL",
+      "waypoints": [
+        "NETEX",
+        "BOBMO",
+        "ANZUL"
+      ]
+    },
+    {
+      "name": "MODRU 1T",
+      "runway": "RWY03",
+      "iaf": "ANZUL",
+      "waypoints": [
+        "MODRU",
+        "ANZUL"
+      ]
+    },
+    {
+      "name": "NVO 1T",
+      "runway": "RWY03",
+      "iaf": "ANZUL",
+      "waypoints": [
+        "NVO",
+        "BAXIM",
+        "ANZUL"
+      ]
+    },
+    {
+      "name": "LNO 1T",
+      "runway": "RWY03",
+      "iaf": "BERIR",
+      "waypoints": [
+        "LNO",
+        "BERIR"
+      ]
+    },
+    {
+      "name": "RUMER 3M",
+      "runway": "RWY21",
+      "iaf": "BOGRU",
+      "waypoints": [
+        "RUMER",
+        "SOPVI",
+        "OSGOS",
+        "BOGRU"
+      ]
+    },
+    {
+      "name": "OSGOS 2M",
+      "runway": "RWY21",
+      "iaf": "BOGRU",
+      "waypoints": [
+        "OSGOS",
+        "BOGRU"
+      ]
+    },
+    {
+      "name": "NETEX 2M",
+      "runway": "RWY21",
+      "iaf": "BOGRU",
+      "waypoints": [
+        "NETEX",
+        "BOBMO",
+        "BOGRU"
+      ]
+    },
+    {
+      "name": "MODRU 2M",
+      "runway": "RWY21",
+      "iaf": "BOGRU",
+      "waypoints": [
+        "MODRU",
+        "BOGRU"
+      ]
+    },
+    {
+      "name": "NVO 3M",
+      "runway": "RWY21",
+      "iaf": "DINAK",
+      "waypoints": [
+        "NVO",
+        "BAXIM",
+        "DINAK"
+      ]
+    },
+    {
+      "name": "LNO 2M",
+      "runway": "RWY21",
+      "iaf": "DINAK",
+      "waypoints": [
+        "LNO",
+        "BERIR",
+        "MAS",
+        "DINAK"
+      ]
+    }
+  ],
+  "iaps": [
+    {
+      "name": "ILS/LOC Z RWY03",
+      "runway": "RWY03",
+      "waypoints": [
+        "MAS",
+        "BK302",
+        "BK303",
+        "BK310",
+        "THR03"
+      ]
+    },
+    {
+      "name": "ILS/LOC Y RWY03",
+      "runway": "RWY03",
+      "waypoints": [
+        "MAS",
+        "BK302",
+        "BK303",
+        "BK310",
+        "THR03"
+      ]
+    },
+    {
+      "name": "ILS/LOC X RWY03",
+      "runway": "RWY03",
+      "waypoints": [
+        "BERIR",
+        "ANZUL",
+        "BK302",
+        "BK303",
+        "BK310",
+        "THR03"
+      ]
+    },
+    {
+      "name": "NDB RWY03",
+      "runway": "RWY03",
+      "waypoints": [
+        "BK302",
+        "BK303",
+        "THR03"
+      ]
+    },
+    {
+      "name": "ILS X CAT II & III/LOC X RWY21",
+      "runway": "RWY21",
+      "waypoints": [
+        "DINAK",
+        "BOGRU",
+        "BK306",
+        "BK311",
+        "THR21"
+      ]
+    },
+    {
+      "name": "RNP RWY21",
+      "runway": "RWY21",
+      "waypoints": [
+        "DINAK",
+        "BOGRU",
+        "BK201",
+        "THR21",
+        "BK202",
+        "NOWIK"
+      ]
+    }
+  ],
+  "counts": {
+    "sids": 12,
+    "stars": 12,
+    "iaps": 6
+  }
+}

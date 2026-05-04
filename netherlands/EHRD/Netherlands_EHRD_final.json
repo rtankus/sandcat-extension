@@ -1,0 +1,638 @@
+{
+  "icao": "EHRD",
+  "name": "Rotterdam/Rotterdam",
+  "frequencies": {
+    "approach": [
+      "122.990"
+    ],
+    "tower": [
+      "118.205",
+      "119.705"
+    ],
+    "atis": [
+      "128.565"
+    ],
+    "schiphol_approach_departure": [
+      "119.055",
+      "121.205"
+    ],
+    "emergency": [
+      "121.500"
+    ]
+  },
+  "sids": [
+    {
+      "name": "ANDIK 2A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RTM",
+        "RD153",
+        "RD151",
+        "RD150",
+        "PAM",
+        "ANDIK"
+      ]
+    },
+    {
+      "name": "ARNEM 3A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RTM",
+        "RD153",
+        "RD151",
+        "RD150",
+        "IVLUT",
+        "NYKER",
+        "ARNEM"
+      ]
+    },
+    {
+      "name": "LUNIX 2A",
+      "runway": "RWY06",
+      "waypoints": [
+         "RTM",
+        "RD153",
+        "RD151",
+        "RD150",
+        "IVLUT",
+        "LUNIX"
+      ]
+    },
+    {
+      "name": "NEPTU 2A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RTM",
+        "RD153",
+        "RD157",
+        "RD161",
+        "INKET",
+        "PELUB",
+        "NEPTU"
+      ]
+    },
+    {
+      "name": "WOODY 2A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RTM",
+        "RD153",
+        "RD157",
+        "RD161",
+        "RD154",
+        "WOODY"
+      ]
+    },
+    {
+      "name": "INKET 2A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RTM",
+        "RD153",
+        "RD157",
+        "RD161",
+        "INKET"
+      ]
+    },
+    {
+      "name": "COA 2A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RTM",
+        "RD153",
+        "RD157",
+        "RD161",
+        "RD154",
+        "COA"
+      ]
+    },
+    {
+      "name": "SOMEL 2A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RD181",
+        "RD186",
+        "SOMEL",
+        "ABNED"
+      ]
+    },
+    {
+      "name": "TULIP 4A",
+      "runway": "RWY06",
+      "waypoints": [
+        "RD181",
+        "RD186",
+        "SOMEL",
+        "OBAGU",
+        "TULIP"
+      ]
+    },
+    {
+      "name": "ANDIK 2B",
+      "runway": "RWY24",
+      "waypoints": [
+        "RD159",
+        "RD163",
+        "RD150",
+        "PAM",
+        "ANDIK"
+      ]
+    },
+    {
+      "name": "ARNEM 3B",
+      "runway": "RWY24",
+      "waypoints": [
+         "RD159",
+        "RD163",
+        "RD150",
+        "IVLUT",
+        "NYKER",
+        "ARNEM"
+      ]
+    },
+    {
+      "name": "LUNIX 2B",
+      "runway": "RWY24",
+      "waypoints": [
+        "RD159",
+        "RD163",
+        "RD150",
+        "IVLUT",
+        "LUNIX"
+      ]
+    },
+    {
+      "name": "NEPTU 2B",
+      "runway": "RWY24",
+      "waypoints": [
+        "RD166",
+        "RD158",
+        "RD156",
+        "RD164",
+        "HELHO",
+        "RD165",
+        "INKET",
+        "PELUB",
+        "NEPTU"
+      ]
+    },
+    {
+      "name": "WOODY 2B",
+      "runway": "RWY24",
+      "waypoints": [
+        "RD166",
+        "RD158",
+        "RD156",
+        "RD164",
+        "HELHO",
+        "RD165",
+        "RD162",
+        "WOODY"
+      ]
+    },
+    {
+      "name": "INKET 2B",
+      "runway": "RWY24",
+      "waypoints": [
+        "RD166",
+        "RD158",
+        "RD156",
+        "RD164",
+        "HELHO",
+        "RD165",
+        "INKET"
+      ]
+    },
+    {
+      "name": "COA 2B",
+      "runway": "RWY24",
+      "waypoints": [
+         "RD166",
+        "RD158",
+        "RD156",
+        "COA"
+      ]
+    },
+    {
+      "name": "SOMEL 2B",
+      "runway": "RWY24",
+      "waypoints": [
+        "RD166",
+        "RD158",
+        "RD156",
+        "RD164",
+        "SOMEL",
+        "ABNED"
+      ]
+    },
+    {
+      "name": "TULIP 3B",
+      "runway": "RWY24",
+      "waypoints": [
+        "RD166",
+        "RD158",
+        "RD156",
+        "RD164",
+        "SOMEL",
+        "OBAGU",
+        "TULIP"
+      ]
+    }
+  ],
+  "stars": [
+    {
+      "name": "DENUT 2R",
+      "runway": "ALL",
+      "waypoints": [
+        "DENUT",
+        "RIMBU",
+        "DOFMU"
+      ],
+      "iaf": "DOFMU"
+    },
+    {
+      "name": "HELEN 4R",
+      "runway": "ALL",
+      "waypoints": [
+        "HELEN",
+        "RIMBU",
+        "DOFMU"
+      ],
+      "iaf": "DOFMU"
+    },
+    {
+      "name": "TOPPA 3R",
+      "runway": "ALL",
+      "waypoints": [
+        "TOPPA",
+        "MASOS"
+      ],
+      "iaf": "MASOS"
+    },
+    {
+      "name": "MOLIX 3R",
+      "runway": "ALL",
+      "waypoints": [
+        "MOLIX",
+        "MASOS"
+      ],
+      "iaf": "MASOS"
+    },
+    {
+      "name": "LAMSO 3R",
+      "runway": "ALL",
+      "waypoints": [
+        "LAMSO",
+        "MASOS"
+      ],
+      "iaf": "MASOS"
+    },
+    {
+      "name": "REDFA 3R",
+      "runway": "ALL",
+      "waypoints": [
+        "REDFA",
+        "MASOS"
+      ],
+      "iaf": "MASOS"
+    },
+    {
+      "name": "INKET 2R",
+      "runway": "ALL",
+      "waypoints": [
+        "INKET",
+        "KAKKO",
+        "DOFMU"
+      ],
+      "iaf": "DOFMU"
+    },
+    {
+      "name": "SONEB 3R",
+      "runway": "ALL",
+      "waypoints": [
+        "SONEB",
+        "TENLI",
+        "FLEVO",
+        "PAM",
+        "KAKKO",
+        "DOFMU"
+      ],
+      "iaf": "DOFMU"
+    },
+    {
+      "name": "ENKOS 3R",
+      "runway": "ALL",
+      "waypoints": [
+        "ENKOS",
+        "PAM",
+        "KAKKO",
+        "DOFMU"
+      ],
+      "iaf": "DOFMU"
+    },
+    {
+      "name": "COA 2R",
+      "runway": "ALL",
+      "waypoints": [
+        "COA",
+        "DOFMU"
+      ],
+      "iaf": "DOFMU"
+    },
+    {
+      "name": "RKN 3R",
+      "runway": "ALL",
+      "waypoints": [
+        "RKN",
+        "TENLI",
+        "FLEVO",
+        "PAM",
+        "KAKKO",
+        "DOFMU"
+      ],
+      "iaf": "MASOS"
+    },
+    {
+      "name": "BLUFA 1R",
+      "runway": "ALL",
+      "waypoints": [
+        "BLUFA",
+        "FLEVO",
+        "PAM",
+        "KAKKO",
+        "DOFMU"
+      ],
+      "iaf": "MASOS"
+    }
+  ],
+  "iaps": [
+    {
+      "name": "ILS/LOC RWY06",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "HELHO",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD250",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR06"
+        },
+        {"fix": "RTM"},
+        {
+          "fix": "RD212",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD213"
+        },
+        {
+          "fix": "KAKKO"
+        },
+        {
+          "fix": "DOFMU"
+        }
+      ],
+      "transitions": {
+        "DOFMU": [
+          "DOFMU",
+          "RD201",
+          "HELHO"
+        ],
+        "MASOS": [
+          "MASOS",
+          "RD254",
+          "HELHO"
+        ]
+      }
+    },
+    {
+      "name": "VOR RWY06",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "HELHO",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD250",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR06"
+        },
+        {
+          "fix": "RTM"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY06",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "HELHO",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD250",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR06"
+        },
+        { "fix": "RTM"},
+        {
+          "fix": "RD212",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD213"
+        },
+        {
+          "fix": "KAKKO"
+        },
+        {
+          "fix": "DOFMU"
+        }
+      ],
+      "transitions": {
+        "DOFMU": [
+          "DOFMU",
+          "RD201",
+          "HELHO"
+        ],
+        "MASOS": [
+          "MASOS",
+          "RD254",
+          "HELHO"
+        ]
+      }
+    },
+    {
+      "name": "ILS Z/LOC Z RWY24",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "ATWIT",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD252",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD255",
+          "altitude": 1310,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR24"
+        },
+        {
+          "fix": "RD214",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "DOFMU"
+        }
+      ],
+      "transitions": {
+        "DOFMU": [
+          "DOFMU",
+          "KAKKO",
+          "RD203",
+          "REWIK",
+          "ATWIT"
+        ],
+        "MASOS": [
+          "MASOS",
+          "KAKKO",
+          "RD203",
+          "REWIK",
+          "ATWIT"
+        ]
+      }
+    },
+    {
+      "name": "ILS Y/LOC Y RWY24",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "RD241",
+          "altitude": 1500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD242",
+          "altitude": 1500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR24"
+        },
+        {
+          "fix": "RD214",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "DOFMU"
+        }
+      ],
+      "transitions": {
+        "DOFMU": [
+          "DOFMU",
+          "KAKKO",
+          "ROVOX",
+          "RD241"
+        ]
+      }
+    },
+    {
+      "name": "VOR RWY24",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "ATWIT",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD252",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR24"
+        },
+        {
+          "fix": "RTM"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY24",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "ATWIT",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "RD252",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+      { "fix": "RTM"},
+        {
+          "fix": "THR24"
+        },
+        {
+          "fix": "RD214",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "DOFMU"
+        }
+      ],
+      "transitions": {
+        "DOFMU": [
+          "DOFMU",
+          "KAKKO",
+          "RD203",
+          "REWIK",
+          "ATWIT"
+        ],
+        "MASOS": [
+          "MASOS",
+          "KAKKO",
+          "RD203",
+          "REWIK",
+          "ATWIT"
+        ]
+      }
+    }
+  ],
+  "counts": {
+    "sids": 18,
+    "stars": 12,
+    "iaps": 7
+  }
+}

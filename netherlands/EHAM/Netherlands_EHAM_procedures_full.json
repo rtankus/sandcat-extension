@@ -1,0 +1,2933 @@
+{
+  "icao": "EHAM",
+  "sids": [
+    {
+      "name": "ANDIK 3F",
+      "runway": "RWY04",
+      "waypoints": [
+        {
+          "fix": "AM019",
+          "lat": 52.337972,
+          "lon": 4.837333
+        },
+        {
+          "fix": "AM020",
+          "lat": 52.336889,
+          "lon": 4.928778
+        },
+        {
+          "fix": "AM043",
+          "lat": 52.425389,
+          "lon": 5.131806
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 3F",
+      "runway": "RWY04",
+      "waypoints": [
+        {
+          "fix": "AM060",
+          "lat": 52.305194,
+          "lon": 4.907028
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 2F",
+      "runway": "RWY04",
+      "waypoints": [
+        {
+          "fix": "AM019",
+          "lat": 52.337972,
+          "lon": 4.837333
+        },
+        {
+          "fix": "SPY",
+          "lat": 52.540278,
+          "lon": 4.853778
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2F",
+      "runway": "RWY04",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.842889
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 2F",
+      "runway": "RWY04",
+      "waypoints": [
+        {
+          "fix": "AM061",
+          "lat": 52.225056,
+          "lon": 4.889472
+        },
+        {
+          "fix": "OGINA"
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2F",
+      "runway": "RWY04",
+      "waypoints": [
+        {
+          "fix": "AM060",
+          "lat": 52.305194,
+          "lon": 4.907028
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "VOLLA 2F",
+      "runway": "RWY04",
+      "waypoints": [
+        {
+          "fix": "AM019",
+          "lat": 52.337972,
+          "lon": 4.837333
+        },
+        {
+          "fix": "AM059",
+          "lat": 52.346861,
+          "lon": 4.850111
+        },
+        {
+          "fix": "AM094",
+          "lat": 52.466083,
+          "lon": 4.661333,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM090",
+          "lat": 52.467222,
+          "lon": 4.534361
+        },
+        {
+          "fix": "BAHSI"
+        },
+        {
+          "fix": "VOLLA"
+        },
+        {
+          "fix": "IDRID"
+        }
+      ]
+    },
+    {
+      "name": "ANDIK 3R",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM018",
+          "lat": 52.320361,
+          "lon": 4.818639
+        },
+        {
+          "fix": "AM014",
+          "lat": 52.337639,
+          "lon": 4.863833
+        },
+        {
+          "fix": "AM020",
+          "lat": 52.336889,
+          "lon": 4.928778
+        },
+        {
+          "fix": "AM043",
+          "lat": 52.425389,
+          "lon": 5.131806
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 3R",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM018",
+          "lat": 52.320361,
+          "lon": 4.818639
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 3R",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM018",
+          "lat": 52.320361,
+          "lon": 4.818639
+        },
+        {
+          "fix": "AM094",
+          "lat": 52.466083,
+          "lon": 4.661333,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM022",
+          "lat": 52.6805,
+          "lon": 4.521944
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2R",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM018",
+          "lat": 52.320361,
+          "lon": 4.818639
+        },
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.843
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 2R",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "OGINA"
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2R",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM018",
+          "lat": 52.320361,
+          "lon": 4.818639
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "VOLLA 2R",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM018",
+          "lat": 52.320361,
+          "lon": 4.818639
+        },
+        {
+          "fix": "AM094",
+          "lat": 52.466083,
+          "lon": 4.661333,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM090",
+          "lat": 52.467222,
+          "lon": 4.534361
+        },
+        {
+          "fix": "BAHSI"
+        },
+        {
+          "fix": "VOLLA"
+        },
+        {
+          "fix": "IDRID"
+        }
+      ]
+    },
+    {
+      "name": "ANDIK 2T",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM014",
+          "lat": 52.337639,
+          "lon": 4.863833
+        },
+        {
+          "fix": "AM021",
+          "lat": 52.47675,
+          "lon": 4.655722
+        },
+        {
+          "fix": "SPY",
+          "lat": 52.540278,
+          "lon": 4.853778
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 3T",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM017",
+          "lat": 52.185833,
+          "lon": 4.936028
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2T",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM017",
+          "lat": 52.185833,
+          "lon": 4.936028
+        },
+        {
+          "fix": "AM038",
+          "lat": 52.184972,
+          "lon": 4.958194
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2T",
+      "runway": "RWY06",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM017",
+          "lat": 52.185833,
+          "lon": 4.936028
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "ANDIK 2N",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM055",
+          "lat": 52.32075,
+          "lon": 4.866528
+        },
+        {
+          "fix": "AM042",
+          "lat": 52.295611,
+          "lon": 4.962111
+        },
+        {
+          "fix": "AM043",
+          "lat": 52.425389,
+          "lon": 5.131806
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 3N",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM055",
+          "lat": 52.32075,
+          "lon": 4.866528
+        },
+        {
+          "fix": "AM042",
+          "lat": 52.295611,
+          "lon": 4.962111
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 3N",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM053",
+          "lat": 52.387222,
+          "lon": 4.789722
+        },
+        {
+          "fix": "AM094",
+          "lat": 52.466083,
+          "lon": 4.661333,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM022",
+          "lat": 52.6805,
+          "lon": 4.521944
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "IDRID 2N",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM053",
+          "lat": 52.387222,
+          "lon": 4.789722
+        },
+        {
+          "fix": "AM094",
+          "lat": 52.466083,
+          "lon": 4.661333,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM090",
+          "lat": 52.467222,
+          "lon": 4.534361
+        },
+        {
+          "fix": "BAHSI"
+        },
+        {
+          "fix": "VOLLA"
+        },
+        {
+          "fix": "IDRID"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2N",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.843
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 2N",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "OGINA"
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2N",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM055",
+          "lat": 52.32075,
+          "lon": 4.866528
+        },
+        {
+          "fix": "AM042",
+          "lat": 52.295611,
+          "lon": 4.962111
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "VALKO 5M",
+      "runway": "RWY09",
+      "waypoints": [
+        {
+          "fix": "AM030",
+          "lat": 52.261583,
+          "lon": 4.801306
+        },
+        {
+          "fix": "AM025",
+          "lat": 52.206833,
+          "lon": 4.740083
+        },
+        {
+          "fix": "AM040",
+          "lat": 52.106639,
+          "lon": 4.467583
+        },
+        {
+          "fix": "VALKO"
+        }
+      ]
+    },
+    {
+      "name": "BETUS 6Y",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM049",
+          "lat": 52.251056,
+          "lon": 4.878083
+        },
+        {
+          "fix": "SPY",
+          "lat": 52.540278,
+          "lon": 4.853778
+        },
+        {
+          "fix": "BETUS"
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "DENAG 7X",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM051",
+          "lat": 52.244056,
+          "lon": 4.817611
+        },
+        {
+          "fix": "AM009",
+          "lat": 52.223694,
+          "lon": 4.554556,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "DENAG"
+        },
+        {
+          "fix": "VALKO"
+        },
+        {
+          "fix": "IDRID"
+        }
+      ]
+    },
+    {
+      "name": "WISPA 4X",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM051",
+          "lat": 52.244056,
+          "lon": 4.817611
+        },
+        {
+          "fix": "AM009",
+          "lat": 52.223694,
+          "lon": 4.554556,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM028",
+          "lat": 52.218889,
+          "lon": 4.421
+        },
+        {
+          "fix": "WISPA"
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "LARAS 2X",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM046",
+          "lat": 52.218444,
+          "lon": 4.743528
+        },
+        {
+          "fix": "AM074",
+          "lat": 52.166167,
+          "lon": 4.762583
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        }
+      ]
+    },
+    {
+      "name": "EDUPO 3X",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM046",
+          "lat": 52.218444,
+          "lon": 4.743528
+        },
+        {
+          "fix": "AM026",
+          "lat": 52.171306,
+          "lon": 4.607972
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "RENDI"
+        },
+        {
+          "fix": "EDUPO"
+        }
+      ]
+    },
+    {
+      "name": "ELPAT 3X",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM046",
+          "lat": 52.218444,
+          "lon": 4.743528
+        },
+        {
+          "fix": "AM027"
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "ROVEN 3X",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM046",
+          "lat": 52.218444,
+          "lon": 4.743528
+        },
+        {
+          "fix": "AM026",
+          "lat": 52.171306,
+          "lon": 4.607972
+        },
+        {
+          "fix": "AM069",
+          "lat": 52.159056,
+          "lon": 4.931806
+        },
+        {
+          "fix": "ROVEN"
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "TORGA 2X",
+      "runway": "RWY18C",
+      "waypoints": [
+        {
+          "fix": "LISOH"
+        },
+        {
+          "fix": "AM046",
+          "lat": 52.218444,
+          "lon": 4.743528
+        },
+        {
+          "fix": "AM026",
+          "lat": 52.171306,
+          "lon": 4.607972
+        },
+        {
+          "fix": "PAM",
+          "lat": 52.333361,
+          "lon": 5.008861
+        },
+        {
+          "fix": "TORGA"
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ANDIK 4E",
+      "runway": "RWY18L",
+      "waypoints": [
+        {
+          "fix": "AM047",
+          "lat": 52.255833,
+          "lon": 4.850306
+        },
+        {
+          "fix": "AM024",
+          "lat": 52.253,
+          "lon": 4.980611
+        },
+        {
+          "fix": "PAM",
+          "lat": 52.33475,
+          "lon": 5.092194
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 5E",
+      "runway": "RWY18L",
+      "waypoints": [
+        {
+          "fix": "AM047",
+          "lat": 52.255833,
+          "lon": 4.850306
+        },
+        {
+          "fix": "AM024",
+          "lat": 52.253,
+          "lon": 4.980611
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 3E",
+      "runway": "RWY18L",
+      "waypoints": [
+        {
+          "fix": "AM047",
+          "lat": 52.255833,
+          "lon": 4.850306
+        },
+        {
+          "fix": "AM050",
+          "lat": 52.155333,
+          "lon": 4.917972
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 5E",
+      "runway": "RWY18L",
+      "waypoints": [
+        {
+          "fix": "AM047",
+          "lat": 52.255833,
+          "lon": 4.850306
+        },
+        {
+          "fix": "AM050",
+          "lat": 52.155333,
+          "lon": 4.917972
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 3E",
+      "runway": "RWY18L",
+      "waypoints": [
+        {
+          "fix": "AM047",
+          "lat": 52.255833,
+          "lon": 4.850306
+        },
+        {
+          "fix": "AM024",
+          "lat": 52.253,
+          "lon": 4.980611
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 4E",
+      "runway": "RWY18L",
+      "waypoints": [
+        {
+          "fix": "AM029",
+          "lat": 52.187694,
+          "lon": 4.820667
+        },
+        {
+          "fix": "AM009",
+          "lat": 52.223694,
+          "lon": 4.554556,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM028",
+          "lat": 52.218889,
+          "lon": 4.421
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "VALKO 5E",
+      "runway": "RWY18L",
+      "waypoints": [
+        {
+          "fix": "AM029",
+          "lat": 52.187694,
+          "lon": 4.820667
+        },
+        {
+          "fix": "AM009",
+          "lat": 52.223694,
+          "lon": 4.554556,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "VALKO"
+        }
+      ]
+    },
+    {
+      "name": "ANDIK 3G",
+      "runway": "RWY22",
+      "waypoints": [
+        {
+          "fix": "AM063",
+          "lat": 52.275278,
+          "lon": 4.747611
+        },
+        {
+          "fix": "AM023",
+          "lat": 52.255889,
+          "lon": 4.848083
+        },
+        {
+          "fix": "PAM",
+          "lat": 52.33475,
+          "lon": 5.092194
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 4G",
+      "runway": "RWY22",
+      "waypoints": [
+        {
+          "fix": "AM063",
+          "lat": 52.275278,
+          "lon": 4.747611
+        },
+        {
+          "fix": "AM023",
+          "lat": 52.255889,
+          "lon": 4.848083
+        },
+        {
+          "fix": "AM027",
+          "lat": 52.250944,
+          "lon": 5.026056
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 2G",
+      "runway": "RWY22",
+      "waypoints": [
+        {
+          "fix": "AM063",
+          "lat": 52.275278,
+          "lon": 4.747611
+        },
+        {
+          "fix": "AM041",
+          "lat": 52.321611,
+          "lon": 4.409444
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2G",
+      "runway": "RWY22",
+      "waypoints": [
+        {
+          "fix": "AM062",
+          "lat": 52.25525,
+          "lon": 4.743833
+        },
+        {
+          "fix": "AM064",
+          "lat": 52.250333,
+          "lon": 4.756306
+        },
+        {
+          "fix": "AM073",
+          "lat": 52.214194,
+          "lon": 4.807722
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 2G",
+      "runway": "RWY22",
+      "waypoints": [
+        {
+          "fix": "AM062",
+          "lat": 52.25525,
+          "lon": 4.743833
+        },
+        {
+          "fix": "AM064",
+          "lat": 52.250333,
+          "lon": 4.756306
+        },
+        {
+          "fix": "AM029",
+          "lat": 52.187694,
+          "lon": 4.820667
+        },
+        {
+          "fix": "AM050",
+          "lat": 52.155333,
+          "lon": 4.917972
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2G",
+      "runway": "RWY22",
+      "waypoints": [
+        {
+          "fix": "AM063",
+          "lat": 52.275278,
+          "lon": 4.747611
+        },
+        {
+          "fix": "AM023",
+          "lat": 52.255889,
+          "lon": 4.848083
+        },
+        {
+          "fix": "AM027",
+          "lat": 52.250944,
+          "lon": 5.026056
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "VALKO 3G",
+      "runway": "RWY22",
+      "waypoints": [
+        {
+          "fix": "AM062",
+          "lat": 52.25525,
+          "lon": 4.743833
+        },
+        {
+          "fix": "AM009",
+          "lat": 52.223694,
+          "lon": 4.554556,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "VALKO"
+        }
+      ]
+    },
+    {
+      "name": "ANDIK 2S",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM005",
+          "lat": 52.270222,
+          "lon": 4.6975
+        },
+        {
+          "fix": "AM008",
+          "lat": 52.216667,
+          "lon": 4.766667
+        },
+        {
+          "fix": "AM026",
+          "lat": 52.171306,
+          "lon": 4.607972
+        },
+        {
+          "fix": "PAM",
+          "lat": 52.33475,
+          "lon": 5.092194
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 3S",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM005",
+          "lat": 52.270222,
+          "lon": 4.6975
+        },
+        {
+          "fix": "AM008",
+          "lat": 52.216667,
+          "lon": 4.766667
+        },
+        {
+          "fix": "AM026",
+          "lat": 52.171306,
+          "lon": 4.607972
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 3S",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM003",
+          "lat": 52.173472,
+          "lon": 4.746167
+        },
+        {
+          "fix": "AM004",
+          "lat": 51.988528,
+          "lon": 4.816694
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 3S",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM005",
+          "lat": 52.270222,
+          "lon": 4.6975
+        },
+        {
+          "fix": "AM008",
+          "lat": 52.216667,
+          "lon": 4.766667
+        },
+        {
+          "fix": "AM026",
+          "lat": 52.171306,
+          "lon": 4.607972
+        },
+        {
+          "fix": "AM050",
+          "lat": 52.155333,
+          "lon": 4.917972
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2S",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM005",
+          "lat": 52.270222,
+          "lon": 4.6975
+        },
+        {
+          "fix": "AM008",
+          "lat": 52.216667,
+          "lon": 4.766667
+        },
+        {
+          "fix": "AM026",
+          "lat": 52.171306,
+          "lon": 4.607972
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 2S",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM001",
+          "lat": 52.276306,
+          "lon": 4.701111
+        },
+        {
+          "fix": "AM051",
+          "lat": 52.244056,
+          "lon": 4.817611
+        },
+        {
+          "fix": "AM009",
+          "lat": 52.223694,
+          "lon": 4.554556,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM028",
+          "lat": 52.218889,
+          "lon": 4.421
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "SPY 4K",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM001",
+          "lat": 52.276306,
+          "lon": 4.701111
+        },
+        {
+          "fix": "AM049",
+          "lat": 52.251056,
+          "lon": 4.878083
+        },
+        {
+          "fix": "SPY",
+          "lat": 52.540278,
+          "lon": 4.853778
+        }
+      ]
+    },
+    {
+      "name": "VALKO 3S",
+      "runway": "RWY24",
+      "waypoints": [
+        {
+          "fix": "AM001",
+          "lat": 52.276306,
+          "lon": 4.701111
+        },
+        {
+          "fix": "AM051",
+          "lat": 52.244056,
+          "lon": 4.817611
+        },
+        {
+          "fix": "AM009",
+          "lat": 52.223694,
+          "lon": 4.554556,
+          "altitude": 2500,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "VALKO"
+        }
+      ]
+    },
+    {
+      "name": "ANDIK 3P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM058",
+          "lat": 52.365361,
+          "lon": 4.685306
+        },
+        {
+          "fix": "SPY",
+          "lat": 52.540278,
+          "lon": 4.853778
+        },
+        {
+          "fix": "ANDIK"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 3P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM057",
+          "lat": 52.365361,
+          "lon": 4.650778
+        },
+        {
+          "fix": "AM058",
+          "lat": 52.365361,
+          "lon": 4.685306
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 2P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM041",
+          "lat": 52.321611,
+          "lon": 4.409444
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM032",
+          "lat": 52.259444,
+          "lon": 4.585722
+        },
+        {
+          "fix": "AM075",
+          "lat": 52.156139,
+          "lon": 4.757444
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 2P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM032",
+          "lat": 52.259444,
+          "lon": 4.585722
+        },
+        {
+          "fix": "AM075",
+          "lat": 52.156139,
+          "lon": 4.757444
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM032",
+          "lat": 52.259444,
+          "lon": 4.585722
+        },
+        {
+          "fix": "AM075",
+          "lat": 52.156139,
+          "lon": 4.757444
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "VOLLA 2P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM041",
+          "lat": 52.321611,
+          "lon": 4.409444
+        },
+        {
+          "fix": "VOLLA"
+        },
+        {
+          "fix": "IDRID"
+        }
+      ]
+    },
+    {
+      "name": "SPY 2P",
+      "runway": "RWY27",
+      "waypoints": [
+        {
+          "fix": "AM057",
+          "lat": 52.365361,
+          "lon": 4.650778
+        },
+        {
+          "fix": "SPY",
+          "lat": 52.540278,
+          "lon": 4.853778
+        }
+      ]
+    },
+    {
+      "name": "OGINA 4W",
+      "runway": "RWY36C",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.843
+        },
+        {
+          "fix": "OGINA"
+        }
+      ]
+    },
+    {
+      "name": "NOPSU 3W",
+      "runway": "RWY36C",
+      "waypoints": [
+        {
+          "fix": "AM044",
+          "lat": 52.257056,
+          "lon": 4.905444
+        },
+        {
+          "fix": "AM082",
+          "lat": 52.424444,
+          "lon": 4.866944
+        },
+        {
+          "fix": "NOPSU"
+        }
+      ]
+    },
+    {
+      "name": "NYKER 5W",
+      "runway": "RWY36C",
+      "waypoints": [
+        {
+          "fix": "AM044",
+          "lat": 52.257056,
+          "lon": 4.905444
+        },
+        {
+          "fix": "AM082",
+          "lat": 52.424444,
+          "lon": 4.866944
+        },
+        {
+          "fix": "NYKER"
+        }
+      ]
+    },
+    {
+      "name": "IVLUT 4W",
+      "runway": "RWY36C",
+      "waypoints": [
+        {
+          "fix": "AM044",
+          "lat": 52.257056,
+          "lon": 4.905444
+        },
+        {
+          "fix": "AM081",
+          "lat": 52.425,
+          "lon": 4.835833
+        },
+        {
+          "fix": "IVLUT"
+        }
+      ]
+    },
+    {
+      "name": "WOODY 3W",
+      "runway": "RWY36C",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.843
+        },
+        {
+          "fix": "WOODY"
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2V",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.843
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 4V",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM036",
+          "lat": 52.257056,
+          "lon": 4.847889
+        },
+        {
+          "fix": "OGINA"
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2V",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM045"
+        },
+        {
+          "fix": "AM012"
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "VOLLA 3V",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM034"
+        },
+        {
+          "fix": "AM090"
+        },
+        {
+          "fix": "BAHSI"
+        },
+        {
+          "fix": "VOLLA"
+        },
+        {
+          "fix": "IDRID"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 5V",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM034"
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 2V",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM045"
+        },
+        {
+          "fix": "AM012"
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    },
+    {
+      "name": "SPY 4V",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM013"
+        },
+        {
+          "fix": "AM084"
+        },
+        {
+          "fix": "AM087"
+        },
+        {
+          "fix": "AM088"
+        },
+        {
+          "fix": "SPY",
+          "lat": 52.540278,
+          "lon": 4.853778
+        }
+      ]
+    },
+    {
+      "name": "KUDAD 2Z",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.843
+        },
+        {
+          "fix": "LEKKO"
+        },
+        {
+          "fix": "LARAS"
+        },
+        {
+          "fix": "KUDAD"
+        }
+      ]
+    },
+    {
+      "name": "LOPIK 2Z",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM072",
+          "lat": 52.020583,
+          "lon": 4.843
+        },
+        {
+          "fix": "LOPIK"
+        }
+      ]
+    },
+    {
+      "name": "RENDI 2Z",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM013"
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "LUNIX"
+        },
+        {
+          "fix": "EDUPO"
+        },
+        {
+          "fix": "RENDI"
+        }
+      ]
+    },
+    {
+      "name": "VOLLA 2Z",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM016"
+        },
+        {
+          "fix": "VOLLA"
+        },
+        {
+          "fix": "IDRID"
+        }
+      ]
+    },
+    {
+      "name": "BERGI 2Z",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM015"
+        },
+        {
+          "fix": "BERGI"
+        }
+      ]
+    },
+    {
+      "name": "ARNEM 2Z",
+      "runway": "RWY36L",
+      "waypoints": [
+        {
+          "fix": "AM013"
+        },
+        {
+          "fix": "IVLUT"
+        },
+        {
+          "fix": "NYKER"
+        },
+        {
+          "fix": "ELPAT"
+        },
+        {
+          "fix": "ARNEM"
+        }
+      ]
+    }
+  ],
+  "stars": [
+    {
+      "name": "TOPPA 2A",
+      "iaf": "SUGOL",
+      "waypoints": [
+        {
+          "fix": "TOPPA"
+        },
+        {
+          "fix": "MONIL"
+        },
+        {
+          "fix": "ROBVI"
+        },
+        {
+          "fix": "SUGOL"
+        }
+      ]
+    },
+    {
+      "name": "MOLIX 2A",
+      "iaf": "SUGOL",
+      "waypoints": [
+        {
+          "fix": "MOLIX"
+        },
+        {
+          "fix": "LUTEX"
+        },
+        {
+          "fix": "ROBVI"
+        },
+        {
+          "fix": "SUGOL"
+        }
+      ]
+    },
+    {
+      "name": "LAMSO 2A",
+      "iaf": "SUGOL",
+      "waypoints": [
+        {
+          "fix": "LAMSO"
+        },
+        {
+          "fix": "ETPOS"
+        },
+        {
+          "fix": "SUGOL"
+        }
+      ]
+    },
+    {
+      "name": "REDFA 1A",
+      "iaf": "SUGOL",
+      "waypoints": [
+        {
+          "fix": "REDFA"
+        },
+        {
+          "fix": "SULUT"
+        },
+        {
+          "fix": "SUGOL"
+        }
+      ]
+    },
+    {
+      "name": "DENUT 3A",
+      "iaf": "RIVER",
+      "waypoints": [
+        {
+          "fix": "DENUT"
+        },
+        {
+          "fix": "YENZO"
+        },
+        {
+          "fix": "RIVER"
+        }
+      ]
+    },
+    {
+      "name": "HELEN 2A",
+      "iaf": "RIVER",
+      "waypoints": [
+        {
+          "fix": "HELEN"
+        },
+        {
+          "fix": "HAMZA"
+        },
+        {
+          "fix": "RIVER"
+        }
+      ]
+    },
+    {
+      "name": "PESER 3A",
+      "iaf": "RIVER",
+      "waypoints": [
+        {
+          "fix": "PESER"
+        },
+        {
+          "fix": "DOFMU"
+        },
+        {
+          "fix": "RIVER"
+        }
+      ]
+    },
+    {
+      "name": "BLUFA 1A",
+      "iaf": "ARTIP",
+      "waypoints": [
+        {
+          "fix": "BLUFA"
+        },
+        {
+          "fix": "ARTIP"
+        }
+      ]
+    },
+    {
+      "name": "NORKU 2A",
+      "iaf": "ARTIP",
+      "waypoints": [
+        {
+          "fix": "NORKU"
+        },
+        {
+          "fix": "SONSA"
+        },
+        {
+          "fix": "ROBIS"
+        },
+        {
+          "fix": "OSKUR"
+        },
+        {
+          "fix": "ARTIP"
+        }
+      ]
+    },
+    {
+      "name": "RKN 2A",
+      "iaf": "ARTIP",
+      "waypoints": [
+        {
+          "fix": "RKN"
+        },
+        {
+          "fix": "OSKUR"
+        },
+        {
+          "fix": "ARTIP"
+        }
+      ]
+    }
+  ],
+  "star_transitions": [
+    {
+      "name": "SUGOL 1B TRANSITION",
+      "runway": "RWY06",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "SUGOL"
+        },
+        {
+          "fix": "NETOM"
+        },
+        {
+          "fix": "AM612",
+          "lat": 52.328167,
+          "lon": 4.375917
+        },
+        {
+          "fix": "SOKSI",
+          "altitude": 4000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM613",
+          "lat": 52.234583,
+          "lon": 4.59575
+        },
+        {
+          "fix": "AM614",
+          "lat": 52.209083,
+          "lon": 4.462556,
+          "altitude": 2900,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RIVER 1B TRANSITION",
+      "runway": "RWY06",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "RIVER"
+        },
+        {
+          "fix": "PORWA"
+        },
+        {
+          "fix": "AM610",
+          "lat": 52.205361,
+          "lon": 4.221583
+        },
+        {
+          "fix": "SOKSI",
+          "altitude": 4000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM613",
+          "lat": 52.234583,
+          "lon": 4.59575
+        },
+        {
+          "fix": "AM614",
+          "lat": 52.209083,
+          "lon": 4.462556,
+          "altitude": 2900,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ARTIP 1B TRANSITION",
+      "runway": "RWY06",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "ARTIP"
+        },
+        {
+          "fix": "PAM",
+          "lat": 52.333361,
+          "lon": 5.008861
+        },
+        {
+          "fix": "AM617",
+          "lat": 52.333639,
+          "lon": 4.928194
+        },
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "SETWO",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM612",
+          "lat": 52.328167,
+          "lon": 4.375917
+        },
+        {
+          "fix": "SOKSI",
+          "altitude": 4000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM613",
+          "lat": 52.234583,
+          "lon": 4.59575
+        },
+        {
+          "fix": "AM614",
+          "lat": 52.209083,
+          "lon": 4.462556,
+          "altitude": 2900,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "SUGOL 1A TRANSITION",
+      "runway": "RWY06",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "SUGOL"
+        },
+        {
+          "fix": "NETOM"
+        },
+        {
+          "fix": "AM612",
+          "lat": 52.328167,
+          "lon": 4.375917
+        },
+        {
+          "fix": "SOKSI",
+          "altitude": 4000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM613",
+          "lat": 52.234583,
+          "lon": 4.59575
+        },
+        {
+          "fix": "AM614",
+          "lat": 52.209083,
+          "lon": 4.462556,
+          "altitude": 2900,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RIVER 1A TRANSITION",
+      "runway": "RWY06",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "RIVER"
+        },
+        {
+          "fix": "PORWA"
+        },
+        {
+          "fix": "AM610",
+          "lat": 52.205361,
+          "lon": 4.221583
+        },
+        {
+          "fix": "SOKSI",
+          "altitude": 4000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM613",
+          "lat": 52.234583,
+          "lon": 4.59575
+        },
+        {
+          "fix": "AM614",
+          "lat": 52.209083,
+          "lon": 4.462556,
+          "altitude": 2900,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ARTIP 1A TRANSITION",
+      "runway": "RWY06",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "ARTIP"
+        },
+        {
+          "fix": "PAM",
+          "lat": 52.333361,
+          "lon": 5.008861
+        },
+        {
+          "fix": "AM617",
+          "lat": 52.333639,
+          "lon": 4.928194
+        },
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "SETWO",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM612",
+          "lat": 52.328167,
+          "lon": 4.375917
+        },
+        {
+          "fix": "SOKSI",
+          "altitude": 4000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM613",
+          "lat": 52.234583,
+          "lon": 4.59575
+        },
+        {
+          "fix": "AM614",
+          "lat": 52.209083,
+          "lon": 4.462556,
+          "altitude": 2900,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "SUGOL 1H TRANSITION",
+      "runway": "RWY18C",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "SUGOL"
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM608",
+          "lat": 52.293389,
+          "lon": 4.289056,
+          "altitude": 3400,
+          "constraint": "at"
+        },
+        {
+          "fix": "SIDNI"
+        }
+      ]
+    },
+    {
+      "name": "RIVER 1H TRANSITION",
+      "runway": "RWY18C",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "RIVER"
+        },
+        {
+          "fix": "PORWA"
+        },
+        {
+          "fix": "AM627",
+          "lat": 52.583889,
+          "lon": 4.646889
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM608",
+          "lat": 52.293389,
+          "lon": 4.289056,
+          "altitude": 3400,
+          "constraint": "at"
+        },
+        {
+          "fix": "SIDNI"
+        }
+      ]
+    },
+    {
+      "name": "ARTIP 1H TRANSITION",
+      "runway": "RWY18C",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "ARTIP"
+        },
+        {
+          "fix": "WINJA",
+          "altitude": "FL100",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM602",
+          "lat": 52.539417,
+          "lon": 4.728139,
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM603",
+          "lat": 52.688278,
+          "lon": 4.680083
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM608",
+          "lat": 52.293389,
+          "lon": 4.289056,
+          "altitude": 3400,
+          "constraint": "at"
+        },
+        {
+          "fix": "SIDNI"
+        }
+      ]
+    },
+    {
+      "name": "SUGOL 1G TRANSITION",
+      "runway": "RWY18C",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "SUGOL"
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM126",
+          "lat": 52.555306,
+          "lon": 4.708389,
+          "altitude": 3400,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM128",
+          "lat": 52.505556,
+          "lon": 4.729556
+        }
+      ]
+    },
+    {
+      "name": "RIVER 1G TRANSITION",
+      "runway": "RWY18C",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "RIVER"
+        },
+        {
+          "fix": "PORWA"
+        },
+        {
+          "fix": "AM627",
+          "lat": 52.583889,
+          "lon": 4.646889
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM126",
+          "lat": 52.555306,
+          "lon": 4.708389,
+          "altitude": 3400,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM128",
+          "lat": 52.505556,
+          "lon": 4.729556
+        }
+      ]
+    },
+    {
+      "name": "ARTIP 1G TRANSITION",
+      "runway": "RWY18C",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "ARTIP"
+        },
+        {
+          "fix": "WINJA",
+          "altitude": "FL100",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM602",
+          "lat": 52.539417,
+          "lon": 4.728139,
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM603",
+          "lat": 52.688278,
+          "lon": 4.680083
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM126",
+          "lat": 52.555306,
+          "lon": 4.708389,
+          "altitude": 3400,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM128",
+          "lat": 52.505556,
+          "lon": 4.729556
+        }
+      ]
+    },
+    {
+      "name": "SUGOL 1D TRANSITION",
+      "runway": "RWY18R",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "SUGOL"
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM608",
+          "lat": 52.293389,
+          "lon": 4.289056,
+          "altitude": 3400,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RIVER 1D TRANSITION",
+      "runway": "RWY18R",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "RIVER"
+        },
+        {
+          "fix": "PORWA"
+        },
+        {
+          "fix": "AM627",
+          "lat": 52.583889,
+          "lon": 4.646889
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM608",
+          "lat": 52.293389,
+          "lon": 4.289056,
+          "altitude": 3400,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ARTIP 1D TRANSITION",
+      "runway": "RWY18R",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "ARTIP"
+        },
+        {
+          "fix": "WINJA",
+          "altitude": "FL100",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM602",
+          "lat": 52.539417,
+          "lon": 4.728139,
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM603",
+          "lat": 52.688278,
+          "lon": 4.680083
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM608",
+          "lat": 52.293389,
+          "lon": 4.289056,
+          "altitude": 3400,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "SUGOL 1C TRANSITION",
+      "runway": "RWY18R",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "SUGOL"
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM133",
+          "lat": 52.486444,
+          "lon": 4.723278,
+          "altitude": 3400,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RIVER 1C TRANSITION",
+      "runway": "RWY18R",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "RIVER"
+        },
+        {
+          "fix": "PORWA"
+        },
+        {
+          "fix": "AM627",
+          "lat": 52.583889,
+          "lon": 4.646889
+        },
+        {
+          "fix": "NETOM",
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM133",
+          "lat": 52.486444,
+          "lon": 4.723278,
+          "altitude": 3400,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ARTIP 1C TRANSITION",
+      "runway": "RWY18R",
+      "approach": "RNP",
+      "waypoints": [
+        {
+          "fix": "ARTIP"
+        },
+        {
+          "fix": "WINJA",
+          "altitude": "FL100",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM602",
+          "lat": 52.539417,
+          "lon": 4.728139,
+          "altitude": "FL070",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM603",
+          "lat": 52.688278,
+          "lon": 4.680083
+        },
+        {
+          "fix": "NIRSI",
+          "altitude": "FL055",
+          "constraint": "at"
+        },
+        {
+          "fix": "AM607",
+          "lat": 52.688139,
+          "lon": 4.513361
+        },
+        {
+          "fix": "AM133",
+          "lat": 52.486444,
+          "lon": 4.723278,
+          "altitude": 3400,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ARTIP 2X TRANSITION",
+      "runway": "RWY36R",
+      "approach": "ILS",
+      "waypoints": [
+        {
+          "fix": "ARTIP",
+          "altitude": "FL070-FL100",
+          "constraint": "between"
+        },
+        {
+          "fix": "INBAM"
+        },
+        {
+          "fix": "AM665",
+          "lat": 52.24625,
+          "lon": 5.041583
+        },
+        {
+          "fix": "AM667",
+          "lat": 52.110583,
+          "lon": 4.9095
+        },
+        {
+          "fix": "AM668",
+          "lat": 52.110639,
+          "lon": 4.801361
+        },
+        {
+          "fix": "AM669",
+          "lat": 52.155222,
+          "lon": 4.764833,
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sids": 82,
+    "stars": 10,
+    "star_transitions": 19
+  }
+}

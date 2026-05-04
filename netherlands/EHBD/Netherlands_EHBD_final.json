@@ -1,0 +1,452 @@
+{
+  "icao": "EHBD",
+  "name": "Weert/Budel",
+  "frequencies": {
+    "tower": [
+      "134.105"
+    ],
+    "approach": [
+      "134.480"
+    ],
+    "afis": [
+      "122.155"
+    ],
+    "mil_info": [
+      "125.930",
+      "132.350"
+    ],
+    "emergency": [
+      "121.500"
+    ]
+  },
+  "sids": [
+    {
+      "name": "ABNED 2G",
+      "runway": "RWY03",
+      "waypoints": [
+        "ABNED",
+        "HAMZA",
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD544"
+      ]
+    },
+    {
+      "name": "PESER 2G",
+      "runway": "RWY03",
+      "waypoints": [
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD544"
+      ]
+    },
+    {
+      "name": "TULIP 3G",
+      "runway": "RWY03",
+      "waypoints": [
+        "TULIP",
+        "HAMZA",
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD544"
+      ]
+    },
+    {
+      "name": "WOODY 3G",
+      "runway": "RWY03",
+      "waypoints": [
+        "WOODY",
+        "RONSA",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD544"
+      ]
+    },
+    {
+      "name": "INKET 3G",
+      "runway": "RWY03",
+      "waypoints": [
+        "INKET",
+        "EHOJI",
+        "YOGCE",
+        "BD544"
+      ]
+    },
+    {
+      "name": "TENLI 2G",
+      "runway": "RWY03",
+      "waypoints": [
+        "TENLI",
+        "NIHOF",
+        "BASGU",
+        "BD540",
+        "BD541"
+      ]
+    },
+    {
+      "name": "OSGOS 2G",
+      "runway": "RWY03",
+      "waypoints": [
+        "OSGOS",
+        "SOPVI",
+        "BD541"
+      ]
+    },
+    {
+      "name": "LNO 4G",
+      "runway": "RWY03",
+      "waypoints": [
+        "LNO",
+        "EDUMA",
+        "OSGOS",
+        "SOPVI",
+        "BD541"
+      ]
+    },
+    {
+      "name": "DIBIR 3G",
+      "runway": "RWY03",
+      "waypoints": [
+        "LMA",
+        "DIBIR",
+        "BD540",
+        "BD541"
+      ]
+    },
+    {
+      "name": "ABNED 2H",
+      "runway": "RWY21",
+      "waypoints": [
+        "ABNED",
+        "HAMZA",
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD545"
+      ]
+    },
+    {
+      "name": "PESER 2H",
+      "runway": "RWY21",
+      "waypoints": [
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD545"
+      ]
+    },
+    {
+      "name": "TULIP 3H",
+      "runway": "RWY21",
+      "waypoints": [
+        "TULIP",
+        "HAMZA",
+        "PESER",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD545"
+      ]
+    },
+    {
+      "name": "WOODY 3H",
+      "runway": "RWY21",
+      "waypoints": [
+        "WOODY",
+        "RONSA",
+        "BREDA",
+        "EHOJI",
+        "YOGCE",
+        "BD545"
+      ]
+    },
+    {
+      "name": "INKET 3H",
+      "runway": "RWY21",
+      "waypoints": [
+        "INKET",
+        "EHOJI",
+        "YOGCE",
+        "BD545"
+      ]
+    },
+    {
+      "name": "TENLI 2H",
+      "runway": "RWY21",
+      "waypoints": [
+        "TENLI",
+        "NIHOF",
+        "BASGU",
+        "BD540",
+        "BD541"
+      ]
+    },
+    {
+      "name": "OSGOS 2H",
+      "runway": "RWY21",
+      "waypoints": [
+        "OSGOS",
+        "SOPVI",
+        "BD541"
+      ]
+    },
+    {
+      "name": "LNO 4H",
+      "runway": "RWY21",
+      "waypoints": [
+        "LNO",
+        "EDUMA",
+        "OSGOS",
+        "SOPVI",
+        "BD541"
+      ]
+    },
+    {
+      "name": "DIBIR 3H",
+      "runway": "RWY21",
+      "waypoints": [
+        "LMA",
+        "DIBIR",
+        "BD540",
+        "BD541"
+      ]
+    }
+  ],
+  "stars": [
+    {
+      "name": "TOPPA 4U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "TOPPA",
+        "HAMZA",
+        "TUPAK",
+        "LIKDO",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "MOLIX 4U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "MOLIX",
+        "HAMZA",
+        "TUPAK",
+        "LIKDO",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "LAMSO 4U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "LAMSO",
+        "HAMZA",
+        "TUPAK",
+        "LIKDO",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "REDFA 4U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "REDFA",
+        "HAMZA",
+        "TUPAK",
+        "LIKDO",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "DENUT 2U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "DENUT",
+        "RIMBU",
+        "TUPAK",
+        "LIKDO",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "HELEN 6U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "HELEN",
+        "RIMBU",
+        "TUPAK",
+        "LIKDO",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "INKET 3U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "INKET",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "TENLI 3U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "TENLI",
+        "NIHOF",
+        "BASGU",
+        "RUMER",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "LOPIK 3U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "LOPIK",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "LNO 3U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "LNO",
+        "EDUMA",
+        "OSGOS",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "LMA 2U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "LMA",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "COA 5U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "COA",
+        "RIMBU",
+        "TUPAK",
+        "LIKDO",
+        "IPTAS",
+        "EHOJI",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "OSGOS 1U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "OSGOS",
+        "BUDIP"
+      ]
+    },
+    {
+      "name": "RUMER 2U",
+      "runway": "ALL",
+      "iaf": "BUDIP",
+      "waypoints": [
+        "RUMER",
+        "BUDIP"
+      ]
+    }
+  ],
+  "iaps": [
+    {
+      "name": "RNP RWY21",
+      "runway": "RWY21",
+      "waypoints": [
+        {
+          "fix": "BUDIP"
+        },
+        {
+          "fix": "BD373",
+          "lat": 51.234167,
+          "lon": 5.656333,
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "BD374",
+          "lat": 51.200167,
+          "lon": 5.676306,
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR21"
+        },
+        {
+          "fix": "BD375",
+          "lat": 51.259972,
+          "lon": 5.683194,
+          "altitude": 700,
+          "constraint": "at"
+        },
+        {
+          "fix": "BD376",
+          "lat": 51.265722,
+          "lon": 5.560194,
+          "altitude": 1200,
+          "constraint": "at"
+        },
+        {
+          "fix": "BD377",
+          "lat": 51.357972,
+          "lon": 5.878944,
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "BUDIP"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sids": 18,
+    "stars": 14,
+    "iaps": 1
+  }
+}

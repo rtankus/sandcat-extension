@@ -329,6 +329,12 @@ function writeIfChanged(key, reason) {
       return false;
     }
 
+    // Respect the "auto-open details panel" toggle
+    const { lbx_settings } = await new Promise(resolve =>
+      chrome.storage.local.get(["lbx_settings"], resolve)
+    );
+    if (!(lbx_settings?.autodetails ?? true)) return false;
+
     // Cooldown
     const now = Date.now();
     if (now - lastClickTs < CLICK_COOLDOWN_MS) return false;
@@ -514,6 +520,13 @@ function watchDataRowChange() {
   }
 }
 setInterval(watchDataRowChange, 500);
+
+window.addEventListener('message', (e) => {
+  if (e.source !== window) return;
+  if (e.data?.source !== 'sc_lb_fetch') return;
+  const key = e.data.globalKey;
+  if (key) writeIfChanged(key, 'fetch_intercept');
+});
 })();
 
 function grabCurrentGlobalKey() {

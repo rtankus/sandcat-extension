@@ -23,3 +23,22 @@ EventTarget.prototype.addEventListener = function(type, fn, opts) {
   }
   return _origAdd.call(this, type, fn, opts);
 };
+
+(function() {
+  if (window.__scFetchGK) return;
+  window.__scFetchGK = true;
+
+  const KEY_REGEX = /\b[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*-(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-\d{1,2}-\d{4}-\d{4}Z_\d+_[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*\.wav\b|\b\d{6}_\d{4}_\d+\.wav\b|\b[A-Za-z]{2,4}-\d{14}_\d+_[A-Za-z0-9]+(?:_[A-Za-z0-9]+)*\.wav\b/i;
+
+  const _orig = window.fetch;
+  window.fetch = function(input, init) {
+    const p = _orig.apply(this, arguments);
+    p.then(r => r.clone().text()).then(text => {
+      const gk = text.match(/"globalKey"\s*:\s*"([^"]+)"/);
+      if (!gk) return;
+      const wav = gk[1].match(KEY_REGEX);
+      if (wav) window.postMessage({ source: 'sc_lb_fetch', globalKey: wav[0] }, '*');
+    }).catch(() => {});
+    return p;
+  };
+})();

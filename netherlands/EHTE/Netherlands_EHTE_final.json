@@ -1,0 +1,59 @@
+{
+  "icao": "EHTE",
+  "name": "Deventer/Teuge",
+  "frequencies": {
+    "ad_info": [
+      "121.005"
+    ],
+    "fis": [
+      "128.355"
+    ],
+    "mil_info": [
+      "132.350"
+    ],
+    "emergency": [
+      "121.500"
+    ]
+  },
+  "sids": [],
+  "stars": [],
+  "iaps": [
+    {
+      "name": "RNP RWY26",
+      "runway": "RWY26",
+      "waypoints": [
+        {
+          "fix": "DEVUT",
+          "lat": 52.252611,
+          "lon": 6.273444,
+          "altitude": 3000,
+          "constraint": "at"
+        },
+        {
+          "fix": "TE400",
+          "lat": 52.2515,
+          "lon": 6.103528,
+          "altitude": 3000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR26",
+          "lat": 52.242672,
+          "lon": 6.059058
+        },
+        {
+          "fix": "TE401",
+          "lat": 52.241444,
+          "lon": 6.017139,
+          "altitude": 3000,
+          "constraint": "at"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "sids": 0,
+    "stars": 0,
+    "iaps": 1
+  }
+}

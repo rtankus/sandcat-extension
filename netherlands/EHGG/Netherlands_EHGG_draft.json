@@ -1,0 +1,495 @@
+{
+  "icao": "EHGG",
+  "name": "Groningen/Eelde",
+  "frequencies": {
+    "approach": [
+      "120.305"
+    ],
+    "tower": [
+      "118.705",
+      "119.705"
+    ],
+    "delivery": [
+      "121.705"
+    ],
+    "atis": [
+      "133.555"
+    ],
+    "emergency": [
+      "121.500"
+    ]
+  },
+  "sids": [
+    {
+      "name": "TEMLU 2C",
+      "runway": "RWY05",
+      "waypoints": [
+        "TEMLU",
+        "EEL"
+      ]
+    },
+    {
+      "name": "OLWOF 1C",
+      "runway": "RWY05",
+      "waypoints": [
+        "OLWOF",
+        "EEL"
+      ]
+    },
+    {
+      "name": "DOBAK 2C",
+      "runway": "RWY05",
+      "waypoints": [
+        "DOBAK",
+        "EEL"
+      ]
+    },
+    {
+      "name": "ENKOS 4C",
+      "runway": "RWY05",
+      "waypoints": [
+        "ENKOS",
+        "OSTIR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "ROLDU 4C",
+      "runway": "RWY05",
+      "waypoints": [
+        "ROLDU",
+        "OSTIR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "NOVEN 3C",
+      "runway": "RWY05",
+      "waypoints": [
+        "NOVEN",
+        "ARTIP",
+        "ROLDU",
+        "OSTIR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "NAPRO 3C",
+      "runway": "RWY05",
+      "waypoints": [
+        "NAPRO",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "RUMER 4C",
+      "runway": "RWY05",
+      "waypoints": [
+        "RUMER",
+        "BAGSU",
+        "NIHOF",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "SONEB 4C",
+      "runway": "RWY05",
+      "waypoints": [
+        "SONEB",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "TEBRO 4C",
+      "runway": "RWY05",
+      "waypoints": [
+        "TEBRO",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "SPY 4C",
+      "runway": "RWY05",
+      "waypoints": [
+        "SPY",
+        "GG528",
+        "OSTIR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "PAM 4C",
+      "runway": "RWY05",
+      "waypoints": [
+        "PAM",
+        "GG528",
+        "OSTIR",
+        "GG527",
+        "GG516",
+        "EEL"
+      ]
+    },
+    {
+      "name": "TEMLU 3D",
+      "runway": "RWY23",
+      "waypoints": [
+        "TEMLU",
+        "EEL"
+      ]
+    },
+    {
+      "name": "OLWOF 1D",
+      "runway": "RWY23",
+      "waypoints": [
+        "OLWOF",
+        "EEL"
+      ]
+    },
+    {
+      "name": "DOBAK 3D",
+      "runway": "RWY23",
+      "waypoints": [
+        "DOBAK",
+        "GG536",
+        "GG535"
+      ]
+    },
+    {
+      "name": "ENKOS 2D",
+      "runway": "RWY23",
+      "waypoints": [
+        "ENKOS",
+        "DIVPA",
+        "GG529",
+        "GG530"
+      ]
+    },
+    {
+      "name": "ROLDU 2D",
+      "runway": "RWY23",
+      "waypoints": [
+        "ROLDU",
+        "OSTIR",
+        "GG532",
+        "GG529"
+      ]
+    },
+    {
+      "name": "NOVEN 2D",
+      "runway": "RWY23",
+      "waypoints": [
+        "NOVEN",
+        "ARTIP",
+        "ROLDU",
+        "OSTIR",
+        "GG532",
+        "GG529"
+      ]
+    },
+    {
+      "name": "NAPRO 2D",
+      "runway": "RWY23",
+      "waypoints": [
+        "NAPRO",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG529"
+      ]
+    },
+    {
+      "name": "RUMER 3D",
+      "runway": "RWY23",
+      "waypoints": [
+        "RUMER",
+        "BASGU",
+        "NIHOF",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG529"
+      ]
+    },
+    {
+      "name": "SONEB 3D",
+      "runway": "RWY23",
+      "waypoints": [
+        "SONEB",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG529"
+      ]
+    },
+    {
+      "name": "TEBRO 3D",
+      "runway": "RWY23",
+      "waypoints": [
+        "TEBRO",
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "GG527",
+        "GG529"
+      ]
+    },
+    {
+      "name": "SPY 2D",
+      "runway": "RWY23",
+      "waypoints": [
+        "SPY",
+        "ENKOS",
+        "DIVPA",
+        "GG530",
+        "GG529"
+      ]
+    },
+    {
+      "name": "PAM 3D",
+      "runway": "RWY23",
+      "waypoints": [
+        "PAM",
+        "GG528",
+        "OSTIR",
+        "GG532",
+        "GG529"
+      ]
+    }
+  ],
+  "stars": [
+    {
+      "name": "TEMLU 2G",
+      "runway": "ALL",
+      "iaf": "HECTI",
+      "waypoints": [
+        "TEMLU",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "OLWOF 1G",
+      "runway": "ALL",
+      "iaf": "HECTI",
+      "waypoints": [
+        "OLWOF",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "KUBAT 2G",
+      "runway": "ALL",
+      "iaf": "HECTI",
+      "waypoints": [
+        "KUBAT",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "DOBAK 2G",
+      "runway": "ALL",
+      "iaf": "HECTI",
+      "waypoints": [
+        "DOBAK",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "TENLI 2G",
+      "runway": "ALL",
+      "iaf": "HECTI",
+      "waypoints": [
+        "TENLI",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "EEL",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "GRONY 2G",
+      "runway": "ALL",
+      "iaf": "TOLKO",
+      "waypoints": [
+        "GRONY",
+        "TOLKO",
+        "OMFAR",
+        "EEL",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "OSTIR 2G",
+      "runway": "ALL",
+      "iaf": "HECTI",
+      "waypoints": [
+        "OSTIR",
+        "OMFAR",
+        "EEL",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "RKN 2G",
+      "runway": "ALL",
+      "iaf": "TOLKO",
+      "waypoints": [
+        "RKN",
+        "GG522",
+        "GG521",
+        "VEROR",
+        "OMFAR",
+        "EEL",
+        "HECTI"
+      ]
+    }
+  ],
+  "iaps": [
+    {
+      "name": "RNP RWY05",
+      "runway": "RWY05",
+      "waypoints": [
+        "TUVOX",
+        "OMFAR",
+        "GG509",
+        "BANDU",
+        "THR05",
+        "GG751",
+        "OMFAR"
+      ],
+      "transitions": {
+        "AMREG": [
+          "AMREG",
+          "TUVOX"
+        ],
+        "VEXAR": [
+          "VEXAR",
+          "TUVOX"
+        ]
+      }
+    },
+    {
+      "name": "VOR RWY05",
+      "runway": "RWY05",
+      "waypoints": [
+        "OMFAR",
+        "BANDU",
+        "GG511",
+        "THR05",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "ILS/LOC RWY23",
+      "runway": "RWY23",
+      "waypoints": [
+        "SIPLO",
+        "HECTI",
+        "GG512",
+        "LARBO",
+        "THR23"
+      ],
+      "transitions": {
+        "IDAKA": [
+          "IDAKA",
+          "SIPLO"
+        ],
+        "XOMBI": [
+          "XOMBI",
+          "SIPLO"
+        ]
+      }
+    },
+    {
+      "name": "ILS RWY23 TOLKO 2G APPROACH",
+      "runway": "RWY23",
+      "waypoints": [
+        "TOLKO",
+        "GETSI",
+        "GG740",
+        "GG741",
+        "GG742",
+        "GG512",
+        "LARBO",
+        "THR23",
+        "HECTI"
+      ]
+    },
+    {
+      "name": "RNP RWY23",
+      "runway": "RWY23",
+      "waypoints": [
+        "SIPLO",
+        "GG512",
+        "LARBO",
+        "THR23",
+        "GG752",
+        "HECTI"
+      ],
+      "transitions": {
+        "IDAKA": [
+          "IDAKA",
+          "SIPLO"
+        ],
+        "XOMBI": [
+          "XOMBI",
+          "SIPLO"
+        ]
+      }
+    },
+    {
+      "name": "VOR RWY23",
+      "runway": "RWY23",
+      "waypoints": [
+        "HECTI",
+        "GG513",
+        "abeam LARBO",
+        "THR23"
+      ]
+    }
+  ],
+  "counts": {
+    "sids": 24,
+    "stars": 8,
+    "iaps": 6
+  }
+}

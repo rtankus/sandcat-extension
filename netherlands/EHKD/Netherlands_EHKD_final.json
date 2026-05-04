@@ -1,0 +1,638 @@
+{
+  "icao": "EHKD",
+  "name": "Den Helder/De Kooy",
+  "frequencies": {
+    "arrival": [
+      "124.230"
+    ],
+    "tower": [
+      "120.130",
+      "122.100"
+    ],
+    "ground": [
+      "121.730"
+    ],
+    "atis": [
+      "133.010"
+    ],
+    "emergency": [
+      "121.500"
+    ]
+  },
+  "sids": [
+    {
+      "name": "ATRIX 3N",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD401",
+        "KD402",
+        "KD405",
+        "ATRIX"
+      ]
+    },
+        {
+      "name": "ATRIX 3L",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD401",
+        "KD402",
+        "KD403",
+        "ATRIX"
+      ]
+    },
+    {
+      "name": "GIKOV 3L",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD401",
+        "KD402",
+        "KD403",
+        "KD404",
+        "GIKOV"
+      ]
+    },
+    {
+      "name": "KOLAV 3L",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD401",
+        "KD402",
+        "KD403",
+        "KD404",
+        "KOLAV"
+      ]
+    },
+    {
+      "name": "PEROR 3L",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD408",
+        "PEROR"
+      ]
+    },
+    {
+      "name": "NEXAR 3L",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD408",
+        "HDR",
+        "NEXAR"
+      ]
+    },
+    {
+      "name": "LERGO 3L",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD408",
+        "HDR",
+        "KD406",
+        "LERGO"
+      ]
+    },
+    {
+      "name": "NAKON 3L",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        "KD400",
+        "KD408",
+        "HDR",
+        "KD406",
+        "NAKON"
+      ]
+    },
+    {
+      "name": "ATRIX 3M",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "HDR",
+        "KD407",
+        "ATRIX"
+      ]
+    },
+    {
+      "name": "GIKOV 3M",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "HDR",
+        "KD407",
+        "GIKOV"
+      ]
+    },
+    {
+      "name": "KOLAV 3M",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "HDR",
+        "KD407",
+        "KOLAV"
+      ]
+    },
+    {
+      "name": "LERGO 3M",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "HDR",
+        "KD407",
+        "LERGO"
+      ]
+    },
+    {
+      "name": "NAKON 3M",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "KD407",
+        "NAKON"
+      ]
+    },
+    {
+      "name": "NEXAR 3M",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "HDR",
+        "KD407",
+        "NEXAR"
+      ]
+    },
+    {
+      "name": "PEROR 4M",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "HDR",
+        "PEROR"
+      ]
+    },
+    {
+      "name": "ATRIX 4P",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "KD401",
+        "KD402",
+        "KD403",
+        "ATRIX"
+      ]
+    },
+    {
+      "name": "GIKOV 4P",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "KD401",
+        "KD402",
+        "KD403",
+        "KD404",
+        "GIKOV"
+      ]
+    },
+    {
+      "name": "KOLAV 4P",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "KD401",
+        "KD402",
+        "KD403",
+        "KD404",
+        "KOLAV"
+      ]
+    },
+    {
+      "name": "ATRIX 4Q",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        "KD401",
+        "KD402",
+        "KD405",
+        "ATRIX"
+      ]
+    }
+  ],
+  "stars": [
+    {
+      "name": "ATRIX 2H",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "waypoints": [
+        "ATRIX",
+        "HDR"
+      ]
+    },
+    {
+      "name": "GIKOV 2H",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "waypoints": [
+        "GIKOV",
+        "HDR"
+      ]
+    },
+    {
+      "name": "KOLAV 2H",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "waypoints": [
+        "KOLAV",
+        "HDR"
+      ]
+    },
+    {
+      "name": "LERGO 2H",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "waypoints": [
+        "LERGO",
+        "HDR"
+      ]
+    },
+    {
+      "name": "NAKON 1H",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "waypoints": [
+        "NAKON",
+        "HDR"
+      ]
+    },
+    {
+      "name": "NEXAR 1H",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "waypoints": [
+        "NEXAR",
+        "HDR"
+      ]
+    },
+    {
+      "name": "PEROR 2H",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "waypoints": [
+        "PEROR",
+        "HDR"
+      ]
+    },
+    {
+      "name": "ATRIX 2J",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "condition": "STAR when activities in EHR8",
+      "waypoints": [
+        "ATRIX",
+        "BUROG",
+        "BAKLU",
+        "HDR"
+      ]
+    },
+    {
+      "name": "GIKOV 2J",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "condition": "STAR when activities in EHR8",
+      "waypoints": [
+        "GIKOV",
+        "BAKLU",
+        "HDR"
+      ]
+    },
+    {
+      "name": "KOLAV 2J",
+      "runway": "ALL",
+      "category": "CAT H",
+      "iaf": "HDR",
+      "condition": "STAR when activities in EHR8",
+      "waypoints": [
+        "KOLAV",
+        "BAKLU",
+        "HDR"
+      ]
+    }
+  ],
+  "iaps": [
+    {
+      "name": "RNP Z RWY03",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        {
+          "fix": "EDFOS",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "KD442",
+          "altitude": 2000,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "HDR"
+        },
+        {
+          "fix": "KD444"
+        },
+        {
+          "fix": "HDR"
+        }
+      ],
+      "transitions": {
+        "NIXCO": [
+          {
+            "fix": "NIXCO",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "EDFOS"
+          }
+        ],
+        "ASTUW": [
+          {
+            "fix": "ASTUW",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KD440",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KD441",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "EDFOS"
+          }
+        ],
+        "HDR": [
+          {
+            "fix": "HDR",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KD440",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "ASTUW",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KD441"
+          },
+          { "fix": "EDFOS" }
+        ]
+      }
+    },
+    {
+      "name": "RNP Y RWY03",
+      "runway": "RWY03",
+      "category": "CAT H",
+      "waypoints": [
+        {
+          "fix": "KOPFA",
+          "altitude": 1200,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "KD445",
+          "altitude": 1200,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR03"
+        },
+        {
+          "fix": "KD444"
+        },
+        {
+          "fix": "HDR"
+        }
+      ],
+      "transitions": {
+        "TAFTU": [
+          {
+            "fix": "TAFTU",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KOPFA"
+          }
+        ],
+        "NOFUD": [
+          {
+            "fix": "NOFUD",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KOPFA"
+          }
+        ],
+        "FEWEX": [
+          {
+            "fix": "FEWEX",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KOPFA"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ILS/LOC RWY21",
+      "runway": "RWY21",
+      "waypoints": [
+        {
+          "fix": "ZOJIK",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR21"
+        },
+        {"fix": "HDR"}
+      ]
+    },
+    {
+      "name": "RNP Z RWY21",
+      "runway": "RWY21",
+      "waypoints": [
+        {
+          "fix": "ZOJIK",
+          "altitude": 1700,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "KD452",
+          "altitude": 1700,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR21"
+        },
+        {
+          "fix": "KD453"
+        },
+        {
+          "fix": "HDR"
+        }
+      ],
+      "transitions": {
+        "FAFLO": [
+          {
+            "fix": "FAFLO",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "ZOJIK"
+          }
+        ],
+        "PUFLA": [
+          {
+            "fix": "PUFLA",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KD451",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "ZOJIK"
+          }
+        ],
+        "JOPFI": [
+          {
+            "fix": "JOPFI",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "ZOJIK"
+          }
+        ],
+        "HDR": [
+          {
+            "fix": "YOJUP",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {"fix": "HDR"},
+          {"fix": "JOPFI"},
+          {
+            "fix": "ZOJIK"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RNP Y RWY21",
+      "runway": "RWY21",
+      "category": "CAT H",
+      "waypoints": [
+        {
+          "fix": "HOXZA",
+          "altitude": 1200,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "KD455",
+          "altitude": 1200,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR21"
+        },
+        {
+          "fix": "KD453"
+        },
+        {
+          "fix": "HDR"
+        }
+      ],
+      "transitions": {
+        "LOCFU": [
+          {
+            "fix": "LOCFU",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "KD454",
+            "altitude": 1500,
+            "constraint": "at"
+          },
+          {
+            "fix": "HOXZA"
+          }
+        ],
+        "GOHEM": [
+          {
+            "fix": "GOHEM",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "HOXZA"
+          }
+        ],
+        "YOJUP": [
+          {
+            "fix": "YOJUP",
+            "altitude": 2000,
+            "constraint": "at"
+          },
+          {
+            "fix": "HOXZA"
+          }
+        ]
+      }
+    }
+  ],
+  "counts": {
+    "sids": 18,
+    "stars": 10,
+    "iaps": 5
+  }
+}

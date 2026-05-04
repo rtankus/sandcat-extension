@@ -61,6 +61,12 @@ window.addEventListener("message", async (event) => {
   const msg = event.data;
   if (!msg) return;
 
+  if (msg.type === "GK_OVERLAY_VISIBLE") {
+    const btn = document.getElementById("showGkBtn");
+    if (btn) btn.style.display = msg.visible ? "none" : "";
+    return;
+  }
+
   if (msg.type === "ROUTE_FIX_STREAM") {
     if (ACTIVE_ROUTE_RENDER > 0) return;
 
@@ -153,6 +159,9 @@ const $ = (id) => document.getElementById(id);
 
 let LAST_RESULTS = [];
 let LAST_CENTER = "";
+let LAST_CENTER_LAT = null;
+let LAST_CENTER_LON = null;
+let LAST_RADIUS_NM = 25;
 let MASTER_RESULTS = [];
 let WAYPOINT_SEARCH_TOKEN = 0;
 let waypointDebounce = null;
@@ -516,7 +525,8 @@ function cleanAusProcName(name) {
     .replace(/\bALPHA\b/gi, "ALFA")
 
     // remove runway clutter
-    .replace(/\s*-\s*RUNWAYS.*$/i, "")
+    .replace(/\s*-\s*(?:ALL\s+)?RUNWAYS.*$/i, "")
+    .replace(/\s+RWY\s+[\d]{2}[LRC]?(?:\/[\d]{2}[LRC]?)*/i, "")
 
     // clean spacing
     .replace(/\s+/g, " ")
@@ -724,10 +734,16 @@ function normalizeRwy(s) {
   return v || null;
 }
 
-function parseRunwayFromApproachName(name) {
-  // Matches "... RWY 17C ..." or "... RWY 4 ..." etc.
-  const m = String(name || "").toUpperCase().match(/\bRWY\s+(\d{1,2}[LRC]?)/);
-  return m ? normalizeRwy(m[1]) : null;
+function parseRunwaysFromApproachName(name) {
+  const m = String(name || "").toUpperCase()
+    .match(/\bRWY\s+(\d{1,2}[LRC]?)(?:\/([LRC]|\d{1,2}[LRC]?))?/);
+  if (!m) return [];
+  const first = normalizeRwy(m[1]);
+  if (!m[2]) return [first];
+  // Second token is either a bare suffix ("R") or a full designator ("30R")
+  const secondRaw = /^\d/.test(m[2]) ? m[2] : m[1].replace(/[LRC]$/, "") + m[2];
+  const second = normalizeRwy(secondRaw);
+  return second && second !== first ? [first, second] : [first];
 }
 
 function groupApproachesByRunway(approaches) {
@@ -735,13 +751,15 @@ function groupApproachesByRunway(approaches) {
   const other = [];
 
   for (const n of (approaches || [])) {
-    const rwy = parseRunwayFromApproachName(n);
-    if (!rwy) {
+    const rwys = parseRunwaysFromApproachName(n);
+    if (!rwys.length) {
       other.push(n);
       continue;
     }
-    if (!map.has(rwy)) map.set(rwy, []);
-    map.get(rwy).push(n);
+    for (const rwy of rwys) {
+      if (!map.has(rwy)) map.set(rwy, []);
+      map.get(rwy).push(n);
+    }
   }
 
   for (const [k, arr] of map.entries()) {
@@ -1687,7 +1705,7 @@ function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches
   const other = [];
 
   for (const ap of ausApproaches || []) {
-    const rwy = parseRunwayFromApproachName(ap.name);
+    const rwy = parseRunwaysFromApproachName(ap.name)[0] || null;
 
     if (!rwy) {
       other.push(ap);
@@ -1988,6 +2006,14 @@ for (const a of list) {
       a.__eiData = null;
     }
   }
+  if (ident.startsWith("EH") && !a.__nlData) {
+    try {
+      a.__nlData = await getNlProceduresForAirport(ident);
+    } catch (e) {
+      console.warn("Netherlands preload failed:", ident, e);
+      a.__nlData = null;
+    }
+  }
 }
 /* -----------------------------
    IAP FILTER
@@ -2012,7 +2038,9 @@ if (hideNoApp) {
 
     const hasIrelandIap = (a.__eiData?.IAPs?.length || 0) > 0;
 
-    return hasUsIap || hasAusIap || hasSwissIap || hasIrelandIap;
+    const hasNlIap = (a.__nlData?.iaps?.length || 0) > 0;
+
+    return hasUsIap || hasAusIap || hasSwissIap || hasIrelandIap || hasNlIap;
   });
 }
 
@@ -2065,6 +2093,39 @@ if (!eiData && airportIdent.startsWith("EI")) {
     a.__eiData = eiData;
   } catch (e) {
     console.warn("Ireland fetch failed:", airportIdent, e);
+  }
+}
+
+let nlData = a.__nlData || null;
+if (!nlData && airportIdent.startsWith("EH")) {
+  try {
+    nlData = await getNlProceduresForAirport(airportIdent);
+    a.__nlData = nlData;
+  } catch (e) {
+    console.warn("Netherlands fetch failed:", airportIdent, e);
+  }
+}
+
+// Eagerly index NL waypoints into FIX_PROCEDURE_MAP for fuzzy search
+if (nlData) {
+  const nlAllProcs = [
+    ...(nlData.sids || []).map(p => ({ ...p, ptype: "SID" })),
+    ...(nlData.stars || []).map(p => ({ ...p, ptype: "STAR" })),
+    ...(nlData.star_transitions || []).map(p => ({ ...p, ptype: "STAR" })),
+    ...(nlData.iaps || []).map(p => ({ ...p, ptype: "IAP" }))
+  ];
+  for (const proc of nlAllProcs) {
+    const allWps = [...(proc.waypoints || [])];
+    if (proc.transitions) {
+      for (const twps of Object.values(proc.transitions)) allWps.push(...twps);
+    }
+    for (const raw of allWps) {
+      const fx = typeof raw === "string" ? raw.trim().toUpperCase() : String(raw?.fix || "").trim().toUpperCase();
+      if (!fx) continue;
+      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+      const exists = FIX_PROCEDURE_MAP[fx].some(e => e.proc === proc.name && e.airport === airportIdent);
+      if (!exists) FIX_PROCEDURE_MAP[fx].push({ airport: airportIdent, type: proc.ptype, proc: proc.name, procDisplay: proc.name });
+    }
   }
 }
 
@@ -2245,6 +2306,32 @@ if (eiComms.length) {
   }
 }
 
+// 🇳🇱 Netherlands AIP comms
+const nlFreqs = (a.__nlData || nlData)?.frequencies || {};
+const nlCommsFlat = Object.entries(nlFreqs).flatMap(([type, freqs]) =>
+  (Array.isArray(freqs) ? freqs : [freqs]).map(f => ({
+    label: type.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
+    freq: String(f || "").trim()
+  }))
+).filter(c => c.freq);
+if (nlCommsFlat.length) {
+  const nlTitle = document.createElement("div");
+  nlTitle.innerHTML = `<strong>Netherlands AIP</strong>`;
+  nlTitle.style.marginTop = "8px";
+  facilityContent.appendChild(nlTitle);
+  const seenNl = new Set();
+  for (const c of nlCommsFlat) {
+    const key = `${c.label}_${c.freq}`;
+    if (seenNl.has(key)) continue;
+    seenNl.add(key);
+    const div = document.createElement("div");
+    div.className = "facilityItem";
+    div.innerText = `${c.label} — ${c.freq}`;
+    facilityContent.appendChild(div);
+    FACILITY_FREQ_INDEX.push({ freq: c.freq, label: c.label, airport: airportIdent });
+  }
+}
+
     // ✅ Always add OurAirports (dedup later if you want)
     if (ourAirports.length) {
 
@@ -2274,7 +2361,7 @@ if (eiComms.length) {
 
     }
 
-if (!usedAirNav && !ourAirports.length && !ausComms.length && !chComms.length && !eiComms.length) {
+if (!usedAirNav && !ourAirports.length && !ausComms.length && !chComms.length && !eiComms.length && !nlCommsFlat.length) {
   facilityContent.innerHTML = "No facility data found.";
 }
 
@@ -2325,11 +2412,9 @@ for (const p of deps) {
 }
 
 if (ausData?.procedures) {
-  for (const [name, fixes] of Object.entries(ausData.procedures)) {
-    if (/^SID\b/i.test(name)) {
-      dpWrap.appendChild(ausProcChip(name, fixes, "SID"));
-    }
-  }
+  const ausDpWrap = document.createElement("div");
+  renderAusProcsByRunway(ausDpWrap, ausData.procedures, "SID");
+  if (ausDpWrap.children.length) dpWrap.appendChild(ausDpWrap);
 }
 
 for (const sid of (chData?.procedures?.sids || [])) {
@@ -2337,6 +2422,8 @@ for (const sid of (chData?.procedures?.sids || [])) {
 }
 
 renderIrelandProcsByRunway(dpWrap, eiData?.SIDs || [], "SID");
+
+renderNlProcsByRunway(dpWrap, nlData?.sids || [], "SID");
 
 if (!deps.length && !dpWrap.children.length) {
   dpWrap.textContent = "(none found)";
@@ -2361,11 +2448,9 @@ for (const p of arrs) {
 }
 
 if (ausData?.procedures) {
-  for (const [name, fixes] of Object.entries(ausData.procedures)) {
-    if (/^STAR\b/i.test(name)) {
-      stWrap.appendChild(ausProcChip(name, fixes, "STAR"));
-    }
-  }
+  const ausStWrap = document.createElement("div");
+  renderAusProcsByRunway(ausStWrap, ausData.procedures, "STAR");
+  if (ausStWrap.children.length) stWrap.appendChild(ausStWrap);
 }
 
 for (const star of (chData?.procedures?.stars || [])) {
@@ -2373,6 +2458,18 @@ for (const star of (chData?.procedures?.stars || [])) {
 }
 
 renderIrelandProcsByRunway(stWrap, eiData?.STARs || [], "STAR");
+
+{
+  // NL STARs + EHAM star_transitions (treated as STARs)
+  const nlStars = nlData?.stars || [];
+  const nlStarTrans = (nlData?.star_transitions || []).map(t => ({
+    name: t.name || "(transition)",
+    runway: t.runway || "ALL",
+    waypoints: t.waypoints || [],
+    iaf: t.iaf || null
+  }));
+  renderNlProcsByRunway(stWrap, [...nlStars, ...nlStarTrans], "STAR");
+}
 
 if (!arrs.length && !stWrap.children.length) {
   stWrap.textContent = "(none found)";
@@ -2445,6 +2542,8 @@ if (chData?.procedures?.approaches?.length) {
 
 renderIrelandIAPsByRunwayPair(apWrap, eiData?.IAPs || []);
 
+renderNlIAPsByRunway(apWrap, nlData?.iaps || []);
+
 if (!aps.length && !apWrap.children.length) {
   apWrap.textContent =
     airportIdent === centerIdentUpper
@@ -2484,6 +2583,129 @@ div.appendChild(sub);
 div.appendChild(proc);
 root.appendChild(div);
   }
+
+  // Re-append waypoints section after every render (filter toggles, etc.)
+  if (LAST_CENTER_LAT != null && LAST_CENTER_LON != null) {
+    appendNearbyWaypoints(LAST_CENTER_LAT, LAST_CENTER_LON, LAST_RADIUS_NM);
+  }
+}
+
+async function appendNearbyWaypoints(lat, lon, radius_nm) {
+  const root = $("results");
+  if (!root) return;
+
+  // Remove any previous waypoints section
+  const prev = root.querySelector(".waypoints-section");
+  if (prev) prev.remove();
+
+  const resp = await chrome.runtime.sendMessage({
+    type: "SEARCH_WAYPOINTS_NEAR",
+    lat,
+    lon,
+    radius_nm
+  });
+
+  const rawFixes = resp?.fixes || [];
+  if (!rawFixes.length) return;
+
+  // Build enriched entries: [ident, lat, lon] → add distance + navaid info
+  const entries = rawFixes.map(fx => {
+    const ident = String(fx[0] || "").toUpperCase();
+    const fLat = Number(fx[1]);
+    const fLon = Number(fx[2]);
+    const dist = distNm(lat, lon, fLat, fLon);
+    const nav = NAVAIDS?.[ident] || null;
+    return { ident, lat: fLat, lon: fLon, dist, nav };
+  }).filter(e => e.dist <= radius_nm);
+
+  entries.sort((a, b) => a.dist - b.dist);
+
+  if (!entries.length) return;
+
+  // Build collapsible section
+  const section = document.createElement("div");
+  section.className = "waypoints-section";
+  section.style.cssText = "margin-top:8px;";
+
+  const header = document.createElement("div");
+  header.className = "waypoints-section-header";
+  header.style.cssText =
+    "display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 8px;" +
+    "background:var(--card-bg,#1e2330);border-radius:6px;user-select:none;" +
+    "font-weight:600;font-size:0.82em;letter-spacing:0.04em;color:var(--accent,#7eb3ff);";
+
+  const arrow = document.createElement("span");
+  arrow.textContent = "▶";
+  arrow.style.cssText = "transition:transform 0.15s;font-size:0.7em;";
+
+  const label = document.createElement("span");
+  label.textContent = `Waypoints within ${radius_nm} NM  (${entries.length})`;
+
+  header.appendChild(arrow);
+  header.appendChild(label);
+
+  const body = document.createElement("div");
+  body.style.cssText = "display:none;padding:4px 0 0 0;";
+
+  header.addEventListener("click", () => {
+    const open = body.style.display !== "none";
+    body.style.display = open ? "none" : "";
+    arrow.style.transform = open ? "" : "rotate(90deg)";
+  });
+
+  for (const e of entries) {
+    const row = document.createElement("div");
+    row.className = "card";
+    row.style.cssText =
+      "display:flex;align-items:center;gap:8px;padding:6px 10px;" +
+      "cursor:pointer;margin:3px 0;";
+
+    // Tag chip
+    const tag = document.createElement("span");
+    const navType = e.nav?.type?.toUpperCase() || "";
+    const isNavaid = !!e.nav;
+    tag.textContent = isNavaid ? (navType || "NAV") : "FIX";
+    tag.className = isNavaid ? "procSID" : "procSTAR";
+    tag.style.cssText = "font-size:0.65em;padding:1px 5px;border-radius:3px;white-space:nowrap;flex-shrink:0;";
+
+    const identEl = document.createElement("span");
+    identEl.style.cssText = "font-weight:700;font-size:0.9em;min-width:60px;";
+    identEl.textContent = e.ident;
+
+    const distEl = document.createElement("span");
+    distEl.style.cssText = "color:var(--text-muted,#8899bb);font-size:0.8em;min-width:52px;";
+    distEl.textContent = `${e.dist.toFixed(1)} NM`;
+
+    const metaEl = document.createElement("span");
+    metaEl.style.cssText = "color:var(--text-muted,#8899bb);font-size:0.78em;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
+    const metaParts = [];
+    if (e.nav?.name) metaParts.push(e.nav.name.toUpperCase());
+    if (e.nav?.freq) metaParts.push(e.nav.freq);
+    metaEl.textContent = metaParts.join(" · ");
+
+    const coordEl = document.createElement("span");
+    coordEl.style.cssText = "color:var(--text-muted,#8899bb);font-size:0.72em;white-space:nowrap;flex-shrink:0;";
+    coordEl.textContent = `${e.lat.toFixed(3)}, ${e.lon.toFixed(3)}`;
+
+    row.appendChild(tag);
+    row.appendChild(identEl);
+    row.appendChild(distEl);
+    row.appendChild(metaEl);
+    row.appendChild(coordEl);
+
+    row.addEventListener("click", async () => {
+      await copyWithFeedback(row, e.ident);
+      const orig = identEl.textContent;
+      identEl.textContent = "Copied ✓";
+      setTimeout(() => { identEl.textContent = orig; }, 800);
+    });
+
+    body.appendChild(row);
+  }
+
+  section.appendChild(header);
+  section.appendChild(body);
+  root.appendChild(section);
 }
 
 function prettyFreqName(f) {
@@ -2714,7 +2936,12 @@ function dedupeAirportsByIdent(list) {
 
 async function queryNearby(force = false) {
 
-  const ident = ($("airportInput").value || "").trim().toUpperCase();
+  let ident = ($("airportInput").value || "").trim().toUpperCase();
+  // Auto-prefix 3-letter US airport codes (e.g. SJC → KSJC)
+  if (/^[A-Z]{3}$/.test(ident)) {
+    ident = "K" + ident;
+    $("airportInput").value = ident;
+  }
   if (!force && ident === LAST_LOADED_AIRPORT) {
   console.log("Already loaded:", ident);
   return;
@@ -2809,6 +3036,10 @@ const resp = await chrome.runtime.sendMessage({
 MASTER_RESULTS = dedupeAirportsByIdent(resp.results);
 
   buildAirportNameMap();
+
+  LAST_CENTER_LAT = resp.center.lat ?? null;
+  LAST_CENTER_LON = resp.center.lon ?? null;
+  LAST_RADIUS_NM = radius_nm;
 
   renderResults(
     MASTER_RESULTS,
@@ -2914,6 +3145,14 @@ $("searchBtn").addEventListener("click", queryNearby);
 $("airportInput").addEventListener("keydown", (e) => {
   if (e.key === "Enter") queryNearby();
 });
+
+const showGkBtn = document.getElementById("showGkBtn");
+
+showGkBtn?.addEventListener("click", () => {
+  window.parent.postMessage({ type: "SHOW_GK_OVERLAY" }, "*");
+});
+
+window.parent.postMessage({ type: "GET_GK_VISIBILITY" }, "*");
 
 // ---- CIFP loader wiring ----
 const cifpBtn = $("cifpBtn");
@@ -3368,6 +3607,301 @@ async function getIrelandProceduresForAirport(icao) {
   });
 }
 
+async function getNlProceduresForAirport(icao) {
+  return new Promise(resolve => {
+    chrome.runtime.sendMessage(
+      { type: "GET_NL_PROCEDURES", icao },
+      response => { resolve(response?.data || null); }
+    );
+  });
+}
+
+// Normalise a waypoint entry from NL JSON: string → {fix}, object → pass-through
+function nlNormaliseWaypoint(w) {
+  if (typeof w === "string") return { fix: w };
+  if (w && typeof w === "object" && w.fix) return w;
+  return null;
+}
+
+// Extract fix strings from NL waypoints (string or {fix,...})
+function nlExtractFixes(waypoints) {
+  return (waypoints || [])
+    .map(nlNormaliseWaypoint)
+    .filter(Boolean)
+    .map(w => String(w.fix || "").trim().toUpperCase())
+    .filter(Boolean);
+}
+
+async function renderNlFixListInPopover(title, waypoints, transitions) {
+  const pop = document.getElementById("fixPopover");
+  const titleEl = document.getElementById("fixPopoverTitle");
+  const content = document.getElementById("fixPopoverContent");
+
+  titleEl.textContent = title;
+  content.innerHTML = "";
+
+  const renderSection = (header, wps) => {
+    if (header) {
+      const hdr = document.createElement("div");
+      hdr.className = "fixRow";
+      hdr.style.cssText = "opacity:0.6;font-size:0.75em;padding:2px 0 2px 0;cursor:default;";
+      hdr.textContent = header;
+      content.appendChild(hdr);
+    }
+    const seen = new Set();
+    for (const raw of wps) {
+      const w = nlNormaliseWaypoint(raw);
+      if (!w) continue;
+      const fx = String(w.fix || "").trim().toUpperCase();
+      if (!fx || seen.has(fx)) continue;
+      seen.add(fx);
+
+      const nav = NAVAIDS?.[fx] || null;
+      const altLabel = formatAltConstraint(w);
+
+      const row = document.createElement("div");
+      row.className = "fixRow";
+      row.style.cursor = "pointer";
+
+      const left = document.createElement("div");
+      left.className = "fixCode";
+      left.textContent = fx;
+
+      const right = document.createElement("div");
+      right.className = "fixMeta";
+
+      const parts = [];
+      if (nav?.name) parts.push(nav.name.toUpperCase());
+      if (altLabel) parts.push(altLabel);
+      right.textContent = parts.join(" · ");
+
+      if (nav) {
+        row.classList.add("isNav");
+        row.title = `${nav.type || "NAVAID"}${nav.freq ? " • " + nav.freq : ""}`;
+      } else {
+        row.title = "Fix/Waypoint";
+      }
+
+      row.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        await copyWithFeedback(row, nav?.name ? nav.name.toUpperCase() : fx);
+        row.classList.add("copied");
+        const orig = right.textContent;
+        right.textContent = "Copied ✓";
+        setTimeout(() => { right.textContent = orig; row.classList.remove("copied"); }, 800);
+      });
+
+      row.appendChild(left);
+      row.appendChild(right);
+      content.appendChild(row);
+    }
+  };
+
+  renderSection(null, waypoints);
+
+  if (transitions && typeof transitions === "object") {
+    for (const [transName, transWps] of Object.entries(transitions)) {
+      renderSection(`↳ Transition: ${transName}`, transWps);
+    }
+  }
+
+  pop.classList.remove("hidden");
+}
+
+function nlProcChip(proc, procType) {
+  const label = proc.name || "(unnamed)";
+  const waypoints = proc.waypoints || [];
+  const fixes = nlExtractFixes(waypoints);
+  const transitions = proc.transitions || null;
+
+  // Collect all transition fixes too (for FIX_PROCEDURE_MAP)
+  const allFixes = [...fixes];
+  if (transitions) {
+    for (const twps of Object.values(transitions)) {
+      for (const fx of nlExtractFixes(twps)) {
+        if (!allFixes.includes(fx)) allFixes.push(fx);
+      }
+    }
+  }
+
+  const iafSuffix = proc.iaf ? ` · IAF: ${proc.iaf}` : "";
+  const transCount = transitions ? Object.keys(transitions).length : 0;
+  const transSuffix = transCount ? ` [${transCount} trans]` : "";
+  const chipLabel = label + transSuffix;
+
+  const span = makeChip(chipLabel, "pointer");
+
+  span.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    if (!fixes.length && !Object.keys(transitions || {}).length) {
+      openFixPopover(span, label, "No waypoints.");
+      return;
+    }
+    for (const fx of allFixes) {
+      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+      FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: label, procDisplay: label });
+    }
+    openFixPopover(span, label, " ");
+    await renderNlFixListInPopover(label, waypoints, transitions);
+  });
+  return span;
+}
+
+function renderNlProcsByRunway(container, procs, procType) {
+  if (!procs.length) return;
+
+  const groups = new Map();
+  for (const proc of procs) {
+    const rwy = (proc.runway || "ALL").replace(/^RWY/i, "").trim() || "ALL";
+    if (!groups.has(rwy)) groups.set(rwy, []);
+    groups.get(rwy).push(proc);
+  }
+
+  const sorted = [...groups.keys()].sort((a, b) => {
+    if (a === "ALL") return 1;
+    if (b === "ALL") return -1;
+    return parseInt(a) - parseInt(b) || a.localeCompare(b);
+  });
+
+  const selected = container.dataset.selectedNlRwyKey || sorted[0];
+  container.dataset.selectedNlRwyKey = selected;
+
+  const selectorRow = document.createElement("div");
+  selectorRow.className = "rwy-selector";
+
+  for (const rwy of sorted) {
+    const lbl = rwy === "ALL" ? "All" : rwy;
+    const btn = makeButtonChip(lbl, selected === rwy);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      container.dataset.selectedNlRwyKey = rwy;
+      container.innerHTML = "";
+      renderNlProcsByRunway(container, procs, procType);
+    });
+    selectorRow.appendChild(btn);
+  }
+
+  container.appendChild(selectorRow);
+
+  const rwyProcs = groups.get(selected) || [];
+  const block = document.createElement("div");
+  block.className = "rwy-block";
+
+  const h = document.createElement("div");
+  h.className = "rwy-header";
+  h.textContent = selected === "ALL" ? `All Runways (${rwyProcs.length})` : `RWY ${selected} (${rwyProcs.length})`;
+  block.appendChild(h);
+
+  const wrap = document.createElement("div");
+  for (const proc of rwyProcs) wrap.appendChild(nlProcChip(proc, procType));
+  block.appendChild(wrap);
+  container.appendChild(block);
+}
+
+function renderNlIAPsByRunway(container, iaps) {
+  if (!iaps.length) return;
+
+  const byRunway = new Map();
+  const other = [];
+
+  for (const proc of iaps) {
+    const rwy = (proc.runway || "").replace(/^RWY/i, "").trim();
+    if (rwy) {
+      if (!byRunway.has(rwy)) byRunway.set(rwy, []);
+      byRunway.get(rwy).push(proc);
+    } else {
+      other.push(proc);
+    }
+  }
+
+  const rwyKeys = [...byRunway.keys()].sort((a, b) => parseInt(a) - parseInt(b) || a.localeCompare(b));
+
+  if (!rwyKeys.length) {
+    for (const proc of iaps) container.appendChild(nlProcChip(proc, "IAP"));
+    return;
+  }
+
+  // Build pairs (e.g. 06/24)
+  const pairMap = new Map();
+  for (const rwy of rwyKeys) {
+    const num = parseInt(rwy);
+    const opposite = String(num <= 18 ? num + 18 : num - 18).padStart(2, "0") + rwy.slice(2);
+    const [lo, hi] = [rwy, opposite].sort((a, b) => parseInt(a) - parseInt(b));
+    const pairKey = `${lo}/${hi}`;
+    if (!pairMap.has(pairKey)) pairMap.set(pairKey, { end1: lo, end2: hi, pairKey, label: `${lo}/${hi}` });
+  }
+
+  const pairs = [...pairMap.values()];
+  if (!pairs.length) {
+    for (const proc of iaps) container.appendChild(nlProcChip(proc, "IAP"));
+    return;
+  }
+
+  const selected = container.dataset.selectedNlIapKey || pairs[0].pairKey;
+  container.dataset.selectedNlIapKey = selected;
+
+  const selectorRow = document.createElement("div");
+  selectorRow.className = "rwy-selector";
+
+  for (const p of pairs) {
+    const btn = makeButtonChip(p.label, selected === p.pairKey);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      container.dataset.selectedNlIapKey = p.pairKey;
+      container.innerHTML = "";
+      renderNlIAPsByRunway(container, iaps);
+    });
+    selectorRow.appendChild(btn);
+  }
+  container.appendChild(selectorRow);
+
+  const content = document.createElement("div");
+  const sel = pairs.find(x => x.pairKey === selected) || pairs[0];
+  const ends = [sel.end1, sel.end2].filter(Boolean);
+  let any = false;
+
+  for (const end of ends) {
+    const procs = byRunway.get(end) || [];
+    if (!procs.length) continue;
+    any = true;
+
+    const block = document.createElement("div");
+    block.className = "rwy-block";
+
+    const hdr = document.createElement("div");
+    hdr.className = "rwy-header";
+    hdr.textContent = `RWY ${end} (${procs.length})`;
+    block.appendChild(hdr);
+
+    const wrap = document.createElement("div");
+    for (const proc of procs) wrap.appendChild(nlProcChip(proc, "IAP"));
+    block.appendChild(wrap);
+    content.appendChild(block);
+  }
+
+  if (!any) {
+    const none = document.createElement("div");
+    none.style.opacity = "0.75";
+    none.textContent = "(no approaches tagged to this runway pair)";
+    content.appendChild(none);
+  }
+
+  if (other.length) {
+    const h = document.createElement("div");
+    h.style.fontWeight = "700";
+    h.style.marginTop = "10px";
+    h.textContent = `Other (${other.length})`;
+    content.appendChild(h);
+    const wrap = document.createElement("div");
+    for (const proc of other) wrap.appendChild(nlProcChip(proc, "IAP"));
+    content.appendChild(wrap);
+  }
+
+  container.appendChild(content);
+}
+
 function swissProcChip(proc, procType) {
   const label = proc.name || "(unnamed)";
   const fixes = (proc.waypoints || [])
@@ -3547,6 +4081,75 @@ function renderIrelandProcsByRunway(container, procs, procType) {
 
   const wrap = document.createElement("div");
   for (const proc of rwyProcs) wrap.appendChild(irelandProcChip(proc, procType));
+  block.appendChild(wrap);
+  container.appendChild(block);
+}
+
+function extractAusProcRunway(name) {
+  // "... RWY 01L/19L/19R" → "01L/19L/19R"
+  const m = String(name).match(/RWY\s+([\d]{2}[LRC]?(?:\/[\d]{2}[LRC]?)*)/i);
+  if (m) return m[1].toUpperCase();
+  // "... - ALL RUNWAYS" → "ALL"
+  if (/ALL\s+RUNWAYS/i.test(name)) return "ALL";
+  return "ALL";
+}
+
+function renderAusProcsByRunway(container, procedures, procType) {
+  // procedures: object { procName: fixes[] }
+  const entries = Object.entries(procedures).filter(([name]) => {
+    if (procType === "SID") return /^SID\b/i.test(name);
+    if (procType === "STAR") return /^STAR\b/i.test(name);
+    return false;
+  });
+  if (!entries.length) return;
+
+  const groups = new Map();
+  for (const [name, fixes] of entries) {
+    const rwy = extractAusProcRunway(name);
+    if (!groups.has(rwy)) groups.set(rwy, []);
+    groups.get(rwy).push({ name, fixes });
+  }
+
+  const sorted = [...groups.keys()].sort((a, b) => {
+    if (a === "ALL") return 1;
+    if (b === "ALL") return -1;
+    const numA = parseInt(a);
+    const numB = parseInt(b);
+    return numA - numB || a.localeCompare(b);
+  });
+
+  const stateKey = `selectedAus${procType}RwyKey`;
+  const selected = container.dataset[stateKey] || sorted[0];
+  container.dataset[stateKey] = selected;
+
+  const selectorRow = document.createElement("div");
+  selectorRow.className = "rwy-selector";
+  for (const rwy of sorted) {
+    const lbl = rwy === "ALL" ? "All" : rwy;
+    const btn = makeButtonChip(lbl, selected === rwy);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      container.dataset[stateKey] = rwy;
+      // Only re-render the AUS section — clear and re-call
+      container.innerHTML = "";
+      renderAusProcsByRunway(container, procedures, procType);
+    });
+    selectorRow.appendChild(btn);
+  }
+  container.appendChild(selectorRow);
+
+  const rwyProcs = groups.get(selected) || [];
+  const block = document.createElement("div");
+  block.className = "rwy-block";
+
+  const h = document.createElement("div");
+  h.className = "rwy-header";
+  h.textContent = selected === "ALL" ? `All Runways (${rwyProcs.length})` : `RWY ${selected} (${rwyProcs.length})`;
+  block.appendChild(h);
+
+  const wrap = document.createElement("div");
+  for (const { name, fixes } of rwyProcs) wrap.appendChild(ausProcChip(name, fixes, procType));
   block.appendChild(wrap);
   container.appendChild(block);
 }
@@ -4084,6 +4687,7 @@ if (lbxKeyEl) {
       if (optFixesFinder) optFixesFinder.checked = !!settings.fixesfinder;
       if (optForeflight) optForeflight.checked = !!settings.foreflight;
       if (optSkyVector) optSkyVector.checked = !!settings.skyvector;
+      if (optAutoDetails) optAutoDetails.checked = settings.autodetails ?? true;
       if (speedSlider && settings.adsbSpeed != null) speedSlider.value = settings.adsbSpeed;
       if (speedText && settings.adsbSpeed != null) speedText.value = settings.adsbSpeed;
     }
@@ -4185,6 +4789,7 @@ async function preloadProcedureMaps(origin, dest){
   /* ---------- Persist Settings ---------- */
 const optForeflight = document.getElementById("opt_foreflight");
 const optFixesFinder = document.getElementById("opt_fixesfinder");
+const optAutoDetails = document.getElementById("opt_autodetails");
   function saveLBXSettings() {
     chrome.storage.local.set({
       lbx_settings: {
@@ -4195,6 +4800,7 @@ const optFixesFinder = document.getElementById("opt_fixesfinder");
         adsbSpeed: Number(speedSlider?.value ?? 500),
         foreflight: optForeflight?.checked,
         skyvector: optSkyVector?.checked,
+        autodetails: optAutoDetails?.checked,
       }
     });
   }
@@ -4205,6 +4811,7 @@ const optFixesFinder = document.getElementById("opt_fixesfinder");
   optFixesFinder?.addEventListener("change", saveLBXSettings);
   optForeflight?.addEventListener("change", saveLBXSettings);
   optSkyVector?.addEventListener("change", saveLBXSettings);
+  optAutoDetails?.addEventListener("change", saveLBXSettings);
 
   /* ---------- Slider Sync ---------- */
 

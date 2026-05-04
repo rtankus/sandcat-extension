@@ -61,6 +61,7 @@
     "swiss_ad2_sandcat.json",
     "australia_vfr_visual_waypoints.json",
     "ireland_procedures.json",
+    "netherlands_procedures.json",
     "airport_names.json"
   ],
   "matches": ["<all_urls>"],

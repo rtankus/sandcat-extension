@@ -112,6 +112,8 @@ let SWISS_AD2_DB = {};
 
 let IRELAND_PROC_DB = {};
 
+let NL_PROC_DB = {};
+
 let OURAIRPORTS_NAMES = {};
 
 async function loadOurAirportsNames() {
@@ -240,6 +242,19 @@ async function loadIrelandProcedures() {
   }
 }
 loadIrelandProcedures();
+
+async function loadNetherlandsProcedures() {
+  try {
+    const url = chrome.runtime.getURL("netherlands_procedures.json");
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed: ${res.status}`);
+    NL_PROC_DB = await res.json();
+    console.log(`Loaded Netherlands procedures: ${Object.keys(NL_PROC_DB).length} airports`);
+  } catch (err) {
+    console.error("Netherlands procedure load failed:", err);
+  }
+}
+loadNetherlandsProcedures();
 
 async function loadAusVfrVisualWaypoints() {
   try {
@@ -3546,6 +3561,12 @@ if (msg?.type === "GET_IRELAND_PROCEDURES") {
   return true;
 }
 
+if (msg?.type === "GET_NL_PROCEDURES") {
+  const icao = String(msg.icao || "").toUpperCase();
+  sendResponse({ ok: true, icao, data: NL_PROC_DB[icao] || null });
+  return true;
+}
+
       if (msg?.type === "GET_GLOBAL_COUNTRIES") {
   await ensureGlobalDataLoaded();
   sendResponse({
@@ -4444,7 +4465,7 @@ if (msg?.type === "QUERY_NEARBY") {
 
   sendResponse({
     ok: true,
-    center: { ident: center.ident, name: center.name },
+    center: { ident: center.ident, name: center.name, lat: center.lat, lon: center.lon },
     results
   });
   return;
