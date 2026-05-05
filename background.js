@@ -142,7 +142,16 @@ const GITHUB_RAW = {
     "navaids.csv",
     "aus_waypoints_complete.json",
     "australia_vfr_visual_waypoints.json",
-    "swiss_ad2_sandcat.json"
+    "swiss_ad2_sandcat.json",
+    "netherlands/EHAM/Netherlands_EHAM_procedures_full.json",
+    "netherlands/EHBD/Netherlands_EHBD_final.json",
+    "netherlands/EHBK/Netherlands_EHBK_final.json",
+    "netherlands/EHEH/Netherlands_EHEH_full.json",
+    "netherlands/EHGG/Netherlands_EHGG_draft.json",
+    "netherlands/EHKD/Netherlands_EHKD_final.json",
+    "netherlands/EHLE/Netherlands_EHLE_final.json",
+    "netherlands/EHRD/Netherlands_EHRD_final.json",
+    "netherlands/EHTE/Netherlands_EHTE_final.json"
   ]
 };
 
@@ -243,12 +252,30 @@ async function loadIrelandProcedures() {
 }
 loadIrelandProcedures();
 
+const NL_INDIVIDUAL_FILES = [
+  "netherlands/EHAM/Netherlands_EHAM_procedures_full.json",
+  "netherlands/EHBD/Netherlands_EHBD_final.json",
+  "netherlands/EHBK/Netherlands_EHBK_final.json",
+  "netherlands/EHEH/Netherlands_EHEH_full.json",
+  "netherlands/EHGG/Netherlands_EHGG_draft.json",
+  "netherlands/EHKD/Netherlands_EHKD_final.json",
+  "netherlands/EHLE/Netherlands_EHLE_final.json",
+  "netherlands/EHRD/Netherlands_EHRD_final.json",
+  "netherlands/EHTE/Netherlands_EHTE_final.json",
+];
+
 async function loadNetherlandsProcedures() {
   try {
-    const url = chrome.runtime.getURL("netherlands_procedures.json");
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed: ${res.status}`);
-    NL_PROC_DB = await res.json();
+    NL_PROC_DB = {};
+    for (const file of NL_INDIVIDUAL_FILES) {
+      let data = await getCachedFile(file);
+      if (!data) {
+        const res = await fetch(chrome.runtime.getURL(file));
+        if (!res.ok) throw new Error(`Failed ${file}: ${res.status}`);
+        data = await res.json();
+      }
+      if (data?.icao) NL_PROC_DB[data.icao] = data;
+    }
     console.log(`Loaded Netherlands procedures: ${Object.keys(NL_PROC_DB).length} airports`);
   } catch (err) {
     console.error("Netherlands procedure load failed:", err);
@@ -2505,9 +2532,6 @@ async function extractAdsbRoute(tabId, forcedIcao) {
   const u = new URL(tab.url);
 
   const replay = u.searchParams.get("replay");
-  if (!replay) {
-    return { ok:false, error:"Missing replay parameter" };
-  }
 
   const icaoResult = await chrome.scripting.executeScript({
   target:{tabId},
@@ -2567,14 +2591,23 @@ const icao =
   forcedIcao ||
   info?.icao ||
   null;
-const replaySec = (typeof info?.secOfDay === "number")
-  ? info.secOfDay
-  : replayParamToSecOfDay(replay);
+let year, month, day, replaySec;
 
-if (!icao) return { ok:false, error:"No aircraft selected in replay" };
-if (replaySec == null) return { ok:false, error:"Could not read replay time" };
+if (replay) {
+  [year, month, day] = replay.split("-");
+  replaySec = (typeof info?.secOfDay === "number")
+    ? info.secOfDay
+    : replayParamToSecOfDay(replay);
+} else {
+  const now = new Date();
+  year     = String(now.getUTCFullYear());
+  month    = String(now.getUTCMonth() + 1).padStart(2, "0");
+  day      = String(now.getUTCDate()).padStart(2, "0");
+  replaySec = now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
+}
 
-  const [year, month, day] = replay.split("-");
+if (!icao) return { ok:false, error:"No aircraft selected" };
+if (replaySec == null) return { ok:false, error:"Could not determine replay time" };
   const shard = icao.slice(-2);
 
   const traceUrl =
@@ -4088,11 +4121,49 @@ if (msg?.type === "GET_LAST_AIRPORT") {
     return;
   }
 
-  const url = `https://www.airnav.com/airport/${icao}`;
+  function parseSkyVectorComms(svHtml) {
+    const comms = [];
+    const idx = svHtml.indexOf('id="aptcomms"');
+    if (idx === -1) return comms;
+    const section = svHtml.slice(idx, idx + 3000);
+    const rowRegex = /<th[^>]*>([^<]+)<\/th>\s*<td[^>]*>([^<]+)<\/td>/gi;
+    let m;
+    while ((m = rowRegex.exec(section)) !== null) {
+      const label = m[1].replace(/&nbsp;/g, " ").replace(/:$/, "").trim();
+      const freq = m[2].trim();
+      if (label && freq) comms.push({ label, freq });
+    }
+    return comms;
+  }
+
+  function parseSkyVectorNavaids(svHtml) {
+    const navaids = [];
+    const idx = svHtml.indexOf('id="aptnavaids"');
+    if (idx === -1) return navaids;
+    const section = svHtml.slice(idx, idx + 8000);
+    const rowRegex = /alt="(VOR|NDB)"[^>]*>[\s\S]*?<strong>([^<]+)<\/strong>[\s\S]*?<td>([^<]+)<\/td>\s*<td>([\d.]+)<\/td>\s*<td>([^<]+)<\/td>\s*<td>([\d.]+)<\/td>/gi;
+    let m;
+    while ((m = rowRegex.exec(section)) !== null) {
+      navaids.push({
+        type: m[1].trim(),
+        id: m[2].trim(),
+        name: m[3].trim(),
+        freq: m[4].trim(),
+        radial: m[5].trim(),
+        range: m[6].trim()
+      });
+    }
+    return navaids;
+  }
 
   try {
-    const html = await fetchText(url);
+    const [html, svHtml] = await Promise.all([
+      fetchText(`https://www.airnav.com/airport/${icao}`).catch(() => null),
+      fetchText(`https://skyvector.com/airport/${icao}`).catch(() => null)
+    ]);
     const results = [];
+
+    if (html) {
 
     // -------------------------------
     // 1. AIRPORT COMMUNICATIONS
@@ -4205,10 +4276,16 @@ results.sort((a, b) => {
 
   return 0;
 });
-    sendResponse({ ok: true, data: results });
+
+    } // end if (html)
+
+    const svComms = svHtml ? parseSkyVectorComms(svHtml) : [];
+    const svNavaids = svHtml ? parseSkyVectorNavaids(svHtml) : [];
+
+    sendResponse({ ok: true, data: results, skyvectorComms: svComms, skyvectorNavaids: svNavaids });
 
   } catch (e) {
-    sendResponse({ ok: false, error: "AirNav fetch failed." });
+    sendResponse({ ok: false, error: "Fetch failed." });
   }
 
   return;

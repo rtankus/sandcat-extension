@@ -2928,6 +2928,884 @@
   "counts": {
     "sids": 82,
     "stars": 10,
-    "star_transitions": 19
+    "star_transitions": 19,
+    "iaps": 18
+  },
+  "iaps": [
+    {
+      "name": "RNP RWY04",
+      "runway": "RWY04",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM201",
+          "lat": 52.161278,
+          "lon": 4.768028
+        },
+        {
+          "fix": "AM202",
+          "lat": 52.109444,
+          "lon": 4.693639
+        },
+        {
+          "fix": "AM203",
+          "lat": 52.146167,
+          "lon": 4.625444
+        },
+        {
+          "fix": "NELFE",
+          "lat": 52.300361,
+          "lon": 4.783472,
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM204",
+          "lat": 52.180333,
+          "lon": 4.783472,
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR04"
+        },
+        {
+          "fix": "AM205",
+          "lat": 52.464056,
+          "lon": 5.018833,
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ILS CAT II & III or LOC RWY06",
+      "runway": "RWY06",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM101",
+          "lat": 52.347861,
+          "lon": 4.637806
+        },
+        {
+          "fix": "AM102",
+          "lat": 52.262833,
+          "lon": 4.417917
+        },
+        {
+          "fix": "AM103",
+          "lat": 52.217528,
+          "lon": 4.464583
+        },
+        {
+          "fix": "OSRON",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM110"
+        },
+        {
+          "fix": "AM609",
+          "lat": 52.221278,
+          "lon": 4.561333,
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM616",
+          "lat": 52.237361,
+          "lon": 4.59575,
+          "altitude": 1310,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR06",
+          "lat": 52.289111,
+          "lon": 4.737222
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY06",
+      "runway": "RWY06",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM101"
+        },
+        {
+          "fix": "AM102"
+        },
+        {
+          "fix": "AM103"
+        },
+        {
+          "fix": "OSRON",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM609",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR06"
+        },
+        {
+          "fix": "AM104"
+        },
+        {
+          "fix": "AM105",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY09",
+      "runway": "RWY09",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM220"
+        },
+        {
+          "fix": "AM221"
+        },
+        {
+          "fix": "AM222"
+        },
+        {
+          "fix": "IFTAZ",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM223",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR09"
+        },
+        {
+          "fix": "AM224",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ILS CAT II & III or LOC RWY18C",
+      "runway": "RWY18C",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM120"
+        },
+        {
+          "fix": "AM121"
+        },
+        {
+          "fix": "AM122"
+        },
+        {
+          "fix": "SIDNI",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM630",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR18C"
+        },
+        {
+          "fix": "AM626",
+          "altitude": 1310,
+          "constraint": "at_or_above"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY18C",
+      "runway": "RWY18C",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM120"
+        },
+        {
+          "fix": "AM121"
+        },
+        {
+          "fix": "AM122"
+        },
+        {
+          "fix": "SIDNI",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM630",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR18C"
+        },
+        {
+          "fix": "AM123",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ILS CAT II & III or LOC RWY18R",
+      "runway": "RWY18R",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM240"
+        },
+        {
+          "fix": "AM241"
+        },
+        {
+          "fix": "AM242"
+        },
+        {
+          "fix": "PEVOS",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM621",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM622"
+        },
+        {
+          "fix": "THR18R"
+        },
+        {
+          "fix": "AM624",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY18R",
+      "runway": "RWY18R",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM240"
+        },
+        {
+          "fix": "AM241"
+        },
+        {
+          "fix": "AM242"
+        },
+        {
+          "fix": "PEVOS",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM621",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR18R"
+        },
+        {
+          "fix": "AM624",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ILS or LOC RWY22",
+      "runway": "RWY22",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "PAM"
+        },
+        {
+          "fix": "AM180"
+        },
+        {
+          "fix": "AM181"
+        },
+        {
+          "fix": "AM649"
+        },
+        {
+          "fix": "AM650",
+          "altitude": 3000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM651"
+        },
+        {
+          "fix": "LANSU"
+        },
+        {
+          "fix": "AM652"
+        },
+        {
+          "fix": "THR22"
+        }
+      ]
+    },
+    {
+      "name": "ILS or LOC CAT H RWY22",
+      "runway": "RWY22",
+      "category": "CAT H",
+      "waypoints": [
+        {
+          "fix": "NIDOP",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "HDR"
+        },
+        {
+          "fix": "AM409",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM410",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM661",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM651",
+          "altitude": 1310,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "AM652"
+        },
+        {
+          "fix": "THR22"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY22",
+      "runway": "RWY22",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM671"
+        },
+        {
+          "fix": "AM672"
+        },
+        {
+          "fix": "PAM"
+        },
+        {
+          "fix": "AGOGO"
+        },
+        {
+          "fix": "AMEGA"
+        },
+        {
+          "fix": "BLUSY",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM661"
+        },
+        {
+          "fix": "THR22"
+        },
+        {
+          "fix": "AM675",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY24",
+      "runway": "RWY24",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM140"
+        },
+        {
+          "fix": "AM141"
+        },
+        {
+          "fix": "AM142"
+        },
+        {
+          "fix": "ARWIN",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM143",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR24"
+        },
+        {
+          "fix": "AM144",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ILS CAT II & III or LOC RWY27",
+      "runway": "RWY27",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM260"
+        },
+        {
+          "fix": "AM261"
+        },
+        {
+          "fix": "AM262"
+        },
+        {
+          "fix": "TIDVO",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM639",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM640",
+          "altitude": 1310,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR27"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY27",
+      "runway": "RWY27",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM260"
+        },
+        {
+          "fix": "AM261"
+        },
+        {
+          "fix": "AM262"
+        },
+        {
+          "fix": "TIDVO",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM639",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR27"
+        },
+        {
+          "fix": "AM263",
+          "altitude": 3000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ILS CAT II & III or LOC RWY36C",
+      "runway": "RWY36C",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM280"
+        },
+        {
+          "fix": "AM281"
+        },
+        {
+          "fix": "AM282"
+        },
+        {
+          "fix": "OLGAX",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "BOVCO"
+        },
+        {
+          "fix": "AM632",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM633",
+          "altitude": 1310,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR36C"
+        },
+        {
+          "fix": "AM280",
+          "altitude": 3000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY36C",
+      "runway": "RWY36C",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM280"
+        },
+        {
+          "fix": "AM281"
+        },
+        {
+          "fix": "AM282"
+        },
+        {
+          "fix": "OLGAX",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "BOVCO"
+        },
+        {
+          "fix": "AM632",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR36C"
+        },
+        {
+          "fix": "AM283",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "ILS CAT II & III or LOC RWY36R",
+      "runway": "RWY36R",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM160"
+        },
+        {
+          "fix": "AM161"
+        },
+        {
+          "fix": "AM162"
+        },
+        {
+          "fix": "NEWCO",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "KAROF"
+        },
+        {
+          "fix": "AM636",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM635",
+          "altitude": 1310,
+          "constraint": "at_or_above"
+        },
+        {
+          "fix": "THR36R"
+        },
+        {
+          "fix": "AM637",
+          "altitude": 1500,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM163",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    },
+    {
+      "name": "RNP RWY36R",
+      "runway": "RWY36R",
+      "transitions": [
+        "RIVER",
+        "SUGOL",
+        "ARTIP"
+      ],
+      "waypoints": [
+        {
+          "fix": "SPL",
+          "lat": 52.332139,
+          "lon": 4.749889
+        },
+        {
+          "fix": "AM160"
+        },
+        {
+          "fix": "AM161"
+        },
+        {
+          "fix": "AM162"
+        },
+        {
+          "fix": "NEWCO",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "KAROF"
+        },
+        {
+          "fix": "AM636",
+          "altitude": 2000,
+          "constraint": "at"
+        },
+        {
+          "fix": "THR36R"
+        },
+        {
+          "fix": "AM637",
+          "altitude": 1500,
+          "constraint": "at"
+        },
+        {
+          "fix": "AM163",
+          "altitude": 2000,
+          "constraint": "at"
+        }
+      ]
+    }
+  ],
+  "frequencies": {
+    "arrival": [
+      "118.405",
+      "126.680"
+    ],
+    "approach_departure": [
+      "119.055",
+      "121.205"
+    ],
+    "tower": [
+      "118.105",
+      "119.230",
+      "118.280"
+    ],
+    "ground": [
+      "121.805",
+      "121.705",
+      "121.905",
+      "121.560"
+    ],
+    "atis": [
+      "132.980"
+    ],
+    "emergency": [
+      "121.500",
+      "243.000"
+    ],
+    "delivery": [
+      "121.975",
+      "124.875"
+    ]
   }
 }

@@ -2361,7 +2361,41 @@ if (nlCommsFlat.length) {
 
     }
 
-if (!usedAirNav && !ourAirports.length && !ausComms.length && !chComms.length && !eiComms.length && !nlCommsFlat.length) {
+const svComms = resp?.skyvectorComms || [];
+const svNavaids = resp?.skyvectorNavaids || [];
+const hasOtherComms = usedAirNav || ourAirports.length || ausComms.length || chComms.length || eiComms.length || nlCommsFlat.length;
+
+if (!hasOtherComms && svComms.length) {
+  const svTitle = document.createElement("div");
+  svTitle.innerHTML = `<strong>SkyVector</strong>`;
+  facilityContent.appendChild(svTitle);
+  const seenSv = new Set();
+  for (const c of svComms) {
+    const key = `${c.label}_${c.freq}`;
+    if (seenSv.has(key)) continue;
+    seenSv.add(key);
+    const div = document.createElement("div");
+    div.className = "facilityItem";
+    div.innerText = `${c.label} — ${c.freq}`;
+    facilityContent.appendChild(div);
+    FACILITY_FREQ_INDEX.push({ freq: c.freq, label: c.label, airport: airportIdent });
+  }
+}
+
+if (svNavaids.length) {
+  const navTitle = document.createElement("div");
+  navTitle.innerHTML = `<strong>Nearby Navigation Aids</strong>`;
+  navTitle.style.marginTop = "8px";
+  facilityContent.appendChild(navTitle);
+  for (const n of svNavaids) {
+    const div = document.createElement("div");
+    div.className = "facilityItem";
+    div.innerText = `${n.type} ${n.id} — ${n.name}  ${n.freq}  ${n.radial} / ${n.range}nm`;
+    facilityContent.appendChild(div);
+  }
+}
+
+if (!hasOtherComms && !svComms.length && !svNavaids.length) {
   facilityContent.innerHTML = "No facility data found.";
 }
 
@@ -2534,11 +2568,7 @@ if (ausData?.procedures) {
   }
 }
 
-if (chData?.procedures?.approaches?.length) {
-  for (const ap of chData.procedures.approaches) {
-    apWrap.appendChild(swissProcChip(ap, "IAP"));
-  }
-}
+renderSwissIAPsByRunway(apWrap, chData?.procedures?.approaches || []);
 
 renderIrelandIAPsByRunwayPair(apWrap, eiData?.IAPs || []);
 
@@ -3712,7 +3742,9 @@ function nlProcChip(proc, procType) {
   const label = proc.name || "(unnamed)";
   const waypoints = proc.waypoints || [];
   const fixes = nlExtractFixes(waypoints);
-  const transitions = proc.transitions || null;
+  const transitions = (proc.transitions && !Array.isArray(proc.transitions) && typeof proc.transitions === "object")
+    ? proc.transitions
+    : null;
 
   // Collect all transition fixes too (for FIX_PROCEDURE_MAP)
   const allFixes = [...fixes];
@@ -3900,6 +3932,119 @@ function renderNlIAPsByRunway(container, iaps) {
   }
 
   container.appendChild(content);
+}
+
+function renderSwissIAPsByRunway(container, iaps) {
+  if (!iaps.length) return;
+
+  const wrapper = document.createElement("div");
+  container.appendChild(wrapper);
+
+  function render() {
+    wrapper.innerHTML = "";
+
+    const byRunway = new Map();
+    const other = [];
+
+    for (const proc of iaps) {
+      const rwy = (proc.runway || "").replace(/^RWY/i, "").trim();
+      if (rwy) {
+        if (!byRunway.has(rwy)) byRunway.set(rwy, []);
+        byRunway.get(rwy).push(proc);
+      } else {
+        other.push(proc);
+      }
+    }
+
+    const rwyKeys = [...byRunway.keys()].sort((a, b) => parseInt(a) - parseInt(b) || a.localeCompare(b));
+
+    if (!rwyKeys.length) {
+      for (const proc of iaps) wrapper.appendChild(swissProcChip(proc, "IAP"));
+      return;
+    }
+
+    const pairMap = new Map();
+    for (const rwy of rwyKeys) {
+      const num = parseInt(rwy);
+      const letter = rwy.replace(/^\d+/, "");
+      const oppositeNum = num <= 18 ? num + 18 : num - 18;
+      const opposite = String(oppositeNum).padStart(2, "0") + letter;
+      const [lo, hi] = [rwy, opposite].sort((a, b) => parseInt(a) - parseInt(b));
+      const pairKey = `${lo}/${hi}`;
+      if (!pairMap.has(pairKey)) pairMap.set(pairKey, { end1: lo, end2: hi, pairKey, label: `${lo}/${hi}` });
+    }
+
+    const pairs = [...pairMap.values()].sort((a, b) => parseInt(a.end1) - parseInt(b.end1));
+
+    if (!pairs.length) {
+      for (const proc of iaps) wrapper.appendChild(swissProcChip(proc, "IAP"));
+      return;
+    }
+
+    const selected = wrapper.dataset.selectedSwissIapKey || pairs[0].pairKey;
+    wrapper.dataset.selectedSwissIapKey = selected;
+
+    const selectorRow = document.createElement("div");
+    selectorRow.className = "rwy-selector";
+
+    for (const p of pairs) {
+      const btn = makeButtonChip(p.label, selected === p.pairKey);
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        wrapper.dataset.selectedSwissIapKey = p.pairKey;
+        render();
+      });
+      selectorRow.appendChild(btn);
+    }
+    wrapper.appendChild(selectorRow);
+
+    const content = document.createElement("div");
+    const sel = pairs.find(x => x.pairKey === selected) || pairs[0];
+    const ends = [sel.end1, sel.end2].filter(Boolean);
+    let any = false;
+
+    for (const end of ends) {
+      const procs = byRunway.get(end) || [];
+      if (!procs.length) continue;
+      any = true;
+
+      const block = document.createElement("div");
+      block.className = "rwy-block";
+
+      const hdr = document.createElement("div");
+      hdr.className = "rwy-header";
+      hdr.textContent = `RWY ${end} (${procs.length})`;
+      block.appendChild(hdr);
+
+      const wrap = document.createElement("div");
+      for (const proc of procs) wrap.appendChild(swissProcChip(proc, "IAP"));
+      block.appendChild(wrap);
+      content.appendChild(block);
+    }
+
+    if (!any) {
+      const none = document.createElement("div");
+      none.style.opacity = "0.75";
+      none.textContent = "(no approaches tagged to this runway pair)";
+      content.appendChild(none);
+    }
+
+    if (other.length) {
+      const h = document.createElement("div");
+      h.style.fontWeight = "700";
+      h.style.marginTop = "10px";
+      h.textContent = `Other (${other.length})`;
+      content.appendChild(h);
+      const otherWrap = document.createElement("div");
+      for (const proc of other) otherWrap.appendChild(swissProcChip(proc, "IAP"));
+      content.appendChild(otherWrap);
+    }
+
+    wrapper.appendChild(content);
+  }
+
+  render();
 }
 
 function swissProcChip(proc, procType) {

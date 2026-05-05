@@ -10,13 +10,6 @@
   // Reset dedup state in background so re-selecting after a page reload isn't silently dropped
   chrome.runtime.sendMessage({ type: "ADSB_PAGE_LOADED" }).catch(() => {});
 
-  // Inject hook into page context
-  const s = document.createElement("script");
-  s.src = chrome.runtime.getURL("adsb_hook.js");
-  s.onload = () => s.remove();
-
-  (document.head || document.documentElement).appendChild(s);
-
   // Listen for hook messages
   window.addEventListener("message", (event) => {
 
