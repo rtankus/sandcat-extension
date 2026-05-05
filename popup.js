@@ -5427,16 +5427,22 @@ if (typeof initAirportSearch === "function") {
     globalBox.innerHTML = "";
     for (const a of merged.slice(0, 40)) {
       const card = document.createElement("div");
-      card.className = "routeAirportCard";
-      const meta = [a.municipality, a.country].filter(Boolean).join(", ");
+      card.className = "airportLookupCard compact";
+      card.dataset.airportIdent = a.ident;
+      const title = a.name || a.ident;
+      const metaParts = [a.ident, a.municipality, a.country].filter(Boolean);
+      const metaLine = metaParts.join(" • ");
       const chips = (a.freqs || []).slice(0, 6).map(f => {
         const mhz = typeof f.freq === "number" ? f.freq.toFixed(3) : f.freq;
         return `<span class="freqChip">${f.type || ""} ${mhz}</span>`;
       }).join("");
-      const metaHtml = meta ? `<span class="routeAirportName" style="color:#64748b;font-size:10px;margin-left:4px">${meta}</span>` : "";
       card.innerHTML =
-        `<span class="routeAirportIdent">${a.ident}</span><span class="routeAirportName">${a.name || ""}</span>${metaHtml}` +
-        (chips ? `<div class="freqChips" style="margin-top:3px">${chips}</div>` : "");
+        `<div class="airportLookupCardTitle">${escapeHtmlLocal(title)}</div>` +
+        (metaLine ? `<div class="airportLookupMetaLine">${escapeHtmlLocal(metaLine)}</div>` : "") +
+        (chips ? `<div class="freqChips" style="margin-top:5px">${chips}</div>` : "");
+      card.addEventListener("click", () => {
+        if (typeof openAirportInSandcat === "function") openAirportInSandcat(a.ident);
+      });
       globalBox.appendChild(card);
     }
   }
