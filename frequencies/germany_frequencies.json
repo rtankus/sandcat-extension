@@ -1,0 +1,2522 @@
+[
+  {
+    "name": "ANSBACH TOWER",
+    "frequency": "122.100",
+    "airspace": "ANSBACH CTR (ETEB)"
+  },
+  {
+    "name": "AUGSBURG TOWER",
+    "frequency": "124.980",
+    "airspace": "AUGSBURG CTR (EDMA)"
+  },
+  {
+    "name": "BERLIN TOWER",
+    "frequency": "118.805",
+    "airspace": "BERLIN CTR (EDDB)"
+  },
+  {
+    "name": "BERLIN TOWER",
+    "frequency": "118.855",
+    "airspace": "BERLIN CTR (EDDB)"
+  },
+  {
+    "name": "BERLIN TOWER",
+    "frequency": "120.030",
+    "airspace": "BERLIN CTR (EDDB)"
+  },
+  {
+    "name": "BERLIN TOWER",
+    "frequency": "396.850",
+    "airspace": "BERLIN CTR (EDDB)"
+  },
+  {
+    "name": "BRAUNSCHWEIG TOWER",
+    "frequency": "120.055",
+    "airspace": "BRAUNSCHWEIG CTR (EDVE)"
+  },
+  {
+    "name": "BREMEN TOWER",
+    "frequency": "120.330",
+    "airspace": "BREMEN CTR (EDDW)"
+  },
+  {
+    "name": "BREMEN TOWER",
+    "frequency": "134.830",
+    "airspace": "BREMEN CTR (EDDW)"
+  },
+  {
+    "name": "BREMEN TOWER",
+    "frequency": "340.850",
+    "airspace": "BREMEN CTR (EDDW)"
+  },
+  {
+    "name": "BUECHEL TOWER",
+    "frequency": "122.100",
+    "airspace": "BUECHEL CTR (ETSB)"
+  },
+  {
+    "name": "BUECHEL TOWER",
+    "frequency": "129.060",
+    "airspace": "BUECHEL CTR (ETSB)"
+  },
+  {
+    "name": "BUECHEL TOWER",
+    "frequency": "257.800",
+    "airspace": "BUECHEL CTR (ETSB)"
+  },
+  {
+    "name": "BUECHEL TOWER",
+    "frequency": "282.200",
+    "airspace": "BUECHEL CTR (ETSB)"
+  },
+  {
+    "name": "BUECKEBURG TOWER",
+    "frequency": "122.100",
+    "airspace": "BUECKEBURG CTR (ETHB)"
+  },
+  {
+    "name": "BUECKEBURG TOWER",
+    "frequency": "140.400",
+    "airspace": "BUECKEBURG CTR (ETHB)"
+  },
+  {
+    "name": "BUECKEBURG TOWER",
+    "frequency": "257.800",
+    "airspace": "BUECKEBURG CTR (ETHB)"
+  },
+  {
+    "name": "BUECKEBURG TOWER",
+    "frequency": "341.250",
+    "airspace": "BUECKEBURG CTR (ETHB)"
+  },
+  {
+    "name": "BUECKEBURG TOWER",
+    "frequency": "387.750",
+    "airspace": "BUECKEBURG CTR (ETHB)"
+  },
+  {
+    "name": "CELLE TOWER",
+    "frequency": "118.255",
+    "airspace": "CELLE CTR (ETHC)"
+  },
+  {
+    "name": "CELLE TOWER",
+    "frequency": "122.100",
+    "airspace": "CELLE CTR (ETHC)"
+  },
+  {
+    "name": "CELLE TOWER",
+    "frequency": "257.800",
+    "airspace": "CELLE CTR (ETHC)"
+  },
+  {
+    "name": "CELLE TOWER",
+    "frequency": "315.150",
+    "airspace": "CELLE CTR (ETHC)"
+  },
+  {
+    "name": "DIEPHOLZ TOWER",
+    "frequency": "122.100",
+    "airspace": "DIEPHOLZ CTR (ETND)"
+  },
+  {
+    "name": "DIEPHOLZ TOWER",
+    "frequency": "135.130",
+    "airspace": "DIEPHOLZ CTR (ETND)"
+  },
+  {
+    "name": "DIEPHOLZ TOWER",
+    "frequency": "257.800",
+    "airspace": "DIEPHOLZ CTR (ETND)"
+  },
+  {
+    "name": "DIEPHOLZ TOWER",
+    "frequency": "379.300",
+    "airspace": "DIEPHOLZ CTR (ETND)"
+  },
+  {
+    "name": "DORTMUND TOWER",
+    "frequency": "134.180",
+    "airspace": "DORTMUND CTR (EDLW)"
+  },
+  {
+    "name": "DRESDEN TOWER",
+    "frequency": "122.930",
+    "airspace": "DRESDEN CTR (EDDC)"
+  },
+  {
+    "name": "DRESDEN TOWER",
+    "frequency": "241.925",
+    "airspace": "DRESDEN CTR (EDDC)"
+  },
+  {
+    "name": "DUESSELDORF TOWER",
+    "frequency": "118.305",
+    "airspace": "DUESSELDORF CTR (EDDL)"
+  },
+  {
+    "name": "DUESSELDORF TOWER",
+    "frequency": "124.355",
+    "airspace": "DUESSELDORF CTR (EDDL)"
+  },
+  {
+    "name": "DUESSELDORF TOWER",
+    "frequency": "290.975",
+    "airspace": "DUESSELDORF CTR (EDDL)"
+  },
+  {
+    "name": "ERFURT TOWER",
+    "frequency": "121.155",
+    "airspace": "ERFURT CTR (EDDE)"
+  },
+  {
+    "name": "ERFURT TOWER",
+    "frequency": "244.425",
+    "airspace": "ERFURT CTR (EDDE)"
+  },
+  {
+    "name": "FASSBERG TOWER",
+    "frequency": "118.525",
+    "airspace": "FASSBERG CTR (ETHS)"
+  },
+  {
+    "name": "FASSBERG TOWER",
+    "frequency": "122.100",
+    "airspace": "FASSBERG CTR (ETHS)"
+  },
+  {
+    "name": "FASSBERG TOWER",
+    "frequency": "257.800",
+    "airspace": "FASSBERG CTR (ETHS)"
+  },
+  {
+    "name": "FASSBERG TOWER",
+    "frequency": "292.425",
+    "airspace": "FASSBERG CTR (ETHS)"
+  },
+  {
+    "name": "FRANKFURT TOWER",
+    "frequency": "118.780",
+    "airspace": "FRANKFURT CTR (EDDF)"
+  },
+  {
+    "name": "FRANKFURT TOWER",
+    "frequency": "124.855",
+    "airspace": "FRANKFURT CTR (EDDF)"
+  },
+  {
+    "name": "FRANKFURT TOWER",
+    "frequency": "127.330",
+    "airspace": "FRANKFURT CTR (EDDF)"
+  },
+  {
+    "name": "FRANKFURT TOWER",
+    "frequency": "136.500",
+    "airspace": "FRANKFURT CTR (EDDF)"
+  },
+  {
+    "name": "FRANKFURT TOWER",
+    "frequency": "399.050",
+    "airspace": "FRANKFURT CTR (EDDF)"
+  },
+  {
+    "name": "FRIEDRICHSHAFEN TOWER",
+    "frequency": "120.080",
+    "airspace": "FRIEDRICHSHAFEN (EDNY1)"
+  },
+  {
+    "name": "FRIEDRICHSHAFEN TOWER",
+    "frequency": "134.305",
+    "airspace": "FRIEDRICHSHAFEN (EDNY1)"
+  },
+  {
+    "name": "FRITZLAR TOWER",
+    "frequency": "122.100",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "FRITZLAR TOWER",
+    "frequency": "247.950",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "FRITZLAR TOWER",
+    "frequency": "257.800",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "FRISBEE TOWER",
+    "frequency": "118.090",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "FRISBEE TOWER",
+    "frequency": "120.055",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "FRISBEE TOWER",
+    "frequency": "122.100",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "FRISBEE TOWER",
+    "frequency": "257.800",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "FRISBEE TOWER",
+    "frequency": "357.375",
+    "airspace": "FRITZLAR CTR (ETHF)"
+  },
+  {
+    "name": "HAHN TOWER",
+    "frequency": "119.655",
+    "airspace": "HAHN CTR (EDFH)"
+  },
+  {
+    "name": "HAHN TOWER",
+    "frequency": "120.905",
+    "airspace": "HAHN CTR (EDFH)"
+  },
+  {
+    "name": "HAHN TOWER",
+    "frequency": "360.075",
+    "airspace": "HAHN CTR (EDFH)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "121.280",
+    "airspace": "HAMBURG SECTOR HAMBURG (EDDH1)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "126.855",
+    "airspace": "HAMBURG SECTOR HAMBURG (EDDH1)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "315.925",
+    "airspace": "HAMBURG SECTOR HAMBURG (EDDH1)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "121.280",
+    "airspace": "HAMBURG SECTOR FINKENWERDER (EDDH2)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "126.855",
+    "airspace": "HAMBURG SECTOR FINKENWERDER (EDDH2)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "315.925",
+    "airspace": "HAMBURG SECTOR FINKENWERDER (EDDH2)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "121.280",
+    "airspace": "HAMBURG SECTOR BOBERG (EDDH3)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "126.855",
+    "airspace": "HAMBURG SECTOR BOBERG (EDDH3)"
+  },
+  {
+    "name": "HAMBURG TOWER",
+    "frequency": "315.925",
+    "airspace": "HAMBURG SECTOR BOBERG (EDDH3)"
+  },
+  {
+    "name": "HANNOVER TOWER",
+    "frequency": "120.180",
+    "airspace": "HANNOVER SECTOR HANNOVER (EDDV1)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "120.405",
+    "airspace": "HANNOVER SECTOR HANNOVER (EDDV1)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "374.950",
+    "airspace": "HANNOVER SECTOR HANNOVER (EDDV1)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "122.100",
+    "airspace": "HANNOVER SECTOR HANNOVER (EDDV1)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "132.055",
+    "airspace": "HANNOVER SECTOR HANNOVER (EDDV1)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "257.800",
+    "airspace": "HANNOVER SECTOR HANNOVER (EDDV1)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "356.100",
+    "airspace": "HANNOVER SECTOR HANNOVER (EDDV1)"
+  },
+  {
+    "name": "HANNOVER TOWER",
+    "frequency": "120.180",
+    "airspace": "HANNOVER SECTOR WUNSTORF (EDDV2)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "120.405",
+    "airspace": "HANNOVER SECTOR WUNSTORF (EDDV2)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "374.950",
+    "airspace": "HANNOVER SECTOR WUNSTORF (EDDV2)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "122.100",
+    "airspace": "HANNOVER SECTOR WUNSTORF (EDDV2)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "132.055",
+    "airspace": "HANNOVER SECTOR WUNSTORF (EDDV2)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "257.800",
+    "airspace": "HANNOVER SECTOR WUNSTORF (EDDV2)"
+  },
+  {
+    "name": "WUNSTORF TOWER",
+    "frequency": "356.100",
+    "airspace": "HANNOVER SECTOR WUNSTORF (EDDV2)"
+  },
+  {
+    "name": "HERINGSDORF TOWER",
+    "frequency": "132.830",
+    "airspace": "HERINGSDORF (EDAH1)"
+  },
+  {
+    "name": "HOF TOWER",
+    "frequency": "124.355",
+    "airspace": "HOF CTR (EDQM)"
+  },
+  {
+    "name": "HOHN TOWER",
+    "frequency": "122.100",
+    "airspace": "HOHN CTR (ETNH)"
+  },
+  {
+    "name": "HOHN TOWER",
+    "frequency": "123.710",
+    "airspace": "HOHN CTR (ETNH)"
+  },
+  {
+    "name": "HOHN TOWER",
+    "frequency": "141.700",
+    "airspace": "HOHN CTR (ETNH)"
+  },
+  {
+    "name": "HOHN TOWER",
+    "frequency": "257.800",
+    "airspace": "HOHN CTR (ETNH)"
+  },
+  {
+    "name": "HOHN TOWER",
+    "frequency": "336.375",
+    "airspace": "HOHN CTR (ETNH)"
+  },
+  {
+    "name": "HOLZDORF TOWER",
+    "frequency": "122.100",
+    "airspace": "HOLZDORF CTR (ETSH)"
+  },
+  {
+    "name": "HOLZDORF TOWER",
+    "frequency": "130.505",
+    "airspace": "HOLZDORF CTR (ETSH)"
+  },
+  {
+    "name": "HOLZDORF TOWER",
+    "frequency": "257.800",
+    "airspace": "HOLZDORF CTR (ETSH)"
+  },
+  {
+    "name": "HOLZDORF TOWER",
+    "frequency": "267.400",
+    "airspace": "HOLZDORF CTR (ETSH)"
+  },
+  {
+    "name": "INGO TOWER",
+    "frequency": "122.100",
+    "airspace": "INGOLSTADT CTR (ETSI)"
+  },
+  {
+    "name": "INGO TOWER",
+    "frequency": "125.255",
+    "airspace": "INGOLSTADT CTR (ETSI)"
+  },
+  {
+    "name": "INGO TOWER",
+    "frequency": "139.400",
+    "airspace": "INGOLSTADT CTR (ETSI)"
+  },
+  {
+    "name": "INGO TOWER",
+    "frequency": "257.800",
+    "airspace": "INGOLSTADT CTR (ETSI)"
+  },
+  {
+    "name": "INGO TOWER",
+    "frequency": "259.575",
+    "airspace": "INGOLSTADT CTR (ETSI)"
+  },
+  {
+    "name": "INGO TOWER",
+    "frequency": "376.800",
+    "airspace": "INGOLSTADT CTR (ETSI)"
+  },
+  {
+    "name": "INGO TOWER",
+    "frequency": "389.600",
+    "airspace": "INGOLSTADT CTR (ETSI)"
+  },
+  {
+    "name": "BADEN TOWER",
+    "frequency": "134.105",
+    "airspace": "KARLSRUHE/BADEN-BADEN (EDSB1)"
+  },
+  {
+    "name": "KASSEL TOWER",
+    "frequency": "118.105",
+    "airspace": "KASSEL CTR (EDVK)"
+  },
+  {
+    "name": "KOELN/BONN TOWER",
+    "frequency": "124.980",
+    "airspace": "KOELN/BONN CTR (EDDK)"
+  },
+  {
+    "name": "KOELN/BONN TOWER",
+    "frequency": "253.025",
+    "airspace": "KOELN/BONN CTR (EDDK)"
+  },
+  {
+    "name": "LAAGE TOWER",
+    "frequency": "118.430",
+    "airspace": "LAAGE CTR (ETNL)"
+  },
+  {
+    "name": "LAAGE TOWER",
+    "frequency": "122.100",
+    "airspace": "LAAGE CTR (ETNL)"
+  },
+  {
+    "name": "LAAGE TOWER",
+    "frequency": "257.800",
+    "airspace": "LAAGE CTR (ETNL)"
+  },
+  {
+    "name": "LAAGE TOWER",
+    "frequency": "336.400",
+    "airspace": "LAAGE CTR (ETNL)"
+  },
+  {
+    "name": "LAHR TOWER",
+    "frequency": "125.180",
+    "airspace": "LAHR CTR (EDTL)"
+  },
+  {
+    "name": "LIMA TOWER",
+    "frequency": "122.100",
+    "airspace": "LAUPHEIM CTR (ETHL)"
+  },
+  {
+    "name": "LIMA TOWER",
+    "frequency": "138.750",
+    "airspace": "LAUPHEIM CTR (ETHL)"
+  },
+  {
+    "name": "LIMA TOWER",
+    "frequency": "257.800",
+    "airspace": "LAUPHEIM CTR (ETHL)"
+  },
+  {
+    "name": "LIMA TOWER",
+    "frequency": "377.575",
+    "airspace": "LAUPHEIM CTR (ETHL)"
+  },
+  {
+    "name": "LECHFELD TOWER",
+    "frequency": "122.100",
+    "airspace": "LECHFELD CTR (ETSL)"
+  },
+  {
+    "name": "LECHFELD TOWER",
+    "frequency": "135.155",
+    "airspace": "LECHFELD CTR (ETSL)"
+  },
+  {
+    "name": "LECHFELD TOWER",
+    "frequency": "257.800",
+    "airspace": "LECHFELD CTR (ETSL)"
+  },
+  {
+    "name": "LECHFELD TOWER",
+    "frequency": "363.375",
+    "airspace": "LECHFELD CTR (ETSL)"
+  },
+  {
+    "name": "LEIPZIG TOWER",
+    "frequency": "121.105",
+    "airspace": "LEIPZIG CTR (EDDP)"
+  },
+  {
+    "name": "LEIPZIG TOWER",
+    "frequency": "125.955",
+    "airspace": "LEIPZIG CTR (EDDP)"
+  },
+  {
+    "name": "LEIPZIG TOWER",
+    "frequency": "378.725",
+    "airspace": "LEIPZIG CTR (EDDP)"
+  },
+  {
+    "name": "LUEBECK TOWER",
+    "frequency": "128.705",
+    "airspace": "LUEBECK CTR (EDHL)"
+  },
+  {
+    "name": "MANNHEIM TOWER",
+    "frequency": "129.780",
+    "airspace": "MANNHEIM CTR (EDFM)"
+  },
+  {
+    "name": "MEMMINGEN TOWER",
+    "frequency": "126.855",
+    "airspace": "MEMMINGEN/ALLGAEU CTR (EDJA)"
+  },
+  {
+    "name": "MOENCHENGLADBACH TOWER",
+    "frequency": "120.455",
+    "airspace": "MOENCHENGLADBACH CTR (EDLN)"
+  },
+  {
+    "name": "MUENCHEN TOWER",
+    "frequency": "118.705",
+    "airspace": "MUENCHEN CTR (EDDM)"
+  },
+  {
+    "name": "MUENSTER TOWER",
+    "frequency": "129.805",
+    "airspace": "MUENSTER CTR (EDDG)"
+  },
+  {
+    "name": "MUENSTER TOWER",
+    "frequency": "282.125",
+    "airspace": "MUENSTER CTR (EDDG)"
+  },
+  {
+    "name": "DONAU TOWER",
+    "frequency": "122.100",
+    "airspace": "NEUBURG CTR (ETSN)"
+  },
+  {
+    "name": "DONAU TOWER",
+    "frequency": "129.855",
+    "airspace": "NEUBURG CTR (ETSN)"
+  },
+  {
+    "name": "DONAU TOWER",
+    "frequency": "138.150",
+    "airspace": "NEUBURG CTR (ETSN)"
+  },
+  {
+    "name": "DONAU TOWER",
+    "frequency": "257.800",
+    "airspace": "NEUBURG CTR (ETSN)"
+  },
+  {
+    "name": "DONAU TOWER",
+    "frequency": "281.025",
+    "airspace": "NEUBURG CTR (ETSN)"
+  },
+  {
+    "name": "DONAU TOWER",
+    "frequency": "308.550",
+    "airspace": "NEUBURG CTR (ETSN)"
+  },
+  {
+    "name": "NIEDERRHEIN TOWER",
+    "frequency": "129.405",
+    "airspace": "NIEDERRHEIN (EDLV1)"
+  },
+  {
+    "name": "STETTEN TOWER",
+    "frequency": "47.900",
+    "airspace": "NIEDERSTETTEN CTR (ETHN)"
+  },
+  {
+    "name": "STETTEN TOWER",
+    "frequency": "122.100",
+    "airspace": "NIEDERSTETTEN CTR (ETHN)"
+  },
+  {
+    "name": "STETTEN TOWER",
+    "frequency": "134.205",
+    "airspace": "NIEDERSTETTEN CTR (ETHN)"
+  },
+  {
+    "name": "STETTEN TOWER",
+    "frequency": "257.800",
+    "airspace": "NIEDERSTETTEN CTR (ETHN)"
+  },
+  {
+    "name": "STETTEN TOWER",
+    "frequency": "356.675",
+    "airspace": "NIEDERSTETTEN CTR (ETHN)"
+  },
+  {
+    "name": "NOERVENICH TOWER",
+    "frequency": "122.100",
+    "airspace": "NOERVENICH CTR (ETNN)"
+  },
+  {
+    "name": "NOERVENICH TOWER",
+    "frequency": "136.205",
+    "airspace": "NOERVENICH CTR (ETNN)"
+  },
+  {
+    "name": "NOERVENICH TOWER",
+    "frequency": "142.900",
+    "airspace": "NOERVENICH CTR (ETNN)"
+  },
+  {
+    "name": "NOERVENICH TOWER",
+    "frequency": "257.800",
+    "airspace": "NOERVENICH CTR (ETNN)"
+  },
+  {
+    "name": "NOERVENICH TOWER",
+    "frequency": "285.075",
+    "airspace": "NOERVENICH CTR (ETNN)"
+  },
+  {
+    "name": "NORDHOLZ TOWER",
+    "frequency": "122.100",
+    "airspace": "NORDHOLZ CTR (ETMN)"
+  },
+  {
+    "name": "NORDHOLZ TOWER",
+    "frequency": "131.255",
+    "airspace": "NORDHOLZ CTR (ETMN)"
+  },
+  {
+    "name": "NORDHOLZ TOWER",
+    "frequency": "142.900",
+    "airspace": "NORDHOLZ CTR (ETMN)"
+  },
+  {
+    "name": "NORDHOLZ TOWER",
+    "frequency": "257.800",
+    "airspace": "NORDHOLZ CTR (ETMN)"
+  },
+  {
+    "name": "NORDHOLZ TOWER",
+    "frequency": "315.700",
+    "airspace": "NORDHOLZ CTR (ETMN)"
+  },
+  {
+    "name": "NUERNBERG TOWER",
+    "frequency": "118.305",
+    "airspace": "NUERNBERG CTR (EDDN)"
+  },
+  {
+    "name": "NUERNBERG TOWER",
+    "frequency": "356.475",
+    "airspace": "NUERNBERG CTR (EDDN)"
+  },
+  {
+    "name": "OBERPFAFFENHOFEN TOWER",
+    "frequency": "119.555",
+    "airspace": "OBERPFAFFENHOFEN CTR (EDMO)"
+  },
+  {
+    "name": "PADERBORN TOWER",
+    "frequency": "133.380",
+    "airspace": "PADERBORN CTR (EDLP)"
+  },
+  {
+    "name": "RAMSTEIN TOWER",
+    "frequency": "133.205",
+    "airspace": "RAMSTEIN CTR (ETAR)"
+  },
+  {
+    "name": "SAARBRUECKEN TOWER",
+    "frequency": "118.355",
+    "airspace": "SAARBRUECKEN (EDDR1)"
+  },
+  {
+    "name": "SCHLESWIG TOWER",
+    "frequency": "122.100",
+    "airspace": "SCHLESWIG CTR (ETNS)"
+  },
+  {
+    "name": "SCHLESWIG TOWER",
+    "frequency": "135.155",
+    "airspace": "SCHLESWIG CTR (ETNS)"
+  },
+  {
+    "name": "SCHLESWIG TOWER",
+    "frequency": "246.500",
+    "airspace": "SCHLESWIG CTR (ETNS)"
+  },
+  {
+    "name": "SCHLESWIG TOWER",
+    "frequency": "257.800",
+    "airspace": "SCHLESWIG CTR (ETNS)"
+  },
+  {
+    "name": "SPANGDAHLEM TOWER",
+    "frequency": "122.200",
+    "airspace": "SPANGDAHLEM CTR (ETAD)"
+  },
+  {
+    "name": "STUTTGART TOWER",
+    "frequency": "118.805",
+    "airspace": "STUTTGART CTR (EDDS)"
+  },
+  {
+    "name": "STUTTGART TOWER",
+    "frequency": "119.055",
+    "airspace": "STUTTGART CTR (EDDS)"
+  },
+  {
+    "name": "STUTTGART TOWER",
+    "frequency": "378.700",
+    "airspace": "STUTTGART CTR (EDDS)"
+  },
+  {
+    "name": "SYLT TOWER",
+    "frequency": "119.750",
+    "airspace": "SYLT CTR (EDXW)"
+  },
+  {
+    "name": "WITTMUND TOWER",
+    "frequency": "118.730",
+    "airspace": "WITTMUND CTR (ETNT)"
+  },
+  {
+    "name": "WITTMUND TOWER",
+    "frequency": "122.100",
+    "airspace": "WITTMUND CTR (ETNT)"
+  },
+  {
+    "name": "WITTMUND TOWER",
+    "frequency": "140.400",
+    "airspace": "WITTMUND CTR (ETNT)"
+  },
+  {
+    "name": "WITTMUND TOWER",
+    "frequency": "247.950",
+    "airspace": "WITTMUND CTR (ETNT)"
+  },
+  {
+    "name": "WITTMUND TOWER",
+    "frequency": "257.800",
+    "airspace": "WITTMUND CTR (ETNT)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "126.325",
+    "airspace": "ALLER (EDWWALR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "127.675",
+    "airspace": "ALLER (EDWWALR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "337.950",
+    "airspace": "ALLER (EDWWALR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "119.505",
+    "airspace": "BERLIN ARRIVAL NORD (EDWWDBAN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "119.630",
+    "airspace": "BERLIN ARRIVAL NORD (EDWWDBAN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "398.575",
+    "airspace": "BERLIN ARRIVAL NORD (EDWWDBAN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "119.505",
+    "airspace": "BERLIN ARRIVAL SUED (EDWWDBAS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "126.425",
+    "airspace": "BERLIN ARRIVAL SUED (EDWWDBAS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "398.575",
+    "airspace": "BERLIN ARRIVAL SUED (EDWWDBAS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "119.505",
+    "airspace": "BERLIN DEPARTURE NORD (EDWWDBDN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "120.340",
+    "airspace": "BERLIN DEPARTURE NORD (EDWWDBDN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "313.500",
+    "airspace": "BERLIN DEPARTURE NORD (EDWWDBDN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "119.505",
+    "airspace": "BERLIN DEPARTURE SUED (EDWWDBDS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "120.630",
+    "airspace": "BERLIN DEPARTURE SUED (EDWWDBDS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "398.575",
+    "airspace": "BERLIN DEPARTURE SUED (EDWWDBDS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "123.225",
+    "airspace": "BOERDE (EDWWBOR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "125.300",
+    "airspace": "BOERDE (EDWWBOR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "270.075",
+    "airspace": "BOERDE (EDWWBOR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "124.075",
+    "airspace": "EIDER (EDWWEID)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "299.100",
+    "airspace": "EIDER (EDWWEID)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "125.025",
+    "airspace": "EMS (EDWWEMS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "133.725",
+    "airspace": "EMS (EDWWEMS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "389.325",
+    "airspace": "EMS (EDWWEMS)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "126.080",
+    "airspace": "FLAEMING (EDWWFLG)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "136.450",
+    "airspace": "FLAEMING (EDWWFLG)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "339.600",
+    "airspace": "FLAEMING (EDWWFLG)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "124.800",
+    "airspace": "FRIESLAND (EDWWFRI)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "127.675",
+    "airspace": "FRIESLAND (EDWWFRI)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "240.600",
+    "airspace": "FRIESLAND (EDWWFRI)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "120.540",
+    "airspace": "HAMBURG (EDWWHAM)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "127.675",
+    "airspace": "HAMBURG (EDWWHAM)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "344.350",
+    "airspace": "HAMBURG (EDWWHAM)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "118.055",
+    "airspace": "HANNOVER (EDWWHAN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "119.490",
+    "airspace": "HANNOVER (EDWWHAN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "259.725",
+    "airspace": "HANNOVER (EDWWHAN)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "120.355",
+    "airspace": "HARZ (EDWWHRZ)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "124.240",
+    "airspace": "HARZ (EDWWHRZ)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "291.575",
+    "airspace": "HARZ (EDWWHRZ)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "125.855",
+    "airspace": "HEIDE (EDWWHEI)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "127.675",
+    "airspace": "HEIDE (EDWWHEI)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "377.475",
+    "airspace": "HEIDE (EDWWHEI)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "125.300",
+    "airspace": "MARK (EDWWMAR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "136.050",
+    "airspace": "MARK (EDWWMAR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "396.975",
+    "airspace": "MARK (EDWWMAR)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "124.175",
+    "airspace": "MUERITZ (EDWWMRZ)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "125.300",
+    "airspace": "MUERITZ (EDWWMRZ)"
+  },
+  {
+    "name": "BREMEN RADAR",
+    "frequency": "259.825",
+    "airspace": "MUERITZ (EDWWMRZ)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.755",
+    "airspace": "ALPEN 1 (EDUUALP14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "344.275",
+    "airspace": "ALPEN 1 (EDUUALP14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "132.140",
+    "airspace": "ALPEN 2 (EDUUALP24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "344.275",
+    "airspace": "ALPEN 2 (EDUUALP24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "127.310",
+    "airspace": "ALPEN 3 (EDUUALP34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "344.275",
+    "airspace": "ALPEN 3 (EDUUALP34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "121.440",
+    "airspace": "ALPEN 4 (EDUUALP44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "344.275",
+    "airspace": "ALPEN 4 (EDUUALP44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "123.390",
+    "airspace": "AMMERSEE 1 (EDUUAMM14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "280.350",
+    "airspace": "AMMERSEE 1 (EDUUAMM14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.640",
+    "airspace": "AMMERSEE 2 (EDUUAMM24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "280.350",
+    "airspace": "AMMERSEE 2 (EDUUAMM24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "136.335",
+    "airspace": "AMMERSEE 3 (EDUUAMM34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "280.350",
+    "airspace": "AMMERSEE 3 (EDUUAMM34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "131.385",
+    "airspace": "AMMERSEE 4 (EDUUAMM44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "280.350",
+    "airspace": "AMMERSEE 4 (EDUUAMM44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "127.290",
+    "airspace": "DONAU 1 (EDUUDON14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "375.250",
+    "airspace": "DONAU 1 (EDUUDON14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "132.730",
+    "airspace": "DONAU 2 (EDUUDON24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "375.250",
+    "airspace": "DONAU 2 (EDUUDON24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.360",
+    "airspace": "DONAU 3 (EDUUDON34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "375.250",
+    "airspace": "DONAU 3 (EDUUDON34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "130.115",
+    "airspace": "DONAU 4 (EDUUDON44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "375.250",
+    "airspace": "DONAU 4 (EDUUDON44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "136.405",
+    "airspace": "ERLANGEN 1 (EDUUERL14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "359.700",
+    "airspace": "ERLANGEN 1 (EDUUERL14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "126.265",
+    "airspace": "ERLANGEN 2 (EDUUERL24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "359.700",
+    "airspace": "ERLANGEN 2 (EDUUERL24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "128.635",
+    "airspace": "ERLANGEN 3 (EDUUERL34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "357.025",
+    "airspace": "ERLANGEN 3 (EDUUERL34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "128.635",
+    "airspace": "ERLANGEN 4 (EDUUERL44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "357.025",
+    "airspace": "ERLANGEN 4 (EDUUERL44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "132.330",
+    "airspace": "FRANKFURT 1 (EDUUFFM14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "398.700",
+    "airspace": "FRANKFURT 1 (EDUUFFM14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "128.830",
+    "airspace": "FRANKFURT 2 (EDUUFFM24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "338.450",
+    "airspace": "FRANKFURT 2 (EDUUFFM24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.340",
+    "airspace": "FRANKFURT 3 (EDUUFFM34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "300.050",
+    "airspace": "FRANKFURT 3 (EDUUFFM34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "135.955",
+    "airspace": "FRANKFURT 4 (EDUUFFM44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "300.050",
+    "airspace": "FRANKFURT 4 (EDUUFFM44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "122.785",
+    "airspace": "FULDA 1 (EDUUFUL13)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "307.250",
+    "airspace": "FULDA 1 (EDUUFUL13)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "134.690",
+    "airspace": "FULDA 2 (EDUUFUL23)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "292.125",
+    "airspace": "FULDA 2 (EDUUFUL23)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "136.315",
+    "airspace": "FULDA 3 (EDUUFUL33)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "292.125",
+    "airspace": "FULDA 3 (EDUUFUL33)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "128.235",
+    "airspace": "HAVEL 1 (EDUUHVL12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "355.625",
+    "airspace": "HAVEL 1 (EDUUHVL12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.760",
+    "airspace": "HAVEL 2 (EDUUHVL22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "355.625",
+    "airspace": "HAVEL 2 (EDUUHVL22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "132.080",
+    "airspace": "NATTENHEIM 1 (EDUUNTM14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "397.450",
+    "airspace": "NATTENHEIM 1 (EDUUNTM14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "135.310",
+    "airspace": "NATTENHEIM 2 (EDUUNTM24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "254.975",
+    "airspace": "NATTENHEIM 2 (EDUUNTM24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "136.480",
+    "airspace": "NATTENHEIM 3 (EDUUNTM34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "376.350",
+    "airspace": "NATTENHEIM 3 (EDUUNTM34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.815",
+    "airspace": "NATTENHEIM 4 (EDUUNTM44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "376.350",
+    "airspace": "NATTENHEIM 4 (EDUUNTM44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.035",
+    "airspace": "OSTSEE 1 (EDUUOSE12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "258.925",
+    "airspace": "OSTSEE 1 (EDUUOSE12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "126.785",
+    "airspace": "OSTSEE 2 (EDUUOSE22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "258.925",
+    "airspace": "OSTSEE 2 (EDUUOSE22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.860",
+    "airspace": "SAALE 1 (EDUUSAL12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "342.125",
+    "airspace": "SAALE 1 (EDUUSAL12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "122.635",
+    "airspace": "SAALE 2 (EDUUSAL22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "342.125",
+    "airspace": "SAALE 2 (EDUUSAL22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "120.930",
+    "airspace": "SOELLINGEN 1 (EDUUSLN13)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "360.375",
+    "airspace": "SOELLINGEN 1 (EDUUSLN13)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "131.365",
+    "airspace": "SOELLINGEN 2 (EDUUSLN23)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "252.975",
+    "airspace": "SOELLINGEN 2 (EDUUSLN23)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "124.035",
+    "airspace": "SOELLINGEN 3 (EDUUSLN33)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "282.700",
+    "airspace": "SOELLINGEN 3 (EDUUSLN33)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.285",
+    "airspace": "SPREE 1 (EDUUSPE12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "281.375",
+    "airspace": "SPREE 1 (EDUUSPE12)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.840",
+    "airspace": "SPREE 2 (EDUUSPE22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "281.375",
+    "airspace": "SPREE 2 (EDUUSPE22)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "132.405",
+    "airspace": "TANGO 1 (EDUUTGO13)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "338.475",
+    "airspace": "TANGO 1 (EDUUTGO13)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.280",
+    "airspace": "TANGO 2 (EDUUTGO23)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "285.075",
+    "airspace": "TANGO 2 (EDUUTGO23)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "135.030",
+    "airspace": "TANGO 3 (EDUUTGO33)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "282.700",
+    "airspace": "TANGO 3 (EDUUTGO33)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "134.085",
+    "airspace": "WUERZBURG 1 (EDUUWUR14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "387.325",
+    "airspace": "WUERZBURG 1 (EDUUWUR14)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "133.835",
+    "airspace": "WUERZBURG 2 (EDUUWUR24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "280.775",
+    "airspace": "WUERZBURG 2 (EDUUWUR24)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "134.065",
+    "airspace": "WUERZBURG 3 (EDUUWUR34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "379.100",
+    "airspace": "WUERZBURG 3 (EDUUWUR34)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "118.215",
+    "airspace": "WUERZBURG 4 (EDUUWUR44)"
+  },
+  {
+    "name": "RHEIN RADAR",
+    "frequency": "308.875",
+    "airspace": "WUERZBURG 4 (EDUUWUR44)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "131.300",
+    "airspace": "BADEN (EDGGBAD)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "254.900",
+    "airspace": "BADEN (EDGGBAD)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "119.110",
+    "airspace": "BOTTROP (EDGGBOT)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "359.875",
+    "airspace": "BOTTROP (EDGGBOT)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "125.200",
+    "airspace": "DINKELSBUEHL (EDGGDKB)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "398.650",
+    "airspace": "DINKELSBUEHL (EDGGDKB)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "121.355",
+    "airspace": "DUESSELDORF TERMINAL (EDGGDUS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "128.555",
+    "airspace": "DUESSELDORF TERMINAL (EDGGDUS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "340.450",
+    "airspace": "DUESSELDORF TERMINAL (EDGGDUS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "343.025",
+    "airspace": "DUESSELDORF TERMINAL (EDGGDUS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "125.600",
+    "airspace": "EIFEL (EDGGEIF)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "375.700",
+    "airspace": "EIFEL (EDGGEIF)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "120.805",
+    "airspace": "FRANKFURT ARRIVAL NORD (EDGGDFAN)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "125.355",
+    "airspace": "FRANKFURT ARRIVAL SÜD (EDGGDFAS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "120.155",
+    "airspace": "FRANKFURT DEPARTURE NORD (EDGGDFDN) LANGEN"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "136.130",
+    "airspace": "FRANKFURT DEPARTURE SÜD (EDGGDFDS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "124.430",
+    "airspace": "FRANKFURT DEPARTURE SÜD (EDGGDFDS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "281.750",
+    "airspace": "FRANKFURT DEPARTURE SÜD (EDGGDFDS)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "124.730",
+    "airspace": "GIESSEN (EDGGGIN)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "264.800",
+    "airspace": "GIESSEN (EDGGGIN)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "129.300",
+    "airspace": "HAMM (EDGGHMM)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "376.400",
+    "airspace": "HAMM (EDGGHMM)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "134.800",
+    "airspace": "HAMMELBURG (EDGGHAB)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "363.650",
+    "airspace": "HAMMELBURG (EDGGHAB)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "127.725",
+    "airspace": "HERSFELD (EDGGHEF)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "296.950",
+    "airspace": "HERSFELD (EDGGHEF)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "133.460",
+    "airspace": "KIRN (EDGGKIR)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "379.350",
+    "airspace": "KIRN (EDGGKIR)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "123.280",
+    "airspace": "KITZINGEN (EDGGKTG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "363.650",
+    "airspace": "KITZINGEN (EDGGKTG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "135.350",
+    "airspace": "KOELN ARRIVAL (EDGGDKA)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "344.550",
+    "airspace": "KOELN ARRIVAL (EDGGDKA)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "125.680",
+    "airspace": "KOENIG (EDGGKNG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "398.650",
+    "airspace": "KOENIG (EDGGKNG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "127.050",
+    "airspace": "LUBURG (EDGGLBU)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "266.150",
+    "airspace": "LUBURG (EDGGLBU)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "132.155",
+    "airspace": "MAIN (EDGGMAN)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "254.900",
+    "airspace": "MAIN (EDGGMAN)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "129.355",
+    "airspace": "NECKAR LOW (EDGGNKRL)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "284.450",
+    "airspace": "NECKAR LOW (EDGGNKRL)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "127.500",
+    "airspace": "NECKAR HIGH (EDGGNKRH)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "254.900",
+    "airspace": "NECKAR HIGH (EDGGNKRH)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "127.365",
+    "airspace": "NOERVENICH (EDGGNOR)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "399.575",
+    "airspace": "NOERVENICH (EDGGNOR)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "125.225",
+    "airspace": "PADERBORN LOW (EDGGPADL)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "342.025",
+    "airspace": "PADERBORN LOW (EDGGPADL)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "135.650",
+    "airspace": "PADERBORN HIGH (EDGGPADH)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "375.100",
+    "airspace": "PADERBORN HIGH (EDGGPADH)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "129.675",
+    "airspace": "PFALZ (EDGGPFA)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "291.000",
+    "airspace": "PFALZ (EDGGPFA)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "119.200",
+    "airspace": "REUTLINGEN (EDGGREU)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "340.425",
+    "airspace": "REUTLINGEN (EDGGREU)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "133.435",
+    "airspace": "RUEDESHEIM (EDGGRUD)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "246.925",
+    "airspace": "RUEDESHEIM (EDGGRUD)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "124.900",
+    "airspace": "SIEGEN (EDGGSIG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "267.500",
+    "airspace": "SIEGEN (EDGGSIG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "125.405",
+    "airspace": "SPESSART (EDGGPSA)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "363.650",
+    "airspace": "SPESSART (EDGGPSA)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "125.050",
+    "airspace": "STUTTGART (EDGGSTG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "340.425",
+    "airspace": "STUTTGART (EDGGSTG)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "127.625",
+    "airspace": "TAUNUS (EDGGTAU)"
+  },
+  {
+    "name": "LANGEN RADAR",
+    "frequency": "399.175",
+    "airspace": "TAUNUS (EDGGTAU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "133.955",
+    "airspace": "CELLE LOW 1 (EDYYH5CL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "CELLE LOW 1 (EDYYH5CL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "133.955",
+    "airspace": "CELLE LOW 2 (EDYYH5CL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "CELLE LOW 2 (EDYYH5CL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "129.840",
+    "airspace": "CELLE MIDDLE (EDYYH7CM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "CELLE MIDDLE (EDYYH7CM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "128.810",
+    "airspace": "CELLE HIGH (EDYYH7CH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "CELLE HIGH (EDYYH7CH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.960",
+    "airspace": "DELTA LOW 1 (EDYYD3WL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "359.450",
+    "airspace": "DELTA LOW 1 (EDYYD3WL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.960",
+    "airspace": "DELTA LOW 2 (EDYYD3WL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "359.450",
+    "airspace": "DELTA LOW 2 (EDYYD3WL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.960",
+    "airspace": "DELTA LOW 3 (EDYYD3WL3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "359.450",
+    "airspace": "DELTA LOW 3 (EDYYD3WL3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.510",
+    "airspace": "DELTA MIDDLE 1 (EDYYD3WM1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "359.450",
+    "airspace": "DELTA MIDDLE 1 (EDYYD3WM1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.510",
+    "airspace": "DELTA MIDDLE 2 (EDYYD3WM2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "359.450",
+    "airspace": "DELTA MIDDLE 2 (EDYYD3WM2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "132.085",
+    "airspace": "DELTA HIGH 1 (EDYYD6WH1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "359.450",
+    "airspace": "DELTA HIGH 1 (EDYYD6WH1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "132.085",
+    "airspace": "DELTA HIGH 2 (EDYYD6WH2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "359.450",
+    "airspace": "DELTA HIGH 2 (EDYYD6WH2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "120.860",
+    "airspace": "HOLSTEIN LOW 1 (EDYYD6HL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "HOLSTEIN LOW 1 (EDYYD6HL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "120.860",
+    "airspace": "HOLSTEIN LOW 2 (EDYYD6HL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "HOLSTEIN LOW 2 (EDYYD6HL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "120.860",
+    "airspace": "HOLSTEIN LOW 3 (EDYYD6HL3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "HOLSTEIN LOW 3 (EDYYD6HL3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "132.780",
+    "airspace": "HOLSTEIN HIGH (EDYYD6HH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "HOLSTEIN HIGH (EDYYD6HH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "136.465",
+    "airspace": "JEVER LOW (EDYYD6JL)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "292.775",
+    "airspace": "JEVER LOW (EDYYD6JL)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "129.735",
+    "airspace": "JEVER HIGH (EDYYD6JH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "292.775",
+    "airspace": "JEVER HIGH (EDYYD6JH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "133.355",
+    "airspace": "LUXEMBOURG LOW (EDYYB5LL)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "338.875",
+    "airspace": "LUXEMBOURG LOW (EDYYB5LL)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "132.315",
+    "airspace": "LUXEMBOURG HIGH (EDYYB5LH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "338.875",
+    "airspace": "LUXEMBOURG HIGH (EDYYB5LH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "122.185",
+    "airspace": "MUENSTER LOW 1 (EDYYH5ML1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "MUENSTER LOW 1 (EDYYH5ML1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "122.185",
+    "airspace": "MUENSTER LOW 2 (EDYYH5ML2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "MUENSTER LOW 2 (EDYYH5ML2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "122.185",
+    "airspace": "MUENSTER LOW 3 (EDYYH5ML3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "MUENSTER LOW 3 (EDYYH5ML3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "122.185",
+    "airspace": "MUENSTER LOW 4 (EDYYH5ML4)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "MUENSTER LOW 4 (EDYYH5ML4)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "130.110",
+    "airspace": "MUENSTER MIDDLE (EDYYH7MM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "MUENSTER MIDDLE (EDYYH7MM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "133.215",
+    "airspace": "MUENSTER HIGH (EDYYH7MH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "MUENSTER HIGH (EDYYH7MH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "132.855",
+    "airspace": "OLNO LOW 1 (EDYYB5OL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "338.875",
+    "airspace": "OLNO LOW 1 (EDYYB5OL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "132.855",
+    "airspace": "OLNO LOW 2 (EDYYB5OL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "338.875",
+    "airspace": "OLNO LOW 2 (EDYYB5OL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "125.980",
+    "airspace": "OLNO HIGH (EDYYB5OH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "338.875",
+    "airspace": "OLNO HIGH (EDYYB5OH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "128.790",
+    "airspace": "RUHR LOW 1 (EDYYH5RL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "RUHR LOW 1 (EDYYH5RL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "128.790",
+    "airspace": "RUHR LOW 2 (EDYYH5RL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "RUHR LOW 2 (EDYYH5RL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "128.790",
+    "airspace": "RUHR LOW 3 (EDYYH5RL3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "RUHR LOW 3 (EDYYH5RL3)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "124.435",
+    "airspace": "RUHR MIDDLE (EDYYH7RM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "RUHR MIDDLE (EDYYH7RM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "122.835",
+    "airspace": "RUHR HIGH (EDYYH7RH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "342.650",
+    "airspace": "RUHR HIGH (EDYYH7RH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "134.710",
+    "airspace": "SOLLING LOW 1 (EDYYH5SL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "SOLLING LOW 1 (EDYYH5SL1)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "134.710",
+    "airspace": "SOLLING LOW 2 (EDYYH5SL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "SOLLING LOW 2 (EDYYH5SL2)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "130.510",
+    "airspace": "SOLLING MIDDLE (EDYYH7SM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "SOLLING MIDDLE (EDYYH7SM)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "131.380",
+    "airspace": "SOLLING HIGH (EDYYH7SH)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "312.350",
+    "airspace": "SOLLING HIGH (EDYYH7SH)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "129.100",
+    "airspace": "ALLERSBERG (EDMMALB)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "306.600",
+    "airspace": "ALLERSBERG (EDMMALB)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "133.615",
+    "airspace": "BAMBERG (EDMMBBG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "129.555",
+    "airspace": "EGGENFELDEN (EDMMEGG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "306.600",
+    "airspace": "EGGENFELDEN (EDMMEGG)"
+  },
+  {
+    "name": "MUENCHEN RADAR (South)",
+    "frequency": "120.780",
+    "airspace": "ERDING HIGH/LOW (EDMMTMAS)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "129.525",
+    "airspace": "FRANKEN LOW (EDMMFRK)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "307.300",
+    "airspace": "FRANKEN LOW (EDMMFRK)"
+  },
+  {
+    "name": "MUENCHEN RADAR (North)",
+    "frequency": "128.030",
+    "airspace": "FREISING HIGH/LOW (EDMMCA4)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "133.550",
+    "airspace": "FUESSEN (EDMMFUE)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "255.950",
+    "airspace": "FUESSEN (EDMMFUE)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "133.230",
+    "airspace": "FUESSEN (EDMMFUE)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "374.875",
+    "airspace": "FUESSEN (EDMMFUE)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "118.235",
+    "airspace": "HALLE (EDMMHAL)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "374.875",
+    "airspace": "HALLE (EDMMHAL)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "133.565",
+    "airspace": "HOF (EDMMHOF)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "129.450",
+    "airspace": "ILLER (EDMMILR)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "253.500",
+    "airspace": "ILLER (EDMMILR)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "124.960",
+    "airspace": "MEISSEN (EDMMMEI)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "296.775",
+    "airspace": "MEISSEN (EDMMMEI)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "125.140",
+    "airspace": "NOERDLINGEN (EDMMNDG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "291.650",
+    "airspace": "NOERDLINGEN (EDMMNDG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "132.555",
+    "airspace": "RODING (EDMMRDG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "306.600",
+    "airspace": "RODING (EDMMRDG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "125.875",
+    "airspace": "SACHSEN LOW (EDMMSAS)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "296.775",
+    "airspace": "SACHSEN LOW (EDMMSAS)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "136.525",
+    "airspace": "SCHWABEN (EDMMSWA)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "132.455",
+    "airspace": "STARNBERG (EDMMSTA)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "255.950",
+    "airspace": "STARNBERG (EDMMSTA)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "133.680",
+    "airspace": "TEGERNSEE (EDMMTEG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "265.725",
+    "airspace": "TEGERNSEE (EDMMTEG)"
+  },
+  {
+    "name": "MUENCHEN RADAR (North)",
+    "frequency": "126.065",
+    "airspace": "THUERINGEN LOW NORD (EDMMTRN)"
+  },
+  {
+    "name": "MUENCHEN RADAR (North)",
+    "frequency": "264.650",
+    "airspace": "THUERINGEN LOW NORD (EDMMTRN)"
+  },
+  {
+    "name": "MUENCHEN RADAR (South)",
+    "frequency": "126.175",
+    "airspace": "THUERINGEN LOW SUED (EDMMTRS)"
+  },
+  {
+    "name": "MUENCHEN RADAR (South)",
+    "frequency": "264.650",
+    "airspace": "THUERINGEN LOW SUED (EDMMTRS)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "132.635",
+    "airspace": "TRAUN (EDMMTRU)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "136.230",
+    "airspace": "WALDA (EDMMWLD)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "291.650",
+    "airspace": "WALDA (EDMMWLD)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "134.150",
+    "airspace": "ZUGSPITZE (EDMMZUG)"
+  },
+  {
+    "name": "MUENCHEN RADAR",
+    "frequency": "255.950",
+    "airspace": "ZUGSPITZE (EDMMZUG)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "129.610",
+    "airspace": "MAASTRICHT SO EAST (EDYYSEST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.830",
+    "airspace": "MAASTRICHT SO EAST (EDYYSEST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "138.575",
+    "airspace": "MAASTRICHT SO EAST (EDYYSEST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "244.750",
+    "airspace": "MAASTRICHT SO EAST (EDYYSEST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "315.050",
+    "airspace": "MAASTRICHT SO EAST (EDYYSEST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "339.925",
+    "airspace": "MAASTRICHT SO EAST (EDYYSEST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "399.800",
+    "airspace": "MAASTRICHT SO EAST (EDYYSEST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "122.765",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "129.610",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.830",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "244.750",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "255.600",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "315.050",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "399.750",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "399.800",
+    "airspace": "MAASTRICHT SO NORTH (EDYYSNOR)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "129.610",
+    "airspace": "MAASTRICHT SO SOUTH (EDYYSSOU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "131.080",
+    "airspace": "MAASTRICHT SO SOUTH (EDYYSSOU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "135.830",
+    "airspace": "MAASTRICHT SO SOUTH (EDYYSSOU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "244.750",
+    "airspace": "MAASTRICHT SO SOUTH (EDYYSSOU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "314.600",
+    "airspace": "MAASTRICHT SO SOUTH (EDYYSSOU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "315.050",
+    "airspace": "MAASTRICHT SO SOUTH (EDYYSSOU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "399.800",
+    "airspace": "MAASTRICHT SO SOUTH (EDYYSSOU)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "126.765",
+    "airspace": "MAASTRICHT SO WEST (EDYYSWST)"
+  },
+  {
+    "name": "MAASTRICHT RADAR",
+    "frequency": "398.025",
+    "airspace": "MAASTRICHT SO WEST (EDYYSWST)"
+  }
+]

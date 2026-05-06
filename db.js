@@ -247,6 +247,16 @@ async getAllRunways() {
   async deleteApproachIndex(ident) {
     const db = await openDB();
     return await del(db, STORES.approachIndex, String(ident || "").toUpperCase());
+  },
+
+  async putAirportFreqs(obj) {
+    const db = await openDB();
+    return await put(db, STORES.meta, "airport_freq_index", obj);
+  },
+
+  async getAirportFreqs() {
+    const db = await openDB();
+    return await get(db, STORES.meta, "airport_freq_index");
   }
 };
 

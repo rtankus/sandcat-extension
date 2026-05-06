@@ -1,0 +1,870 @@
+{
+  "country": "Italy",
+  "source": "AIP Italia ENR 2.1, 19 MAR 2026 PDF",
+  "frequencies": [
+    {
+      "name": "Emergency",
+      "frequency": 121.5
+    },
+    {
+      "name": "Emergency",
+      "frequency": 243.0
+    },
+    {
+      "name": "Milano Information",
+      "frequency": 135.075
+    },
+    {
+      "name": "Milano Information",
+      "frequency": 124.925
+    },
+    {
+      "name": "Milano Information",
+      "frequency": 128.925
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 126.75
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 135.9
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 129.275
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 126.3
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 118.805
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 125.63
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 132.705
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 133.18
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 134.175
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 134.425
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 125.275
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 130.18
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 118.675
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 124.25
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 127.45
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 129.075
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 134.05
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 122.73
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 125.985
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 127.165
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 128.015
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 130.73
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 132.285
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 132.905
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 133.74
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 134.53
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 135.13
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 135.455
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 136.035
+    },
+    {
+      "name": "Milano Radar",
+      "frequency": 136.205
+    },
+    {
+      "name": "Milano Military",
+      "frequency": 129.825
+    },
+    {
+      "name": "Milano Military",
+      "frequency": 128.615
+    },
+    {
+      "name": "Milano Military",
+      "frequency": 121.14
+    },
+    {
+      "name": "Padova Information",
+      "frequency": 124.15
+    },
+    {
+      "name": "Padova Information",
+      "frequency": 126.425
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 118.9
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 119.175
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 120.725
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 134.75
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 125.9
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 128.575
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 125.485
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 127.38
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 132.86
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 133.305
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 133.515
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 133.705
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 133.94
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 136.465
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 134.39
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 122.735
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 130.525
+    },
+    {
+      "name": "Padova Radar",
+      "frequency": 135.94
+    },
+    {
+      "name": "Padova Military",
+      "frequency": 123.175
+    },
+    {
+      "name": "Padova Military",
+      "frequency": 129.375
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 125.75
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 124.2
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 134.2
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 130.9
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 127.125
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 124.8
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 128.8
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 133.25
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 129.575
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 134.125
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 119.075
+    },
+    {
+      "name": "Roma Information",
+      "frequency": 125.1
+    },
+    {
+      "name": "Roma Arrivals",
+      "frequency": 125.5
+    },
+    {
+      "name": "Roma Arrivals",
+      "frequency": 127.95
+    },
+    {
+      "name": "Roma Director",
+      "frequency": 131.25
+    },
+    {
+      "name": "Roma Director",
+      "frequency": 119.2
+    },
+    {
+      "name": "Roma Departures",
+      "frequency": 130.9
+    },
+    {
+      "name": "Roma Departures",
+      "frequency": 122.53
+    },
+    {
+      "name": "Roma Departures",
+      "frequency": 131.1
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 125.95
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 118.8
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 127.125
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 133.25
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 124.35
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 130.875
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 124.2
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 124.8
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 127.35
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 128.8
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 135.425
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 134.2
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 133.485
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 119.425
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 132.525
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 134.9
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 135.7
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 120.33
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 121.315
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 125.455
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 132.03
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 132.84
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 133.13
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 134.78
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 135.615
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 131.2
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 130.775
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 132.36
+    },
+    {
+      "name": "Roma Radar",
+      "frequency": 123.415
+    },
+    {
+      "name": "Roma Military",
+      "frequency": 123.225
+    },
+    {
+      "name": "Roma Military",
+      "frequency": 142.3
+    },
+    {
+      "name": "Roma Military",
+      "frequency": 126.46
+    },
+    {
+      "name": "Roma Military",
+      "frequency": 129.775
+    },
+    {
+      "name": "Brindisi Information",
+      "frequency": 131.125
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 119.475
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 118.75
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 133.025
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 126.875
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 128.3
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 120.58
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 136.65
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 123.95
+    },
+    {
+      "name": "Brindisi Radar",
+      "frequency": 129.215
+    },
+    {
+      "name": "Brindisi Military",
+      "frequency": 121.075
+    },
+    {
+      "name": "Amendola APP",
+      "frequency": 118.855
+    },
+    {
+      "name": "Amendola Radar",
+      "frequency": 118.855
+    },
+    {
+      "name": "Ancona APP",
+      "frequency": 125.325
+    },
+    {
+      "name": "Aviano Approach",
+      "frequency": 120.13
+    },
+    {
+      "name": "Aviano Approach",
+      "frequency": 120.965
+    },
+    {
+      "name": "Bologna APP",
+      "frequency": 118.15
+    },
+    {
+      "name": "Bologna APP",
+      "frequency": 120.1
+    },
+    {
+      "name": "Bologna APP",
+      "frequency": 133.775
+    },
+    {
+      "name": "Bologna Radar",
+      "frequency": 118.15
+    },
+    {
+      "name": "Bologna Radar",
+      "frequency": 120.1
+    },
+    {
+      "name": "Bologna Radar",
+      "frequency": 133.775
+    },
+    {
+      "name": "Cagliari APP",
+      "frequency": 119.275
+    },
+    {
+      "name": "Cagliari APP",
+      "frequency": 122.95
+    },
+    {
+      "name": "Cagliari Radar",
+      "frequency": 122.95
+    },
+    {
+      "name": "Catania APP",
+      "frequency": 119.25
+    },
+    {
+      "name": "Catania Director",
+      "frequency": 120.805
+    },
+    {
+      "name": "Catania Radar",
+      "frequency": 119.25
+    },
+    {
+      "name": "Emergenza",
+      "frequency": 121.5
+    },
+    {
+      "name": "Frosinone Approach",
+      "frequency": 122.6
+    },
+    {
+      "name": "Genova APP",
+      "frequency": 119.6
+    },
+    {
+      "name": "Genova Radar",
+      "frequency": 119.6
+    },
+    {
+      "name": "Genova Radar",
+      "frequency": 119.85
+    },
+    {
+      "name": "Gioia APP",
+      "frequency": 122.1
+    },
+    {
+      "name": "Gioia APP",
+      "frequency": 130.655
+    },
+    {
+      "name": "Gioia Radar",
+      "frequency": 122.1
+    },
+    {
+      "name": "Gioia Radar",
+      "frequency": 130.655
+    },
+    {
+      "name": "Grazzanise APP",
+      "frequency": 122.1
+    },
+    {
+      "name": "Grazzanise APP",
+      "frequency": 135.255
+    },
+    {
+      "name": "Grosseto APP",
+      "frequency": 124.525
+    },
+    {
+      "name": "Grosseto Radar",
+      "frequency": 124.525
+    },
+    {
+      "name": "Grottaglie APP",
+      "frequency": 118.7
+    },
+    {
+      "name": "Lampedusa APP",
+      "frequency": 118.03
+    },
+    {
+      "name": "Latina APP",
+      "frequency": 122.1
+    },
+    {
+      "name": "Latina APP",
+      "frequency": 126.55
+    },
+    {
+      "name": "Lecce APP",
+      "frequency": 118.955
+    },
+    {
+      "name": "Lecce APP",
+      "frequency": 122.1
+    },
+    {
+      "name": "Lecce Radar",
+      "frequency": 118.955
+    },
+    {
+      "name": "Palermo APP",
+      "frequency": 118.65
+    },
+    {
+      "name": "Palermo APP",
+      "frequency": 120.2
+    },
+    {
+      "name": "Palermo radar",
+      "frequency": 118.65
+    },
+    {
+      "name": "Palermo radar",
+      "frequency": 120.2
+    },
+    {
+      "name": "Pantelleria APP",
+      "frequency": 119.35
+    },
+    {
+      "name": "Parma APP",
+      "frequency": 127.575
+    },
+    {
+      "name": "Perugia APP",
+      "frequency": 125.6
+    },
+    {
+      "name": "Pescara APP",
+      "frequency": 120.05
+    },
+    {
+      "name": "Piacenza APP",
+      "frequency": 121.25
+    },
+    {
+      "name": "Pisa APP",
+      "frequency": 124.28
+    },
+    {
+      "name": "Pisa APP",
+      "frequency": 126.08
+    },
+    {
+      "name": "Pratica TWR",
+      "frequency": 118.05
+    },
+    {
+      "name": "Pratica TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Reggio APP",
+      "frequency": 120.275
+    },
+    {
+      "name": "Roma Departure",
+      "frequency": 130.9
+    },
+    {
+      "name": "Roma Departure",
+      "frequency": 131.1
+    },
+    {
+      "name": "Trapani APP",
+      "frequency": 119.95
+    },
+    {
+      "name": "Trapani APP",
+      "frequency": 122.805
+    },
+    {
+      "name": "Trapani Radar",
+      "frequency": 119.95
+    },
+    {
+      "name": "Trapani Radar",
+      "frequency": 122.805
+    },
+    {
+      "name": "Treviso APP",
+      "frequency": 120.405
+    },
+    {
+      "name": "Treviso APP",
+      "frequency": 121.155
+    },
+    {
+      "name": "Treviso Radar",
+      "frequency": 120.405
+    },
+    {
+      "name": "Viterbo APP",
+      "frequency": 119.68
+    },
+    {
+      "name": "Amendola TWR",
+      "frequency": 118.205
+    },
+    {
+      "name": "Amendola TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Aviano TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Aviano TWR",
+      "frequency": 134.1
+    },
+    {
+      "name": "Cameri GND",
+      "frequency": 139.1
+    },
+    {
+      "name": "Cameri TWR",
+      "frequency": 118.18
+    },
+    {
+      "name": "Cameri TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Casarsa Radio",
+      "frequency": 122.7
+    },
+    {
+      "name": "Cervia TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Cervia TWR",
+      "frequency": 124.9
+    },
+    {
+      "name": "Decimo TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Decimo TWR",
+      "frequency": 140.4
+    },
+    {
+      "name": "Frosinone TWR",
+      "frequency": 119.35
+    },
+    {
+      "name": "Frosinone TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Ghedi TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Gioia TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Gioia TWR",
+      "frequency": 122.455
+    },
+    {
+      "name": "Grazzanise TWR",
+      "frequency": 118.025
+    },
+    {
+      "name": "Grazzanise TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Istrana TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Istrana TWR",
+      "frequency": 124.355
+    },
+    {
+      "name": "Lecce GND",
+      "frequency": 142.0
+    },
+    {
+      "name": "Lecce TWR",
+      "frequency": 119.555
+    },
+    {
+      "name": "Lecce TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Piacenza TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Piacenza TWR",
+      "frequency": 123.925
+    },
+    {
+      "name": "Pratica GND",
+      "frequency": 121.6
+    },
+    {
+      "name": "Rivolto TWR",
+      "frequency": 122.1
+    },
+    {
+      "name": "Rivolto TWR",
+      "frequency": 126.85
+    },
+    {
+      "name": "Rivolto TWR",
+      "frequency": 139.25
+    },
+    {
+      "name": "Sigonella TWR",
+      "frequency": 118.055
+    },
+    {
+      "name": "Sigonella TWR",
+      "frequency": 122.1
+    }
+  ]
+}

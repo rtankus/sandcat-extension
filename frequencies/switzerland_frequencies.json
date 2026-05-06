@@ -1,0 +1,170 @@
+{
+  "country": "Switzerland",
+  "source": "AIP Switzerland ENR 2.1 frequencies",
+  "frequencies": [
+    {
+      "name": "Swiss Radar M1",
+      "frequency": "133.050"
+    },
+    {
+      "name": "Swiss Radar M2",
+      "frequency": "133.405"
+    },
+    {
+      "name": "Swiss Radar M3",
+      "frequency": "132.815"
+    },
+    {
+      "name": "Swiss Radar M4",
+      "frequency": "134.605"
+    },
+    {
+      "name": "Swiss Radar M5",
+      "frequency": "132.835"
+    },
+    {
+      "name": "Swiss Radar M6",
+      "frequency": "133.690"
+    },
+    {
+      "name": "Swiss Radar M7",
+      "frequency": "133.690"
+    },
+    {
+      "name": "Swiss Radar ALTN M1",
+      "frequency": "126.225"
+    },
+    {
+      "name": "Swiss Radar UHF M5/M6/M7",
+      "frequency": "247.400"
+    },
+    {
+      "name": "Swiss Radar ALTN M2/M3/M4/M5/M6/M7",
+      "frequency": "133.660"
+    },
+    {
+      "name": "Swiss Radar UHF M1/M2/M3/M4",
+      "frequency": "245.025"
+    },
+    {
+      "name": "Swiss Radar ALTN Swiss-wide sectors",
+      "frequency": "135.015"
+    },
+    {
+      "name": "Swiss Radar L1",
+      "frequency": "134.850"
+    },
+    {
+      "name": "Swiss Radar L2",
+      "frequency": "126.050"
+    },
+    {
+      "name": "Swiss Radar L3",
+      "frequency": "134.315"
+    },
+    {
+      "name": "Swiss Radar L4",
+      "frequency": "136.015"
+    },
+    {
+      "name": "Swiss Radar L5",
+      "frequency": "128.155"
+    },
+    {
+      "name": "Swiss Radar L6",
+      "frequency": "132.615"
+    },
+    {
+      "name": "Swiss Radar L7",
+      "frequency": "132.615"
+    },
+    {
+      "name": "Swiss Radar ALTN 8.33 kHz Channels",
+      "frequency": "133.630"
+    },
+    {
+      "name": "Swiss Radar UHF L1/L2/L3/L4/L5/L6/L7",
+      "frequency": "374.050"
+    },
+    {
+      "name": "Swiss Radar UHF ALTN State Aircraft",
+      "frequency": "298.250"
+    },
+    {
+      "name": "Swiss Radar ALTN Swiss-wide sectors",
+      "frequency": "128.785"
+    },
+    {
+      "name": "Emergency All Services",
+      "frequency": "121.500"
+    },
+    {
+      "name": "Swiss Radar Geneva INI North",
+      "frequency": "134.030"
+    },
+    {
+      "name": "Swiss Radar Geneva INI South",
+      "frequency": "124.225"
+    },
+    {
+      "name": "Swiss Radar Geneva INI East",
+      "frequency": "128.905"
+    },
+    {
+      "name": "Swiss Radar Geneva ALTN",
+      "frequency": "125.550"
+    },
+    {
+      "name": "Swiss Radar Geneva UHF State Aircraft",
+      "frequency": "340.800"
+    },
+    {
+      "name": "ALPS RADAR Geneva VFR/IFR",
+      "frequency": "119.175"
+    },
+    {
+      "name": "Geneva Information",
+      "frequency": "126.350"
+    },
+    {
+      "name": "Emergency All Services",
+      "frequency": "121.500"
+    },
+    {
+      "name": "Swiss Radar Zurich South",
+      "frequency": "128.050"
+    },
+    {
+      "name": "Swiss Radar Zurich North",
+      "frequency": "136.155"
+    },
+    {
+      "name": "Swiss Radar Zurich West",
+      "frequency": "135.680"
+    },
+    {
+      "name": "Swiss Radar Zurich East",
+      "frequency": "133.905"
+    },
+    {
+      "name": "ALPS RADAR Zurich ARR/DEP EDNY and LSZR",
+      "frequency": "119.925"
+    },
+    {
+      "name": "ALPS RADAR Zurich VFR",
+      "frequency": "119.225"
+    },
+    {
+      "name": "Zurich Information",
+      "frequency": "124.700"
+    },
+    {
+      "name": "Zurich ACC/FIC ALTN",
+      "frequency": "126.225"
+    },
+    {
+      "name": "Emergency All Services",
+      "frequency": "121.500"
+    }
+  ]
+}

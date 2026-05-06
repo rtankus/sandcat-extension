@@ -114,6 +114,13 @@ let IRELAND_PROC_DB = {};
 
 let NL_PROC_DB = {};
 
+let CH_ENROUTE_FREQS = null;
+let FR_ENROUTE_FREQS = null;
+let DE_ENROUTE_FREQS = null;
+let IT_ENROUTE_FREQS = null;
+
+let FREQ_REVERSE_INDEX = null;
+
 let OURAIRPORTS_NAMES = {};
 
 async function loadOurAirportsNames() {
@@ -252,6 +259,33 @@ async function loadIrelandProcedures() {
 }
 loadIrelandProcedures();
 
+async function loadCountryFrequencies() {
+  if (CH_ENROUTE_FREQS && FR_ENROUTE_FREQS && DE_ENROUTE_FREQS && IT_ENROUTE_FREQS) return;
+  try {
+    const [chUrl, frUrl, deUrl, itUrl] = [
+      chrome.runtime.getURL("frequencies/switzerland_frequencies.json"),
+      chrome.runtime.getURL("frequencies/france_frequencies.json"),
+      chrome.runtime.getURL("frequencies/germany_frequencies.json"),
+      chrome.runtime.getURL("frequencies/italy_frequencies.json"),
+    ];
+    const [chRes, frRes, deRes, itRes] = await Promise.all([fetch(chUrl), fetch(frUrl), fetch(deUrl), fetch(itUrl)]);
+    const [chData, frData, deData, itData] = await Promise.all([chRes.json(), frRes.json(), deRes.json(), itRes.json()]);
+    CH_ENROUTE_FREQS = chData.frequencies || [];
+    FR_ENROUTE_FREQS = frData.frequencies || [];
+    DE_ENROUTE_FREQS = Array.isArray(deData) ? deData : (deData.frequencies || []);
+    IT_ENROUTE_FREQS = itData.frequencies || [];
+    FREQ_REVERSE_INDEX = null;
+    console.log(`Loaded country freqs: CH=${CH_ENROUTE_FREQS.length} FR=${FR_ENROUTE_FREQS.length} DE=${DE_ENROUTE_FREQS.length} IT=${IT_ENROUTE_FREQS.length}`);
+  } catch (err) {
+    console.error("Country frequency load failed:", err);
+    CH_ENROUTE_FREQS = CH_ENROUTE_FREQS || [];
+    FR_ENROUTE_FREQS = FR_ENROUTE_FREQS || [];
+    DE_ENROUTE_FREQS = DE_ENROUTE_FREQS || [];
+    IT_ENROUTE_FREQS = IT_ENROUTE_FREQS || [];
+  }
+}
+loadCountryFrequencies();
+
 const NL_INDIVIDUAL_FILES = [
   "netherlands/EHAM/Netherlands_EHAM_procedures_full.json",
   "netherlands/EHBD/Netherlands_EHBD_final.json",
@@ -302,6 +336,12 @@ async function loadAusVfrVisualWaypoints() {
 }
 
 loadAusVfrVisualWaypoints();
+
+// Preload and cache all frequency data at startup so freq search is instant
+(async () => {
+  await Promise.all([loadOurAirportsFrequencies(), loadAusFrequencies(), loadCountryFrequencies(), ensureOurAirportsLoaded()]);
+  buildFreqReverseIndex();
+})();
 
 const GLOBAL_BY_IDENT = new Map();
 const GLOBAL_GRID = new Map();
@@ -1085,6 +1125,7 @@ async function ensureOurAirportsLoaded() {
       RUNWAY_MEM_CACHE.set(k, v);
     }
   }
+  FREQ_REVERSE_INDEX = null; // force rebuild so country lookups use fresh AIRPORT_MAP
 }
 
   return;
@@ -1176,6 +1217,7 @@ for (const [k, v] of bins.entries()) {
 for (const a of airports) {
   AIRPORT_MAP.set(a.id, a);
 }
+  FREQ_REVERSE_INDEX = null; // force rebuild so country lookups use fresh AIRPORT_MAP
 
 }
 
@@ -1820,16 +1862,26 @@ for (const r of rows) {
   console.log("Navaids fetched + cached:", Object.keys(NAVAID_INDEX).length);
 }
 
+const AIRPORT_FREQ_CACHE_MS = 7 * 24 * 60 * 60 * 1000;
 let AIRPORT_FREQ_INDEX = null;
 
 async function loadOurAirportsFrequencies() {
-
   if (AIRPORT_FREQ_INDEX) return;
 
+  const now = Date.now();
+  const meta = (await DB.getMeta()) || {};
+
+  if (meta.airportFreqLoadedAt && (now - meta.airportFreqLoadedAt) < AIRPORT_FREQ_CACHE_MS) {
+    const cached = await DB.getAirportFreqs();
+    if (cached && Object.keys(cached).length > 0) {
+      AIRPORT_FREQ_INDEX = cached;
+      console.log("Airport frequencies loaded from DB cache:", Object.keys(cached).length);
+      return;
+    }
+  }
+
   console.log("Fetching airport-frequencies.csv...");
-
   const url = "https://davidmegginson.github.io/ourairports-data/airport-frequencies.csv";
-
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch airport-frequencies.csv");
 
@@ -1837,30 +1889,25 @@ async function loadOurAirportsFrequencies() {
   const rows = parseCSV(text);
 
   const out = {};
-
   for (const r of rows) {
-
     const ident = String(r.airport_ident || "").toUpperCase();
     if (!ident) continue;
-
     const freq = String(r.frequency_mhz || "").trim();
     if (!freq) continue;
-
     const type = String(r.type || "").toUpperCase();
     const desc = String(r.description || "").trim();
-
     if (!out[ident]) out[ident] = [];
-
-    out[ident].push({
-      type,
-      name: desc || type,
-      freq
-    });
+    out[ident].push({ type, name: desc || type, freq });
   }
 
   AIRPORT_FREQ_INDEX = out;
+  FREQ_REVERSE_INDEX = null; // force rebuild to include OurAirports data
 
-  console.log("Frequencies loaded:", Object.keys(out).length);
+  await DB.putAirportFreqs(out);
+  meta.airportFreqLoadedAt = now;
+  await DB.putMeta(meta);
+
+  console.log("Airport frequencies fetched + cached:", Object.keys(out).length);
 }
 
 let AUS_FREQ_INDEX = null;
@@ -1900,11 +1947,101 @@ async function loadAusFrequencies() {
       }));
     }
     AUS_FREQ_INDEX = out;
+    FREQ_REVERSE_INDEX = null; // force rebuild to include AU data
     console.log("AU frequencies loaded:", Object.keys(out).length);
   } catch (err) {
     console.error("Failed to load aus_waypoints_complete.json:", err);
     AUS_FREQ_INDEX = {};
   }
+}
+
+function normalizeFreqKey(raw) {
+  return String(raw || "").replace(/[^0-9]/g, "");
+}
+
+function buildFreqReverseIndex() {
+  if (FREQ_REVERSE_INDEX) return;
+  FREQ_REVERSE_INDEX = new Map();
+
+  function add(freq, label, type, airport_icao, country) {
+    const key = normalizeFreqKey(freq);
+    if (!key || key.length < 5) return;
+    if (!FREQ_REVERSE_INDEX.has(key)) FREQ_REVERSE_INDEX.set(key, []);
+    FREQ_REVERSE_INDEX.get(key).push({ origFreq: String(freq), label: label || "", type: type || "", airport_icao: airport_icao || null, country: country || "" });
+  }
+
+  // ICAO → country lookup from AIRPORT_MAP
+  const icaoCountry = new Map();
+  for (const a of AIRPORT_MAP.values()) {
+    if (a.ident) icaoCountry.set(a.ident, a.country || "");
+  }
+
+  // OurAirports (worldwide airport-level freqs)
+  for (const [icao, freqs] of Object.entries(AIRPORT_FREQ_INDEX || {})) {
+    const country = icaoCountry.get(icao) || "";
+    for (const f of freqs) add(f.freq, f.name || f.type, f.type, icao, country);
+  }
+
+  // Swiss airport-level comms
+  for (const [icao, data] of Object.entries(SWISS_AD2_DB || {})) {
+    for (const c of (data.comms || [])) add(c.freq, c.label || c.type, c.type, icao, "CH");
+  }
+
+  // Ireland — two formats: array [{name,type,frequency}] or object {TWR:"119.3",...}
+  for (const [icao, data] of Object.entries(IRELAND_PROC_DB || {})) {
+    const freqs = data.frequencies;
+    if (Array.isArray(freqs)) {
+      for (const c of freqs) add(c.frequency, c.name || c.type, c.type, icao, "IE");
+    } else if (freqs && typeof freqs === "object") {
+      for (const [role, freq] of Object.entries(freqs)) {
+        if (freq) add(freq, role, commLabelToType(role), icao, "IE");
+      }
+    }
+  }
+
+  // Netherlands
+  for (const [icao, data] of Object.entries(NL_PROC_DB || {})) {
+    for (const [role, vals] of Object.entries(data.frequencies || {})) {
+      const label = role.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      for (const f of (Array.isArray(vals) ? vals : [vals])) {
+        if (f) add(f, label, commLabelToType(role), icao, "NL");
+      }
+    }
+  }
+
+  // Australia
+  for (const [icao, freqs] of Object.entries(AUS_FREQ_INDEX || {})) {
+    for (const f of freqs) add(f.freq, f.name || f.type, f.type, icao, "AU");
+  }
+
+  // Switzerland enroute ACC sectors (no airport ICAO)
+  for (const e of (CH_ENROUTE_FREQS || [])) {
+    add(e.frequency, e.name, "CTR", null, "CH");
+  }
+
+  // France enroute ACC sectors (no airport ICAO)
+  for (const e of (FR_ENROUTE_FREQS || [])) {
+    const freq = e.frequency_mhz != null ? String(e.frequency_mhz) : e.frequency;
+    const sectorTag = e.sectors?.length ? ` [${e.sectors.join(",")}]` : "";
+    const label = (e.name || e.facility || "") + sectorTag;
+    add(freq, label, e.service || "CTR", null, "FR");
+  }
+
+  // Germany — plain array {name, frequency, airspace}, ICAO in airspace parentheses
+  // name already contains type (e.g. "RHEIN RADAR"), so pass "" to avoid redundant badge
+  for (const e of (DE_ENROUTE_FREQS || [])) {
+    const icaoMatch = (e.airspace || "").match(/\(([A-Z]{4})\)/);
+    const icao = icaoMatch ? icaoMatch[1] : null;
+    const label = e.airspace ? `${e.name} — ${e.airspace}` : e.name;
+    add(e.frequency, label, "", icao, "DE");
+  }
+
+  // Italy — {country, source, frequencies: [{name, frequency (number)}]}
+  for (const e of (IT_ENROUTE_FREQS || [])) {
+    add(String(e.frequency), e.name, commLabelToType(e.name || ""), null, "IT");
+  }
+
+  console.log(`[SandCat] FREQ_REVERSE_INDEX built: ${FREQ_REVERSE_INDEX.size} unique frequencies`);
 }
 
 function getEnrichedFreqs(ident) {
@@ -3536,6 +3673,61 @@ if (msg?.type === "SEARCH_AIRPORTS_GLOBAL") {
       return aExact - bExact;
     });
 
+    sendResponse({ ok: true, results });
+  })();
+  return true;
+}
+
+if (msg?.type === "SEARCH_BY_FREQUENCY") {
+  (async () => {
+    const raw = String(msg.freq || "").trim();
+    const queryKey = normalizeFreqKey(raw);
+    if (!queryKey || queryKey.length < 3) { sendResponse({ ok: true, results: [] }); return; }
+    const filterCountry = String(msg.country || "").toUpperCase().trim();
+
+    await loadCountryFrequencies();
+    buildFreqReverseIndex();
+
+    const results = [];
+    const seen = new Set();
+    for (const [key, entries] of FREQ_REVERSE_INDEX) {
+      if (!key.includes(queryKey)) continue;
+      for (const e of entries) {
+        if (filterCountry && e.country !== filterCountry) continue;
+        const dk = `${key}|${e.airport_icao}|${e.label}`;
+        if (seen.has(dk)) continue;
+        seen.add(dk);
+        results.push({ freq: e.origFreq, label: e.label, type: e.type, airport_icao: e.airport_icao, country: e.country });
+        if (results.length >= 25) break;
+      }
+      if (results.length >= 25) break;
+    }
+
+    results.sort((a, b) => {
+      const aExact = normalizeFreqKey(a.freq) === queryKey ? 0 : 1;
+      const bExact = normalizeFreqKey(b.freq) === queryKey ? 0 : 1;
+      return aExact - bExact || String(a.freq).localeCompare(String(b.freq));
+    });
+
+    sendResponse({ ok: true, results });
+  })();
+  return true;
+}
+
+if (msg?.type === "GET_FREQ_COUNTRIES") {
+  (async () => {
+    await loadCountryFrequencies();
+    buildFreqReverseIndex();
+    const counts = new Map();
+    for (const [, entries] of FREQ_REVERSE_INDEX) {
+      for (const e of entries) {
+        if (!e.country) continue;
+        counts.set(e.country, (counts.get(e.country) || 0) + 1);
+      }
+    }
+    const results = [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([code, count]) => ({ code, count }));
     sendResponse({ ok: true, results });
   })();
   return true;
@@ -5805,10 +5997,16 @@ chrome.runtime.onMessage.addListener((msg) => {
       GLOBAL_DATA_READY.waypoints = false;
       GLOBAL_DATA_READY.navaids = false;
       GLOBAL_DATA_READY.all = false;
+      FREQ_REVERSE_INDEX = null;
+      CH_ENROUTE_FREQS = null;
+      FR_ENROUTE_FREQS = null;
+      DE_ENROUTE_FREQS = null;
+      IT_ENROUTE_FREQS = null;
       await Promise.all([
         loadSwissProcedures(),
         loadAustraliaProcedures(),
         loadAusVfrVisualWaypoints(),
+        loadCountryFrequencies(),
         ensureGlobalDataLoaded()
       ]);
 

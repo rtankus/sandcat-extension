@@ -533,33 +533,25 @@ function cleanAusProcName(name) {
     .trim();
 }
 const label = cleanAusProcName(procName);
+const cleanFixes = [...new Set(
+  (fixes || [])
+    .map(f => String(f || "").trim().toUpperCase())
+    .filter(Boolean)
+)];
 const span = makeChip(label, "pointer");
+
+for (const fx of cleanFixes) {
+  if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+  if (!FIX_PROCEDURE_MAP[fx].some(e => e.proc === procName && e.type === procType))
+    FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: procName, procDisplay: procName });
+}
 
   span.addEventListener("click", async (e) => {
     e.stopPropagation();
 
-    const cleanFixes = [...new Set(
-      (fixes || [])
-        .map(f => String(f || "").trim().toUpperCase())
-        .filter(Boolean)
-    )];
-
     if (!cleanFixes.length) {
       openFixPopover(span, procName, "No fixes parsed.");
       return;
-    }
-
-    for (const fx of cleanFixes) {
-      if (!FIX_PROCEDURE_MAP[fx]) {
-        FIX_PROCEDURE_MAP[fx] = [];
-      }
-
-      FIX_PROCEDURE_MAP[fx].push({
-        airport: "",
-        type: procType,
-        proc: procName,
-        procDisplay: procName
-      });
     }
 
     openFixPopover(span, procName, " ");
@@ -1699,6 +1691,17 @@ function renderRunwayEndSection(container, airportIdent, rwy, names, defaultExpa
 }
 
 function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches) {
+  for (const ap of ausApproaches || []) {
+    const procName = ap.name;
+    for (const fRaw of ap.fixes || []) {
+      const fx = String(fRaw || "").trim().toUpperCase();
+      if (!fx) continue;
+      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+      if (!FIX_PROCEDURE_MAP[fx].some(e => e.proc === procName && e.type === "IAP"))
+        FIX_PROCEDURE_MAP[fx].push({ airport: airportIdent, type: "IAP", proc: procName, procDisplay: procName });
+    }
+  }
+
   const pairs = buildRunwayPairs(runways || []);
 
   const byRunway = new Map();
@@ -3150,6 +3153,43 @@ for (const airport of MASTER_RESULTS) {
     }
   }
 
+  /* IAP */
+  for (const apNameRaw of (airport.approaches || [])) {
+
+    const apName = String(apNameRaw || "").trim();
+    if (!apName) continue;
+
+    const iapResp = await chrome.runtime.sendMessage({
+      type: "GET_IAP_FIXES",
+      airportIdent: airport.ident,
+      approachName: apName
+    });
+
+    for (const fxRaw of iapResp?.fixes || []) {
+
+      const key = String(fxRaw || "").toUpperCase().trim();
+      if (!key) continue;
+
+      if (!FIX_PROCEDURE_MAP[key]) {
+        FIX_PROCEDURE_MAP[key] = [];
+      }
+
+      const exists = FIX_PROCEDURE_MAP[key].some(
+        x => x.proc === apName && x.airport === airport.ident && x.type === "IAP"
+      );
+
+      if (!exists) {
+        FIX_PROCEDURE_MAP[key].push({
+          airport: airport.ident,
+          type: "IAP",
+          proc: apName,
+          procDisplay: apName
+        });
+      }
+
+    }
+  }
+
 }
 }
   /* -----------------------------
@@ -3937,6 +3977,17 @@ function renderNlIAPsByRunway(container, iaps) {
 function renderSwissIAPsByRunway(container, iaps) {
   if (!iaps.length) return;
 
+  for (const proc of iaps) {
+    const label = proc.name || "(unnamed)";
+    for (const w of proc.waypoints || []) {
+      const fx = String(w.ident || "").trim().toUpperCase();
+      if (!fx) continue;
+      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+      if (!FIX_PROCEDURE_MAP[fx].some(e => e.proc === label && e.type === "IAP"))
+        FIX_PROCEDURE_MAP[fx].push({ airport: "", type: "IAP", proc: label, procDisplay: label });
+    }
+  }
+
   const wrapper = document.createElement("div");
   container.appendChild(wrapper);
 
@@ -4052,18 +4103,20 @@ function swissProcChip(proc, procType) {
   const fixes = (proc.waypoints || [])
     .map(w => String(w.ident || "").trim().toUpperCase())
     .filter(Boolean);
+  const cleanFixes = [...new Set(fixes)];
   const span = makeChip(label, "pointer");
+
+  for (const fx of cleanFixes) {
+    if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+    if (!FIX_PROCEDURE_MAP[fx].some(e => e.proc === label && e.type === procType))
+      FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: label, procDisplay: label });
+  }
 
   span.addEventListener("click", async (e) => {
     e.stopPropagation();
-    if (!fixes.length) {
+    if (!cleanFixes.length) {
       openFixPopover(span, label, "No waypoints.");
       return;
-    }
-    const cleanFixes = [...new Set(fixes)];
-    for (const fx of cleanFixes) {
-      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
-      FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: label, procDisplay: label });
     }
     openFixPopover(span, label, " ");
     await renderFixListInPopover(label, cleanFixes);
@@ -4159,18 +4212,20 @@ function irelandProcChip(proc, procType) {
     : (proc.waypoints || []);
 
   const fixes = waypoints.map(w => String(w.fix || "").trim().toUpperCase()).filter(Boolean);
+  const cleanFixes = [...new Set(fixes)];
   const span = makeChip(chipLabel, "pointer");
+
+  for (const fx of cleanFixes) {
+    if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+    if (!FIX_PROCEDURE_MAP[fx].some(e => e.proc === label && e.type === procType))
+      FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: label, procDisplay: label });
+  }
 
   span.addEventListener("click", async (e) => {
     e.stopPropagation();
-    if (!fixes.length) {
+    if (!cleanFixes.length) {
       openFixPopover(span, label, "No waypoints.");
       return;
-    }
-    const cleanFixes = [...new Set(fixes)];
-    for (const fx of cleanFixes) {
-      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
-      FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: label, procDisplay: label });
     }
     openFixPopover(span, label, " ");
     await renderIrelandFixListInPopover(label, waypoints);
@@ -4332,6 +4387,17 @@ function buildIrelandRunwayPairs(procs) {
 
 function renderIrelandIAPsByRunwayPair(container, iaps) {
   if (!iaps.length) return;
+
+  for (const proc of iaps) {
+    const label = proc.name || "(unnamed)";
+    for (const w of proc.waypoints || []) {
+      const fx = String(w.fix || "").trim().toUpperCase();
+      if (!fx) continue;
+      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+      if (!FIX_PROCEDURE_MAP[fx].some(e => e.proc === label && e.type === "IAP"))
+        FIX_PROCEDURE_MAP[fx].push({ airport: "", type: "IAP", proc: label, procDisplay: label });
+    }
+  }
 
   const byRunway = new Map();
   const other = [];
@@ -5350,35 +5416,66 @@ if (typeof initAirportSearch === "function") {
   const queryInput = document.getElementById("airportSearchQuery");
   const contextInput = document.getElementById("airportSearchContext");
   const helperText = document.getElementById("airportSearchHelperText");
+  const btnFreq = document.getElementById("aptRegionFreq");
+  const freqPanel = document.getElementById("freqSearchPanel");
+  const freqQueryInput = document.getElementById("freqSearchQuery");
+  const freqCountryFilter = document.getElementById("freqCountryFilter");
+  const freqResultsDiv = document.getElementById("freqSearchResults");
 
   if (!btnUS || !btnGlobal) return;
 
   let aptRegion = "US";
+  let freqCountriesLoaded = false;
+
+  async function populateFreqCountries() {
+    if (!freqCountryFilter) return;
+    let resp;
+    try { resp = await chrome.runtime.sendMessage({ type: "GET_FREQ_COUNTRIES" }); }
+    catch { return; }
+    if (!resp?.ok) return;
+    const dn = new Intl.DisplayNames(["en"], { type: "region" });
+    freqCountryFilter.innerHTML = `<option value="">All countries</option>`;
+    for (const { code, count } of resp.results) {
+      let name = code;
+      try { name = dn.of(code) || code; } catch {}
+      const opt = document.createElement("option");
+      opt.value = code;
+      opt.textContent = `${name} (${count})`;
+      freqCountryFilter.appendChild(opt);
+    }
+  }
   let globalAptTimer = null;
 
   function setAptRegion(region) {
     aptRegion = region;
     btnUS.classList.toggle("active", region === "US");
     btnGlobal.classList.toggle("active", region === "global");
+    btnFreq?.classList.toggle("active", region === "freq");
 
     const showUS = region === "US";
+    const showFreq = region === "freq";
+
     if (usHeader) usHeader.style.display = showUS ? "" : "none";
-    if (guessLabel) guessLabel.textContent = showUS ? "AIRPORT GUESS" : "SEARCH";
-    if (contextRow) contextRow.style.display = "";
-    if (contextBlock) contextBlock.style.display = "";
+    if (guessLabel) guessLabel.textContent = showUS ? "AIRPORT GUESS" : showFreq ? "FREQUENCY LOOKUP" : "SEARCH";
+    if (contextRow) contextRow.style.display = showFreq ? "none" : "";
+    if (contextBlock) contextBlock.style.display = showFreq ? "none" : "";
     if (helperText) helperText.style.display = showUS ? "" : "none";
     if (filterEl) filterEl.style.display = showUS ? "" : "none";
     if (suggEl) suggEl.style.display = showUS ? "" : "none";
     if (resultsEl) resultsEl.style.display = showUS ? "" : "none";
-    if (globalBox) globalBox.style.display = showUS ? "none" : "";
+    if (globalBox) globalBox.style.display = region === "global" ? "" : "none";
+    if (queryInput) queryInput.style.display = showFreq ? "none" : "";
+    if (freqPanel) freqPanel.style.display = showFreq ? "" : "none";
 
-    if (queryInput) queryInput.placeholder = showUS
+    if (queryInput && !showFreq) queryInput.placeholder = showUS
       ? "Type what you heard, e.g. 'dulles' or 'LAX'"
       : "Airport name or ICAO...";
-    if (contextInput && !showUS) contextInput.placeholder =
+    if (contextInput && !showUS && !showFreq) contextInput.placeholder =
       "Add context clues: nearby NAVAIDs, waypoints, city, frequencies...";
 
-    if (!showUS) runGlobalAptSearch();
+    if (region === "global") runGlobalAptSearch();
+    if (showFreq && freqQueryInput) freqQueryInput.focus();
+    if (showFreq && !freqCountriesLoaded) { freqCountriesLoaded = true; populateFreqCountries(); }
   }
 
   function extractContextIdents(text) {
@@ -5449,6 +5546,7 @@ if (typeof initAirportSearch === "function") {
 
   btnUS.addEventListener("click", () => setAptRegion("US"));
   btnGlobal.addEventListener("click", () => setAptRegion("global"));
+  btnFreq?.addEventListener("click", () => setAptRegion("freq"));
 
   queryInput?.addEventListener("input", () => {
     if (aptRegion !== "global") return;
@@ -5463,6 +5561,55 @@ if (typeof initAirportSearch === "function") {
   });
 
   if (globalBox) globalBox.style.display = "none";
+
+  let freqRevTimer = null;
+
+  async function runFreqSearch() {
+    if (!freqResultsDiv) return;
+    const raw = (freqQueryInput?.value || "").trim();
+    const digits = raw.replace(/[^0-9]/g, "");
+    if (!raw || digits.length < 3) {
+      freqResultsDiv.innerHTML = `<div style="color:#4b5563;font-size:11px">Type at least 3 digits to search...</div>`;
+      return;
+    }
+    freqResultsDiv.innerHTML = `<div style="color:#4b5563;font-size:11px">Searching...</div>`;
+    const country = freqCountryFilter?.value || "";
+    let resp;
+    try { resp = await chrome.runtime.sendMessage({ type: "SEARCH_BY_FREQUENCY", freq: raw, country }); }
+    catch (e) { freqResultsDiv.innerHTML = `<div style="color:#ef4444;font-size:11px">Error: ${e.message}</div>`; return; }
+    if (!resp?.ok || !resp.results?.length) {
+      freqResultsDiv.innerHTML = `<div style="color:#4b5563;font-size:11px">No facilities found for "${escapeHtmlLocal(raw)}"</div>`;
+      return;
+    }
+    freqResultsDiv.innerHTML = "";
+    for (const r of resp.results) {
+      const card = document.createElement("div");
+      card.className = "freqRevCard";
+      const badge = r.type ? `<span class="freqRevTypeBadge">${escapeHtmlLocal(r.type)}</span>` : "";
+      const meta = [r.airport_icao, r.country].filter(Boolean).join(" • ");
+      card.innerHTML =
+        `<div class="freqRevCardFreq">${escapeHtmlLocal(r.freq)}</div>` +
+        `<div class="freqRevCardLabel">${badge}${escapeHtmlLocal(r.label || r.airport_icao || "")}</div>` +
+        (meta ? `<div class="freqRevCardMeta">${escapeHtmlLocal(meta)}</div>` : "");
+      card.addEventListener("click", () => {
+        if (!r.airport_icao) return;
+        const airportInput = document.getElementById("airportInput");
+        if (airportInput) airportInput.value = r.airport_icao;
+        maybeQueryNearby(r.airport_icao);
+      });
+      freqResultsDiv.appendChild(card);
+    }
+  }
+
+  freqQueryInput?.addEventListener("input", () => {
+    clearTimeout(freqRevTimer);
+    freqRevTimer = setTimeout(runFreqSearch, 300);
+  });
+
+  freqCountryFilter?.addEventListener("change", () => {
+    clearTimeout(freqRevTimer);
+    runFreqSearch();
+  });
 })();
 
 try {
