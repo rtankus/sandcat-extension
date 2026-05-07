@@ -2022,9 +2022,7 @@ function buildFreqReverseIndex() {
   // France enroute ACC sectors (no airport ICAO)
   for (const e of (FR_ENROUTE_FREQS || [])) {
     const freq = e.frequency_mhz != null ? String(e.frequency_mhz) : e.frequency;
-    const sectorTag = e.sectors?.length ? ` [${e.sectors.join(",")}]` : "";
-    const label = (e.name || e.facility || "") + sectorTag;
-    add(freq, label, e.service || "CTR", null, "FR");
+    add(freq, e.name || "", e.service || "CTR", null, "FR");
   }
 
   // Germany — plain array {name, frequency, airspace}, ICAO in airspace parentheses

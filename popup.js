@@ -5563,6 +5563,11 @@ if (typeof initAirportSearch === "function") {
   if (globalBox) globalBox.style.display = "none";
 
   let freqRevTimer = null;
+  const freqCountryNames = new Intl.DisplayNames(["en"], { type: "region" });
+  function freqCountryLabel(code) {
+    if (!code) return "";
+    try { return freqCountryNames.of(code) || code; } catch { return code; }
+  }
 
   async function runFreqSearch() {
     if (!freqResultsDiv) return;
@@ -5585,11 +5590,10 @@ if (typeof initAirportSearch === "function") {
     for (const r of resp.results) {
       const card = document.createElement("div");
       card.className = "freqRevCard";
-      const badge = r.type ? `<span class="freqRevTypeBadge">${escapeHtmlLocal(r.type)}</span>` : "";
-      const meta = [r.airport_icao, r.country].filter(Boolean).join(" • ");
+      const meta = [r.airport_icao, freqCountryLabel(r.country)].filter(Boolean).join(" • ");
       card.innerHTML =
         `<div class="freqRevCardFreq">${escapeHtmlLocal(r.freq)}</div>` +
-        `<div class="freqRevCardLabel">${badge}${escapeHtmlLocal(r.label || r.airport_icao || "")}</div>` +
+        `<div class="freqRevCardLabel">${escapeHtmlLocal(r.label || r.airport_icao || "")}</div>` +
         (meta ? `<div class="freqRevCardMeta">${escapeHtmlLocal(meta)}</div>` : "");
       card.addEventListener("click", () => {
         if (!r.airport_icao) return;
