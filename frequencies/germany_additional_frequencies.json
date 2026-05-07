@@ -1,0 +1,126 @@
+[
+  {
+    "name": "Allendorf Information",
+    "frequency": "135.165"
+  },
+  {
+    "name": "Altenburg Information",
+    "frequency": "123.580"
+  },
+  {
+    "name": "Bamberg Information",
+    "frequency": "123.440"
+  },
+  {
+    "name": "Barth Information",
+    "frequency": "118.080"
+  },
+  {
+    "name": "Bautzen Information",
+    "frequency": "120.605"
+  },
+  {
+    "name": "Bayreuth Information",
+    "frequency": "127.530"
+  },
+  {
+    "name": "Coburg Information",
+    "frequency": "128.680"
+  },
+  {
+    "name": "Donaueschingen Information",
+    "frequency": "126.690"
+  },
+  {
+    "name": "Airbus Information",
+    "frequency": "122.055"
+  },
+  {
+    "name": "Egelsbach Radio",
+    "frequency": "118.405"
+  },
+  {
+    "name": "Eggenfelden Information",
+    "frequency": "120.305"
+  },
+  {
+    "name": "Emden Information",
+    "frequency": "118.605"
+  },
+  {
+    "name": "Giebelstadt Information",
+    "frequency": "125.505"
+  },
+  {
+    "name": "Kiel Information",
+    "frequency": "119.980"
+  },
+  {
+    "name": "Magdeburg Information",
+    "frequency": "119.305"
+  },
+  {
+    "name": "Mengen Information",
+    "frequency": "135.180"
+  },
+  {
+    "name": "Neubrandenburg Information",
+    "frequency": "119.180"
+  },
+  {
+    "name": "Nordholz Turm",
+    "frequency": "131.255"
+  },
+  {
+    "name": "Nordholz Radar",
+    "frequency": "123.300"
+  },
+  {
+    "name": "Langen Information",
+    "frequency": "128.525"
+  },
+  {
+    "name": "Langen Information",
+    "frequency": "125.100"
+  },
+  {
+    "name": "Schleissheim Information",
+    "frequency": "131.130"
+  },
+  {
+    "name": "Schleswig Turm",
+    "frequency": "122.100"
+  },
+  {
+    "name": "Schleswig Radar",
+    "frequency": "123.300"
+  },
+  {
+    "name": "Schoenhagen Information",
+    "frequency": "131.155"
+  },
+  {
+    "name": "Schwäbisch Hall Information",
+    "frequency": "129.230"
+  },
+  {
+    "name": "Siegerland Information",
+    "frequency": "120.380"
+  },
+  {
+    "name": "Straubing Information",
+    "frequency": "127.155"
+  },
+  {
+    "name": "Strausberg Information",
+    "frequency": "118.735"
+  },
+  {
+    "name": "Wilhelmshaven Information",
+    "frequency": "129.255"
+  },
+  {
+    "name": "Zweibrücken Information",
+    "frequency": "123.830"
+  }
+]
