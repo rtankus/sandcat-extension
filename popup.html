@@ -1147,6 +1147,55 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   animation: sandcat-spin 0.7s linear infinite;
   flex-shrink: 0;
 }
+#routeTitle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+#routeLoadingBadge {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #94a3b8;
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 2px 7px 2px 5px;
+  letter-spacing: 0.02em;
+}
+#routeLoadingBadge.visible {
+  display: flex;
+}
+#routeLoadingBadge .flight-loading-spinner {
+  width: 8px;
+  height: 8px;
+  border-width: 1.5px;
+}
+.flight-loading-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 28px 12px;
+}
+.flight-loading-spinner-lg {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 3px solid #334155;
+  border-top-color: #22c55e;
+  border-radius: 50%;
+  animation: sandcat-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+.flight-loading-status {
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
 #routeAnalysis{
   background:#111827;
   border-radius:10px;
@@ -1341,7 +1390,7 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   gap: 4px;
   margin-bottom: 6px;
 }
-.aptRegionBtn {
+#airportLookupRoot button.aptRegionBtn {
   flex: 1;
   padding: 3px 0;
   font-size: 11px;
@@ -1352,14 +1401,24 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   color: #94a3b8;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
+  filter: none;
 }
-.aptRegionBtn.active {
+#airportLookupRoot button.aptRegionBtn.active {
   background: #3b82f6;
   color: #fff;
   border-color: #3b82f6;
+  filter: none;
+}
+#airportLookupRoot button.aptRegionBtn:hover:not(.active) {
+  background: #2d3748;
+  color: #e2e8f0;
+  filter: none;
 }
 #globalAptResults {
   margin-top: 4px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 /* --- Global Airport Search (globalNavPanel) --- */
@@ -1407,11 +1466,52 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   transition: border-color 0.14s;
 }
 .freqRevCard:hover { border-color: rgba(96,165,250,0.55); }
+.freqRevCard.nearby {
+  background: linear-gradient(180deg, rgba(15,40,30,0.95), rgba(8,22,16,0.97));
+  border-color: rgba(34,197,94,0.28);
+}
+.freqRevCard.nearby:hover { border-color: rgba(34,197,94,0.6); }
 .freqRevCardFreq { font-family: ui-monospace,monospace; font-size:14px; font-weight:700; color:#60a5fa; }
+.freqRevCard.nearby .freqRevCardFreq { color:#4ade80; }
 .freqRevCardLabel { font-size:12px; color:#f8fbff; font-weight:600; margin-top:2px; }
-.freqRevCardMeta { font-size:11px; color:#94a3b8; margin-top:2px; }
+.freqRevCardMeta { font-size:11px; color:#94a3b8; margin-top:2px; display:flex; align-items:center; gap:5px; }
+.freqRevNearbyBadge { display:inline-block; background:rgba(34,197,94,0.15); color:#4ade80; border:1px solid rgba(34,197,94,0.3); border-radius:4px; padding:0 5px; font-size:9px; font-weight:700; font-family:ui-monospace,monospace; letter-spacing:0.04em; }
 .freqRevTypeBadge { display:inline-block; background:rgba(96,165,250,0.18); color:#93c5fd; border-radius:4px; padding:0 5px; font-size:10px; font-weight:700; font-family:ui-monospace,monospace; margin-right:4px; }
-#freqSearchResults { max-height:320px; overflow-y:auto; }
+#freqSearchResults { max-height:360px; overflow-y:auto; }
+.freqRevGrid { display:grid; grid-template-columns:1fr 1fr; gap:8px; align-items:start; }
+.freqRevCol { display:flex; flex-direction:column; min-width:0; }
+.freqRevColHdr { font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:2px 2px 5px; margin-bottom:2px; }
+.freqRevColHdr--nearby { color:#4ade80; border-bottom:1px solid rgba(34,197,94,0.2); }
+.freqRevColHdr--global { color:#64748b; border-bottom:1px solid rgba(255,255,255,0.07); }
+.freqRevCol .freqRevCard { margin-bottom:5px; }
+#freqPrefetchStatus {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  margin-top: 6px;
+  padding: 5px 8px;
+  background: rgba(34,197,94,0.07);
+  border: 1px solid rgba(34,197,94,0.18);
+  border-radius: 7px;
+  font-size: 10px;
+  color: #4ade80;
+  letter-spacing: 0.02em;
+}
+#freqPrefetchStatus.active { display: flex; }
+#freqPrefetchStatus .fp-spinner {
+  width: 9px; height: 9px;
+  border: 1.5px solid rgba(34,197,94,0.25);
+  border-top-color: #4ade80;
+  border-radius: 50%;
+  animation: sandcat-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+#freqPrefetchStatus .fp-bar-wrap {
+  flex: 1; height: 3px; background: rgba(34,197,94,0.15); border-radius: 2px; overflow: hidden;
+}
+#freqPrefetchStatus .fp-bar {
+  height: 100%; background: #4ade80; border-radius: 2px; transition: width 0.3s ease;
+}
 
 .facilityRow{
   background:#1e293b;
@@ -2199,6 +2299,10 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   <input type="checkbox" id="procGlobalToggle">
   US SIDs/STARs
 </label>
+  <label style="font-size:12px">
+  <input type="checkbox" id="procIntlToggle">
+  Intl SIDs/STARs
+</label>
 </div>
 
     <div id="results"></div>
@@ -2305,6 +2409,7 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
           <option value="">Loading countries...</option>
         </select>
       </div>
+      <div id="freqPrefetchStatus"></div>
       <div id="freqSearchResults" style="margin-top:6px;"></div>
     </div>
   </div>
@@ -2314,7 +2419,7 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
 </div>
 
 <div id="routePanel" class="panel collapsible">
-  <div class="panel-header" id="routeTitle">Active Flight</div>
+  <div class="panel-header" id="routeTitle">Active Flight<span id="routeLoadingBadge"><span class="flight-loading-spinner"></span>Loading…</span></div>
 
   <div class="panel-body routeBody fixes-mode">
     <div id="routeModeToggle">

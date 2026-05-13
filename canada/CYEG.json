@@ -1,0 +1,784 @@
+{
+    "airport": "CYEG",
+    "comms": {
+        "ATIS": "128.0",
+        "ARR": [
+            "120.5",
+            "363.8"
+        ],
+        "DEP": [
+            "133.65",
+            "363.8"
+        ],
+        "TWR": [
+            "118.3",
+            "381.2"
+        ],
+        "GND": [
+            "121.7",
+            "275.6"
+        ]
+    },
+    "sids": [
+        {
+            "name": "GABET ONE DEP",
+            "identifier": "GABET1",
+            "type": "RNAV",
+            "routes": [
+                {
+                    "runway": "RWY02",
+                    "waypoints": [
+                        "OVUTO",
+                        "GABET"
+                    ],
+                    "departure_heading": 20
+                }
+            ],
+            "altitude": {
+                "initial": 6000
+            }
+        },
+        {
+            "name": "HAMPO TWO DEP",
+            "identifier": "HAMPO2",
+            "type": "RNAV",
+            "routes": [
+                {
+                    "runway": "RWY20",
+                    "waypoints": [
+                        "OBMOX",
+                        "HAMPO"
+                    ],
+                    "departure_heading": 200
+                }
+            ],
+            "altitude": {
+                "initial": 6000
+            }
+        },
+        {
+            "name": "JEVON ONE DEP",
+            "identifier": "JEVON1",
+            "type": "RNAV",
+            "routes": [
+                {
+                    "runway": "RWY12",
+                    "waypoints": [
+                        "KEKBI",
+                        "JEVON"
+                    ],
+                    "departure_heading": 120
+                }
+            ],
+            "altitude": {
+                "initial": 6000
+            }
+        },
+        {
+            "name": "MIPOT ONE DEP",
+            "identifier": "MIPOT1",
+            "type": "RNAV",
+            "routes": [
+                {
+                    "runway": "RWY30",
+                    "waypoints": [
+                        "OMVOL",
+                        "MIPOT"
+                    ],
+                    "departure_heading": 300
+                }
+            ],
+            "altitude": {
+                "initial": 6000
+            }
+        }
+    ],
+    "stars": [
+        {
+            "name": "ELLKS THREE ARR",
+            "identifier": "ELLKS3",
+            "waypoints": [
+                {
+                    "runway": "RWY02",
+                    "waypoints": [
+                        "ELLKS",
+                        "APKIT",
+                        "REXOM",
+                        "VIGVI"
+                    ]
+                },
+                {
+                    "runway": "RWY12",
+                    "waypoints": [
+                        "ELLKS",
+                        "APKIT",
+                        "NOXEV",
+                        "BEMIG"
+                    ]
+                },
+                {
+                    "runway": "RWY20",
+                    "waypoints": [
+                        "ELLKS",
+                        "APKIT",
+                        "MESDI",
+                        "EPSUL",
+                        "UMIBA",
+                        "DUDKO",
+                        "LIDOR"
+                    ]
+                },
+                {
+                    "runway": "RWY30",
+                    "waypoints": [
+                        "ELLKS",
+                        "APKIT",
+                        "MESDI",
+                        "ALNEG",
+                        "KISOD",
+                        "SUVAT",
+                        "MESVA"
+                    ]
+                }
+            ]
+        },
+        {
+
+    "name": "IGSOX THREE ARR",
+
+    "identifier": "IGSOX3",
+
+    "waypoints": [
+
+      {
+
+        "runway": "RWY02",
+
+        "waypoints": ["CAMRA", "IGSOX", "GOPEV", "ESVIT", "MUVGO", "BIPNA", "ULUXO"]
+
+      },
+
+      {
+
+        "runway": "RWY12",
+
+        "waypoints": ["CAMRA", "IGSOX", "GOPEV", "KEVRA", "DAVRU", "OBSUK", "POGIS"]
+
+      },
+
+      {
+
+        "runway": "RWY20",
+
+        "waypoints": ["CAMRA", "IGSOX", "GOPEV", "VOGAP", "ETBAL"]
+
+      },
+
+      {
+
+        "runway": "RWY30",
+
+        "waypoints": ["CAMRA", "IGSOX", "JEVON"]
+
+      }
+
+    ]
+
+  },
+{
+
+    "name": "OILRS TWO ARR",
+
+    "identifier": "OILRS2",
+
+    "waypoints": [
+
+      {
+
+        "runway": "RWY02",
+
+        "waypoints": ["OILRS", "MASUD", "LENID", "ULUXO"]
+
+      },
+
+      {
+
+        "runway": "RWY12",
+
+        "waypoints": ["OILRS", "MASUD", "TESOB", "ALNEG", "TULID", "BEMIG", "NOXEV"]
+
+      },
+
+      {
+
+        "runway": "RWY20",
+
+        "waypoints": ["OILRS", "MASUD", "TESOB", "AXITU", "UDLAR", "VOGAP", "ETBAL"]
+
+      },
+
+      {
+
+        "runway": "RWY30",
+
+        "waypoints": ["OILRS", "MASUD", "SUVAT", "MESVA"]
+
+      }
+
+    ]
+
+  },
+        {
+            "name": "RESAX ONE ARR",
+            "identifier": "RESAX1",
+            "waypoints": [
+                {
+                    "runway": "RWY02",
+                    "waypoints": [
+                        "RESAX",
+                        "RUBSU",
+                        "ESVIT",
+                        "MUVGO",
+                        "BIPNA",
+                        "ULUXO"
+                    ]
+                },
+                {
+                    "runway": "RWY12",
+                    "waypoints": [
+                        "RESAX",
+                        "RUBSU",
+                        "TILOV",
+                        "OBSUK",
+                        "POGIS"
+                    ]
+                },
+                {
+                    "runway": "RWY20",
+                    "waypoints": [
+                        "RESAX",
+                        "RUBSU",
+                        "GABET"
+                    ]
+                },
+                {
+                    "runway": "RWY30",
+                    "waypoints": [
+                        "RESAX",
+                        "RUBSU",
+                        "ITREG",
+                        "LETIX",
+                        "LOBTI",
+                        "DAPIT"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "TETAG TWO ARR",
+            "identifier": "TETAG2",
+            "waypoints": [
+                {
+                    "runway": "RWY02",
+                    "waypoints": [
+                        "TETAG",
+                        "SETBU",
+                        "PESGO",
+                        "VIPSO",
+                        "NOTIG",
+                        "EPSUL",
+                        "BOXET",
+                        "VIGVI",
+                        "REXOM"
+                    ]
+                },
+                {
+                    "runway": "RWY12",
+                    "waypoints": [
+                        "TETAG",
+                        "SETBU",
+                        "PESGO",
+                        "MIPOT"
+                    ]
+                },
+                {
+                    "runway": "RWY20",
+                    "waypoints": [
+                        "TETAG",
+                        "SETBU",
+                        "PESGO",
+                        "VIPSO",
+                        "DUDKO",
+                        "LIDOR"
+                    ]
+                },
+                {
+                    "runway": "RWY30",
+                    "waypoints": [
+                        "TETAG",
+                        "SETBU",
+                        "PESGO",
+                        "VIPSO",
+                        "NOTIG",
+                        "KEVRA",
+                        "OMENA",
+                        "LOBTI",
+                        "DAPIT"
+                    ]
+                }
+            ]
+        }
+    ],
+    "approaches": [
+        {
+            "name": "ILS RWY 02",
+            "runway": "RWY02",
+            "type": "ILS",
+            "transitions": [
+                {
+                    "name": "VIGVI",
+                    "waypoints": [
+                        "VIGVI",
+                        "HAMPO",
+                        "OBMOX"
+                    ]
+                },
+                {
+                    "name": "BIPNA",
+                    "waypoints": [
+                        "BIPNA",
+                        "HAMPO",
+                        "OBMOX"
+                    ]
+                },
+                {
+                    "name": "LENID",
+                    "waypoints": [
+                        "LENID",
+                        "HAMPO",
+                        "OBMOX"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "OBMOX"
+            ]
+        },
+        {
+            "name": "RNAV (GNSS) Z RWY 02",
+            "runway": "RWY02",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "VIGVI",
+                    "waypoints": [
+                        "VIGVI",
+                        "HAMPO",
+                        "URVOG"
+                    ]
+                },
+                {
+                    "name": "HAMPO",
+                    "waypoints": [
+                        "HAMPO",
+                        "URVOG"
+                    ]
+                },
+                {
+                    "name": "BIPNA",
+                    "waypoints": [
+                        "BIPNA",
+                        "HAMPO",
+                        "URVOG"
+                    ]
+                },
+                {
+                    "name": "LENDI",
+                    "waypoints": [
+                        "LENDI",
+                        "HAMPO",
+                        "URVOG"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "URVOG",
+                "GABET"
+            ]
+        },
+        {
+            "name": "RNAV (RNP) Y RWY 02",
+            "runway": "RWY02",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "APKIT",
+                    "waypoints": [
+                        "APKIT",
+                        "AXULA",
+                        "URVOG"
+                    ]
+                },
+                {
+                    "name": "HAMPO",
+                    "waypoints": [
+                        "HAMPO",
+                        "URVOG"
+                    ]
+                },
+                {
+                    "name": "MASUD",
+                    "waypoints": [
+                        "MASUD",
+                        "EMBET",
+                        "URVOG"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "URVOG",
+                "GABET"
+            ]
+        },
+        {
+            "name": "ILS RWY 12",
+            "runway": "RWY12",
+            "type": "ILS",
+            "transitions": [
+                {
+                    "name": "MIPOT",
+                    "waypoints": [
+                        "MIPOT",
+                        "MEPGU"
+                    ]
+                },
+                {
+                    "name": "BEMIG",
+                    "waypoints": [
+                        "BEMIG",
+                        "MIPOT",
+                        "MEPGU"
+                    ]
+                },
+                {
+                    "name": "OBSUK",
+                    "waypoints": [
+                        "OBSUK",
+                        "MIPOT",
+                        "MEPGU"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "MEPGU",
+                "VIRVI"
+            ]
+        },
+        {
+            "name": "RNAV (GNSS) Z RWY 12",
+            "runway": "RWY12",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "OBSUK",
+                    "waypoints": [
+                        "OBSUK",
+                        "MIPOT",
+                        "DUTKI"
+                    ]
+                },
+                {
+                    "name": "MIPOT",
+                    "waypoints": [
+                        "MIPOT",
+                        "DUTKI"
+                    ]
+                },
+                {
+                    "name": "BEMIG",
+                    "waypoints": [
+                        "BEMIG",
+                        "MIPOT",
+                        "DUTKI"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "DUTKI",
+                "JEVON"
+            ]
+        },
+        {
+            "name": "RNAV (RNP) Y RWY 12",
+            "runway": "RWY12",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "MIPOT",
+                    "waypoints": [
+                        "MIPOT",
+                        "VESBA",
+                        "DUTKI"
+                    ]
+                },
+                {
+                    "name": "APKIT",
+                    "waypoints": [
+                        "APKIT",
+                        "KAVUD",
+                        "DUTKI"
+                    ]
+                },
+                {
+                    "name": "MOGIX",
+                    "waypoints": [
+                        "MOGIX",
+                        "KAVUD",
+                        "DUTKI",
+                        "JEVON"
+                    ]
+                },
+                {
+                    "name": "TULID",
+                    "waypoints": [
+                        "TULID",
+                        "MOGIX",
+                        "KAVUD",
+                        "DUTKI"
+                    ]
+                },
+                {
+                    "name": "DAVRU",
+                    "waypoints": [
+                        "DAVRU",
+                        "UKPUM",
+                        "XUDGA",
+                        "VESBA",
+                        "DUTKI"
+                    ]
+                },
+                {
+                    "name": "TILOV",
+                    "waypoints": [
+                        "TILOV",
+                        "XUDGA",
+                        "VESBA",
+                        "DUTKI"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "DUTKI",
+                "JEVON"
+            ]
+        },
+        {
+            "name": "RNAV (GNSS) Z RWY 20",
+            "runway": "RWY20",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "DUDKO",
+                    "waypoints": [
+                        "DUDKO",
+                        "GABET",
+                        "ONGUL"
+                    ]
+                },
+                {
+                    "name": "GABET",
+                    "waypoints": [
+                        "GABET",
+                        "ONGUL"
+                    ]
+                },
+                {
+                    "name": "VOGAP",
+                    "waypoints": [
+                        "VOGAP",
+                        "GABET",
+                        "ONGUL"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "ONGUL",
+                "HAMPO"
+            ]
+        },
+        {
+            "name": "RNAV (RNP) Y RWY 20",
+            "runway": "RWY20",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "VIPSO",
+                    "waypoints": [
+                        "VIPSO",
+                        "BITKA",
+                        "ONGUL"
+                    ]
+                },
+                {
+                    "name": "UMIBA",
+                    "waypoints": [
+                        "UMIBA",
+                        "APLOS",
+                        "BIKTA",
+                        "ONGUL"
+                    ]
+                },
+                {
+                    "name": "GABET",
+                    "waypoints": [
+                        "GABET",
+                        "ONGUL"
+                    ]
+                },
+                {
+                    "name": "GOPEV",
+                    "waypoints": [
+                        "GOPEV",
+                        "GOTUL",
+                        "DENDU",
+                        "ONGUL"
+                    ]
+                },
+                {
+                    "name": "UDLAR",
+                    "waypoints": [
+                        "UDLAR",
+                        "GOTUL",
+                        "DENDU",
+                        "ONGUL"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "ONGUL",
+                "HAMPO"
+            ]
+        },
+        {
+            "name": "ILS RWY 30",
+            "runway": "RWY30",
+            "type": "ILS",
+            "transitions": [
+                {
+                    "name": "JEVON",
+                    "waypoints": [
+                        "JEVON",
+                        "GADEP"
+                    ]
+                },
+                {
+                    "name": "LOBTI",
+                    "waypoints": [
+                        "LOBTI",
+                        "JEVON",
+                        "GADEP"
+                    ]
+                },
+                {
+                    "name": "SUVAT",
+                    "waypoints": [
+                        "SUVAT",
+                        "JEVON",
+                        "GADEP"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "GADEP",
+                "VEVBU"
+            ]
+        },
+        {
+            "name": "RNAV (GNSS) Z RWY 30",
+            "runway": "RWY30",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "LOBTI",
+                    "waypoints": [
+                        "LOBTI",
+                        "JEVON",
+                        "SEKOB"
+                    ]
+                },
+                {
+                    "name": "JEVON",
+                    "waypoints": [
+                        "JEVON",
+                        "SEKOB"
+                    ]
+                },
+                {
+                    "name": "SUVAT",
+                    "waypoints": [
+                        "SUVAT",
+                        "JEVON",
+                        "SEKOB"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "SEKOB",
+                "XIBES",
+                "MIPOT"
+            ]
+        },
+        {
+            "name": "RNAV (RNP) Y RWY 30",
+            "runway": "RWY30",
+            "type": "RNAV",
+            "transitions": [
+                {
+                    "name": "LETIX",
+                    "waypoints": [
+                        "LETIX",
+                        "LIDIR",
+                        "SEKOB"
+                    ]
+                },
+                {
+                    "name": "OMENA",
+                    "waypoints": [
+                        "OMENA",
+                        "SEDEN",
+                        "LIDIR",
+                        "SEKOB"
+                    ]
+                },
+                {
+                    "name": "JEVON",
+                    "waypoints": [
+                        "JEVON",
+                        "SEKOB"
+                    ]
+                },
+                {
+                    "name": "MASUD",
+                    "waypoints": [
+                        "MASUD",
+                        "XUGEX",
+                        "SEKOB"
+                    ]
+                },
+                {
+                    "name": "KISOD",
+                    "waypoints": [
+                        "KISOD",
+                        "PIKPA",
+                        "XUGEX",
+                        "SEKOB"
+                    ]
+                }
+            ],
+            "waypoints": [
+                "SEKOB",
+                "MIPOT"
+            ]
+        }
+    ]
+}

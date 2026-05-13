@@ -512,7 +512,7 @@ await renderFixListInPopover(procObj.name, sorted);
   return span;
 }
 
-function ausProcChip(procName, fixes, procType) {
+function ausProcChip(procName, fixes, procType, chartUrl = null) {
 function cleanAusProcName(name) {
   return String(name || "")
     .replace(/^SID\s+/i, "")
@@ -546,11 +546,27 @@ for (const fx of cleanFixes) {
     FIX_PROCEDURE_MAP[fx].push({ airport: "", type: procType, proc: procName, procDisplay: procName });
 }
 
+if (chartUrl) {
+  const icon = document.createElement("span");
+  icon.textContent = " ↗";
+  icon.title = "View chart PDF";
+  icon.style.cssText = "opacity:0.5;font-size:0.42em;vertical-align:middle;cursor:pointer;margin-left:2px;";
+  icon.addEventListener("click", e => {
+    e.stopPropagation();
+    chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url: chartUrl });
+  });
+  span.appendChild(icon);
+}
+
   span.addEventListener("click", async (e) => {
     e.stopPropagation();
 
     if (!cleanFixes.length) {
-      openFixPopover(span, procName, "No fixes parsed.");
+      if (chartUrl) {
+        chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url: chartUrl });
+      } else {
+        openFixPopover(span, procName, "No fixes parsed.");
+      }
       return;
     }
 
@@ -983,6 +999,8 @@ function levenshtein(a, b) {
 async function searchWaypoints(query, token = 0) {
 const useNationwide =
   document.getElementById("procGlobalToggle")?.checked === true;
+const useIntl =
+  document.getElementById("procIntlToggle")?.checked === true;
   const resultsContainer = document.getElementById("results");
   resultsContainer.innerHTML = "";
 
@@ -1053,9 +1071,9 @@ if (useNationwide) {
 
   }
 
-} else {
+} else if (!useIntl) {
 
-  // 📍 Nearby airports only
+  // 📍 Nearby airports only (fix-name search — skipped in intl proc-name mode)
   for (const fix in FIX_PROCEDURE_MAP) {
 
     const procs = FIX_PROCEDURE_MAP[fix];
@@ -1104,7 +1122,7 @@ if (useNationwide) {
   /* -------------------------------
      IAP SEARCH
   --------------------------------*/
-if (!useNationwide) {
+if (!useNationwide && !useIntl) {
   for (const airport of (MASTER_RESULTS || [])) {
 
     const ident = String(airport?.ident || "").toUpperCase();
@@ -1169,7 +1187,7 @@ if (score < 10) continue;
 /* -------------------------------
    GLOBAL FIXES (non-US airports)
 --------------------------------*/
-const isGlobal = LAST_CENTER && !isDomesticSandcatICAO(LAST_CENTER);
+const isGlobal = LAST_CENTER && !isDomesticSandcatICAO(LAST_CENTER) && !useIntl;
 if (isGlobal) {
   try {
     const coordResp = await chrome.runtime.sendMessage({
@@ -1207,6 +1225,39 @@ if (isGlobal) {
     }
   } catch (e) {
     console.warn("Global waypoint search failed:", e);
+  }
+}
+
+/* -------------------------------
+   INTL SID/STAR SEARCH (non-US countries)
+--------------------------------*/
+if (useIntl) {
+  try {
+    const nearbyIcaos = [
+      ...((MASTER_RESULTS || []).map(a => String(a.ident || "").toUpperCase())),
+      LAST_CENTER || ""
+    ].filter(Boolean);
+    const intlResp = await chrome.runtime.sendMessage({
+      type: "SEARCH_GLOBAL_PROCEDURES",
+      query,
+      icaos: nearbyIcaos
+    });
+    for (const r of intlResp?.results || []) {
+      const key = `${r.airport}|${r.type}|${r.name}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      matches.push({
+        fix: r.name,
+        navName: "",
+        airport: r.airport,
+        procedure: "",
+        type: r.type,
+        score: r.score,
+        country: r.country
+      });
+    }
+  } catch (e) {
+    console.warn("Intl procedure search failed:", e);
   }
 }
 
@@ -1690,7 +1741,7 @@ function renderRunwayEndSection(container, airportIdent, rwy, names, defaultExpa
   container.appendChild(details);
 }
 
-function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches) {
+function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches, dapLinks = null) {
   for (const ap of ausApproaches || []) {
     const procName = ap.name;
     for (const fRaw of ap.fixes || []) {
@@ -1721,7 +1772,7 @@ function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches
 
   if (!pairs.length) {
     for (const ap of ausApproaches) {
-      apWrap.appendChild(ausProcChip(ap.name, ap.fixes, "IAP"));
+      apWrap.appendChild(ausProcChip(ap.name, ap.fixes, "IAP", dapLinks?.[ap.name.toUpperCase()] || null));
     }
     return;
   }
@@ -1746,7 +1797,7 @@ function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches
         apWrap.dataset.selectedPairKey = p.pairKey;
 
         apWrap.innerHTML = "";
-        renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches);
+        renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches, dapLinks);
       });
 
       selectorRow.appendChild(btn);
@@ -1776,7 +1827,7 @@ function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches
     const wrap = document.createElement("div");
 
     for (const ap of aps) {
-      wrap.appendChild(ausProcChip(ap.name, ap.fixes, "IAP"));
+      wrap.appendChild(ausProcChip(ap.name, ap.fixes, "IAP", dapLinks?.[ap.name.toUpperCase()] || null));
     }
 
     block.appendChild(wrap);
@@ -1800,7 +1851,7 @@ function renderAusApproachesGrouped(apWrap, airportIdent, runways, ausApproaches
     const wrap = document.createElement("div");
 
     for (const ap of other) {
-      wrap.appendChild(ausProcChip(ap.name, ap.fixes, "IAP"));
+      wrap.appendChild(ausProcChip(ap.name, ap.fixes, "IAP", dapLinks?.[ap.name.toUpperCase()] || null));
     }
 
     content.appendChild(wrap);
@@ -1990,7 +2041,6 @@ for (const a of list) {
       a.__ausData = await getAusProceduresForAirport(ident);
     } catch (e) {
       console.warn("AUS preload failed:", ident, e);
-      a.__ausData = null;
     }
   }
   if (ident.startsWith("LS") && !a.__chData) {
@@ -2015,6 +2065,15 @@ for (const a of list) {
     } catch (e) {
       console.warn("Netherlands preload failed:", ident, e);
       a.__nlData = null;
+    }
+  }
+
+  if (ident.startsWith("CY") && !a.__caData) {
+    try {
+      a.__caData = await getCanadaProceduresForAirport(ident);
+    } catch (e) {
+      console.warn("Canada preload failed:", ident, e);
+      a.__caData = null;
     }
   }
 }
@@ -2043,7 +2102,9 @@ if (hideNoApp) {
 
     const hasNlIap = (a.__nlData?.iaps?.length || 0) > 0;
 
-    return hasUsIap || hasAusIap || hasSwissIap || hasIrelandIap || hasNlIap;
+    const hasCanadaIap = (a.__caData?.iaps?.length || a.__caData?.approaches?.length || 0) > 0;
+
+    return hasUsIap || hasAusIap || hasSwissIap || hasIrelandIap || hasNlIap || hasCanadaIap;
   });
 }
 
@@ -2063,20 +2124,17 @@ list = list.slice(0, maxResultsUI);
   for (const a of list) {
     const airportIdent = String(a.ident || "").toUpperCase();
 let ausData = a.__ausData || null;
+let dapLinks = a.__dapLinks || null;
 
-if (!ausData && airportIdent.startsWith("Y")) {
+if (airportIdent.startsWith("Y")) {
   try {
-    ausData = await getAusProceduresForAirport(airportIdent);
-    a.__ausData = ausData;
+    const fetches = [];
+    if (!ausData) fetches.push(getAusProceduresForAirport(airportIdent).then(d => { ausData = d; a.__ausData = d; }));
+    if (!dapLinks) fetches.push(getAusDapLinksForAirport(airportIdent).then(d => { dapLinks = d; a.__dapLinks = d; }));
+    await Promise.all(fetches);
   } catch (e) {
-    console.warn("AUS procedure fetch failed:", airportIdent, e);
+    console.warn("AUS data fetch failed:", airportIdent, e);
   }
-}
-
-try {
-  ausData = await getAusProceduresForAirport(airportIdent);
-} catch (e) {
-  console.warn("AUS fetch failed:", airportIdent, e);
 }
 
 let chData = a.__chData || null;
@@ -2125,6 +2183,51 @@ if (nlData) {
     for (const raw of allWps) {
       const fx = typeof raw === "string" ? raw.trim().toUpperCase() : String(raw?.fix || "").trim().toUpperCase();
       if (!fx) continue;
+      if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+      const exists = FIX_PROCEDURE_MAP[fx].some(e => e.proc === proc.name && e.airport === airportIdent);
+      if (!exists) FIX_PROCEDURE_MAP[fx].push({ airport: airportIdent, type: proc.ptype, proc: proc.name, procDisplay: proc.name });
+    }
+  }
+}
+
+let caData = a.__caData || null;
+if (!caData && airportIdent.startsWith("CY")) {
+  try {
+    caData = await getCanadaProceduresForAirport(airportIdent);
+    a.__caData = caData;
+  } catch (e) {
+    console.warn("Canada fetch failed:", airportIdent, e);
+  }
+}
+
+let ghoshaanCharts = a.__ghoshaanCharts !== undefined ? a.__ghoshaanCharts : null;
+let ghoshaanCountry = a.__ghoshaanCountry || null;
+const GHOSHAAN_PREFIXES = ["EI", "CY", "EH", "LS"];
+if (ghoshaanCharts === null && GHOSHAAN_PREFIXES.includes(airportIdent.slice(0, 2))) {
+  try {
+    const resp = await new Promise(resolve =>
+      chrome.runtime.sendMessage({ type: "GET_GHOSHAAN_CHARTS", icao: airportIdent }, resolve)
+    );
+    ghoshaanCharts = resp?.charts || [];
+    ghoshaanCountry = resp?.country || null;
+    a.__ghoshaanCharts = ghoshaanCharts;
+    a.__ghoshaanCountry = ghoshaanCountry;
+  } catch (e) {
+    console.warn("Ghoshaan charts fetch failed:", airportIdent, e);
+    ghoshaanCharts = [];
+    a.__ghoshaanCharts = [];
+  }
+}
+
+if (caData) {
+  const caAllProcs = [
+    ...(caData.sids || []).map(p => ({ ...p, ptype: "SID" })),
+    ...(caData.stars || []).map(p => ({ ...p, ptype: "STAR" })),
+    ...(caData.iaps || caData.approaches || []).map(p => ({ ...p, ptype: "IAP" }))
+  ];
+  for (const proc of caAllProcs) {
+    const fixes = caExtractAllFixes(proc);
+    for (const fx of fixes) {
       if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
       const exists = FIX_PROCEDURE_MAP[fx].some(e => e.proc === proc.name && e.airport === airportIdent);
       if (!exists) FIX_PROCEDURE_MAP[fx].push({ airport: airportIdent, type: proc.ptype, proc: proc.name, procDisplay: proc.name });
@@ -2199,208 +2302,201 @@ chrome.runtime.sendMessage(
     }
     const chComms = a.__chData?.comms || [];
 
-    let usedAirNav = false;
+    const svComms = resp?.skyvectorComms || [];
+    const svNavaids = resp?.skyvectorNavaids || [];
 
-    if (resp && resp.ok && resp.data?.length) {
+    // SkyVector comms take priority; JSON/AirNav sources are fallbacks
+    if (svComms.length) {
+      const svTitle = document.createElement("div");
+      svTitle.innerHTML = `<strong>SkyVector</strong>`;
+      facilityContent.appendChild(svTitle);
+      const seenSv = new Set();
+      for (const c of svComms) {
+        const key = `${c.label}_${c.freq}`;
+        if (seenSv.has(key)) continue;
+        seenSv.add(key);
+        const div = document.createElement("div");
+        div.className = "facilityItem";
+        div.innerText = `${c.label} — ${c.freq}`;
+        facilityContent.appendChild(div);
+        FACILITY_FREQ_INDEX.push({ freq: c.freq, label: c.label, airport: airportIdent });
+      }
+    } else {
+      // Fallback sources when SkyVector has no comms
 
-      usedAirNav = true;
-
-      const comms = resp.data.filter(d => d.type === "comm");
-      const navs = resp.data.filter(d => d.type === "nav");
-
-      if (comms.length) {
-        const commTitle = document.createElement("div");
-        commTitle.innerHTML = "<strong>Communications</strong>";
-        facilityContent.appendChild(commTitle);
-
-        comms.forEach(c => {
+      // AirNav (US airports)
+      if (resp && resp.ok && resp.data?.length) {
+        const comms = resp.data.filter(d => d.type === "comm");
+        const navs = resp.data.filter(d => d.type === "nav");
+        if (comms.length) {
+          const commTitle = document.createElement("div");
+          commTitle.innerHTML = "<strong>Communications</strong>";
+          facilityContent.appendChild(commTitle);
+          comms.forEach(c => {
+            const div = document.createElement("div");
+            div.className = "facilityItem";
+            div.innerText = `${c.label} — ${c.freq}`;
+            facilityContent.appendChild(div);
+          });
+        }
+        navs.forEach(n => {
           const div = document.createElement("div");
           div.className = "facilityItem";
-          div.innerText = `${c.label} — ${c.freq}`;
+          div.innerText = `${n.label} — ${n.freq}`;
           facilityContent.appendChild(div);
         });
       }
 
-      navs.forEach(n => {
-        const div = document.createElement("div");
-        div.className = "facilityItem";
-        div.innerText = `${n.label} — ${n.freq}`;
-        facilityContent.appendChild(div);
-      });
-
-    }
-
-// 🇦🇺 Australia DAP comms
-if (ausComms.length) {
-  const title = document.createElement("div");
-  title.innerHTML = `<strong>Australia DAP</strong>`;
-  title.style.marginTop = "8px";
-  facilityContent.appendChild(title);
-
-  const seenAus = new Set();
-
-  for (const c of ausComms) {
-    const label = String(c.label || "").trim();
-    const freq = String(c.freq || "").trim();
-
-    if (!label || !freq) continue;
-
-    const key = `${label}_${freq}`;
-    if (seenAus.has(key)) continue;
-    seenAus.add(key);
-
-    const div = document.createElement("div");
-    div.className = "facilityItem";
-    div.innerText = `${label} — ${freq}`;
-
-    facilityContent.appendChild(div);
-
-    FACILITY_FREQ_INDEX.push({
-      freq,
-      label,
-      airport: airportIdent
-    });
-  }
-}
-
-// 🇨🇭 Swiss AD2 comms
-if (chComms.length) {
-  const chTitle = document.createElement("div");
-  chTitle.innerHTML = `<strong>Switzerland AIP</strong>`;
-  chTitle.style.marginTop = "8px";
-  facilityContent.appendChild(chTitle);
-
-  const seenCh = new Set();
-  for (const c of chComms) {
-    const label = String(c.label || c.type || "").trim();
-    const freq = String(c.freq || "").trim();
-    if (!label || !freq) continue;
-    const key = `${label}_${freq}`;
-    if (seenCh.has(key)) continue;
-    seenCh.add(key);
-    const div = document.createElement("div");
-    div.className = "facilityItem";
-    div.innerText = `${label} — ${freq}`;
-    facilityContent.appendChild(div);
-    FACILITY_FREQ_INDEX.push({ freq, label, airport: airportIdent });
-  }
-}
-
-// 🇮🇪 Ireland AIP comms
-const eiComms = a.__eiData?.frequencies || eiData?.frequencies || [];
-if (eiComms.length) {
-  const eiTitle = document.createElement("div");
-  eiTitle.innerHTML = `<strong>Ireland AIP</strong>`;
-  eiTitle.style.marginTop = "8px";
-  facilityContent.appendChild(eiTitle);
-  const seenEi = new Set();
-  for (const c of eiComms) {
-    const label = String(c.name || c.type || "").trim();
-    const freq = String(c.frequency || "").trim();
-    if (!label || !freq) continue;
-    const key = `${label}_${freq}`;
-    if (seenEi.has(key)) continue;
-    seenEi.add(key);
-    const div = document.createElement("div");
-    div.className = "facilityItem";
-    div.innerText = `${label} — ${freq}`;
-    facilityContent.appendChild(div);
-    FACILITY_FREQ_INDEX.push({ freq, label, airport: airportIdent });
-  }
-}
-
-// 🇳🇱 Netherlands AIP comms
-const nlFreqs = (a.__nlData || nlData)?.frequencies || {};
-const nlCommsFlat = Object.entries(nlFreqs).flatMap(([type, freqs]) =>
-  (Array.isArray(freqs) ? freqs : [freqs]).map(f => ({
-    label: type.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
-    freq: String(f || "").trim()
-  }))
-).filter(c => c.freq);
-if (nlCommsFlat.length) {
-  const nlTitle = document.createElement("div");
-  nlTitle.innerHTML = `<strong>Netherlands AIP</strong>`;
-  nlTitle.style.marginTop = "8px";
-  facilityContent.appendChild(nlTitle);
-  const seenNl = new Set();
-  for (const c of nlCommsFlat) {
-    const key = `${c.label}_${c.freq}`;
-    if (seenNl.has(key)) continue;
-    seenNl.add(key);
-    const div = document.createElement("div");
-    div.className = "facilityItem";
-    div.innerText = `${c.label} — ${c.freq}`;
-    facilityContent.appendChild(div);
-    FACILITY_FREQ_INDEX.push({ freq: c.freq, label: c.label, airport: airportIdent });
-  }
-}
-
-    // ✅ Always add OurAirports (dedup later if you want)
-    if (ourAirports.length) {
-
-      const title = document.createElement("div");
-      title.innerHTML = `<strong>OurAirports</strong>`;
-      title.style.marginTop = "8px";
-      facilityContent.appendChild(title);
-
-      for (const f of ourAirports) {
-
-        const div = document.createElement("div");
-        div.className = "facilityItem";
-
-        const name = prettyFreqName(f);
-
-        div.innerText = `${name} — ${f.freq}`;
-
-        facilityContent.appendChild(div);
-
-        // 🔥 also feed your global index
-        FACILITY_FREQ_INDEX.push({
-          freq: f.freq,
-          label: name,
-          airport: airportIdent
-        });
+      // 🇦🇺 Australia DAP comms
+      if (ausComms.length) {
+        const title = document.createElement("div");
+        title.innerHTML = `<strong>Australia DAP</strong>`;
+        title.style.marginTop = "8px";
+        facilityContent.appendChild(title);
+        const seenAus = new Set();
+        for (const c of ausComms) {
+          const label = String(c.label || "").trim();
+          const freq = String(c.freq || "").trim();
+          if (!label || !freq) continue;
+          const key = `${label}_${freq}`;
+          if (seenAus.has(key)) continue;
+          seenAus.add(key);
+          const div = document.createElement("div");
+          div.className = "facilityItem";
+          div.innerText = `${label} — ${freq}`;
+          facilityContent.appendChild(div);
+          FACILITY_FREQ_INDEX.push({ freq, label, airport: airportIdent });
+        }
       }
 
+      // 🇨🇭 Swiss AD2 comms
+      if (chComms.length) {
+        const chTitle = document.createElement("div");
+        chTitle.innerHTML = `<strong>Switzerland AIP</strong>`;
+        chTitle.style.marginTop = "8px";
+        facilityContent.appendChild(chTitle);
+        const seenCh = new Set();
+        for (const c of chComms) {
+          const label = String(c.label || c.type || "").trim();
+          const freq = String(c.freq || "").trim();
+          if (!label || !freq) continue;
+          const key = `${label}_${freq}`;
+          if (seenCh.has(key)) continue;
+          seenCh.add(key);
+          const div = document.createElement("div");
+          div.className = "facilityItem";
+          div.innerText = `${label} — ${freq}`;
+          facilityContent.appendChild(div);
+          FACILITY_FREQ_INDEX.push({ freq, label, airport: airportIdent });
+        }
+      }
+
+      // 🇮🇪 Ireland AIP comms
+      const eiComms = a.__eiData?.frequencies || eiData?.frequencies || [];
+      if (eiComms.length) {
+        const eiTitle = document.createElement("div");
+        eiTitle.innerHTML = `<strong>Ireland AIP</strong>`;
+        eiTitle.style.marginTop = "8px";
+        facilityContent.appendChild(eiTitle);
+        const seenEi = new Set();
+        for (const c of eiComms) {
+          const label = String(c.name || c.type || "").trim();
+          const freq = String(c.frequency || "").trim();
+          if (!label || !freq) continue;
+          const key = `${label}_${freq}`;
+          if (seenEi.has(key)) continue;
+          seenEi.add(key);
+          const div = document.createElement("div");
+          div.className = "facilityItem";
+          div.innerText = `${label} — ${freq}`;
+          facilityContent.appendChild(div);
+          FACILITY_FREQ_INDEX.push({ freq, label, airport: airportIdent });
+        }
+      }
+
+      // 🇳🇱 Netherlands AIP comms
+      const nlFreqs = (a.__nlData || nlData)?.frequencies || {};
+      const nlCommsFlat = Object.entries(nlFreqs).flatMap(([type, freqs]) =>
+        (Array.isArray(freqs) ? freqs : [freqs]).map(f => ({
+          label: type.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
+          freq: String(f || "").trim()
+        }))
+      ).filter(c => c.freq);
+      if (nlCommsFlat.length) {
+        const nlTitle = document.createElement("div");
+        nlTitle.innerHTML = `<strong>Netherlands AIP</strong>`;
+        nlTitle.style.marginTop = "8px";
+        facilityContent.appendChild(nlTitle);
+        const seenNl = new Set();
+        for (const c of nlCommsFlat) {
+          const key = `${c.label}_${c.freq}`;
+          if (seenNl.has(key)) continue;
+          seenNl.add(key);
+          const div = document.createElement("div");
+          div.className = "facilityItem";
+          div.innerText = `${c.label} — ${c.freq}`;
+          facilityContent.appendChild(div);
+          FACILITY_FREQ_INDEX.push({ freq: c.freq, label: c.label, airport: airportIdent });
+        }
+      }
+
+      // 🇨🇦 Canada AIP comms
+      const caComms = a.__caData?.comms || caData?.comms || [];
+      if (caComms.length) {
+        const caTitle = document.createElement("div");
+        caTitle.innerHTML = `<strong>Canada AIP</strong>`;
+        caTitle.style.marginTop = "8px";
+        facilityContent.appendChild(caTitle);
+        const seenCa = new Set();
+        for (const c of caComms) {
+          const label = String(c.name || "").trim();
+          const freq = String(c.frequency || "").trim();
+          if (!label || !freq) continue;
+          const key = `${label}_${freq}`;
+          if (seenCa.has(key)) continue;
+          seenCa.add(key);
+          const el = document.createElement("div");
+          el.className = "facilityItem";
+          el.innerText = `${label} — ${freq}`;
+          facilityContent.appendChild(el);
+          FACILITY_FREQ_INDEX.push({ freq, label, airport: airportIdent });
+        }
+      }
+
+      // OurAirports
+      if (ourAirports.length) {
+        const title = document.createElement("div");
+        title.innerHTML = `<strong>OurAirports</strong>`;
+        title.style.marginTop = "8px";
+        facilityContent.appendChild(title);
+        for (const f of ourAirports) {
+          const div = document.createElement("div");
+          div.className = "facilityItem";
+          const name = prettyFreqName(f);
+          div.innerText = `${name} — ${f.freq}`;
+          facilityContent.appendChild(div);
+          FACILITY_FREQ_INDEX.push({ freq: f.freq, label: name, airport: airportIdent });
+        }
+      }
     }
 
-const svComms = resp?.skyvectorComms || [];
-const svNavaids = resp?.skyvectorNavaids || [];
-const hasOtherComms = usedAirNav || ourAirports.length || ausComms.length || chComms.length || eiComms.length || nlCommsFlat.length;
+    // SkyVector navaids always shown
+    if (svNavaids.length) {
+      const navTitle = document.createElement("div");
+      navTitle.innerHTML = `<strong>Nearby Navigation Aids</strong>`;
+      navTitle.style.marginTop = "8px";
+      facilityContent.appendChild(navTitle);
+      for (const n of svNavaids) {
+        const div = document.createElement("div");
+        div.className = "facilityItem";
+        div.innerText = `${n.type} ${n.id} — ${n.name}  ${n.freq}  ${n.radial} / ${n.range}nm`;
+        facilityContent.appendChild(div);
+      }
+    }
 
-if (!hasOtherComms && svComms.length) {
-  const svTitle = document.createElement("div");
-  svTitle.innerHTML = `<strong>SkyVector</strong>`;
-  facilityContent.appendChild(svTitle);
-  const seenSv = new Set();
-  for (const c of svComms) {
-    const key = `${c.label}_${c.freq}`;
-    if (seenSv.has(key)) continue;
-    seenSv.add(key);
-    const div = document.createElement("div");
-    div.className = "facilityItem";
-    div.innerText = `${c.label} — ${c.freq}`;
-    facilityContent.appendChild(div);
-    FACILITY_FREQ_INDEX.push({ freq: c.freq, label: c.label, airport: airportIdent });
-  }
-}
-
-if (svNavaids.length) {
-  const navTitle = document.createElement("div");
-  navTitle.innerHTML = `<strong>Nearby Navigation Aids</strong>`;
-  navTitle.style.marginTop = "8px";
-  facilityContent.appendChild(navTitle);
-  for (const n of svNavaids) {
-    const div = document.createElement("div");
-    div.className = "facilityItem";
-    div.innerText = `${n.type} ${n.id} — ${n.name}  ${n.freq}  ${n.radial} / ${n.range}nm`;
-    facilityContent.appendChild(div);
-  }
-}
-
-if (!hasOtherComms && !svComms.length && !svNavaids.length) {
-  facilityContent.innerHTML = "No facility data found.";
-}
+    if (!svComms.length && !svNavaids.length && !resp?.ok && !ourAirports.length && !ausComms.length && !chComms.length) {
+      facilityContent.innerHTML = "No facility data found.";
+    }
 
   }
 );
@@ -2450,7 +2546,7 @@ for (const p of deps) {
 
 if (ausData?.procedures) {
   const ausDpWrap = document.createElement("div");
-  renderAusProcsByRunway(ausDpWrap, ausData.procedures, "SID");
+  renderAusProcsByRunway(ausDpWrap, ausData.procedures, "SID", dapLinks);
   if (ausDpWrap.children.length) dpWrap.appendChild(ausDpWrap);
 }
 
@@ -2461,6 +2557,8 @@ for (const sid of (chData?.procedures?.sids || [])) {
 renderIrelandProcsByRunway(dpWrap, eiData?.SIDs || [], "SID");
 
 renderNlProcsByRunway(dpWrap, nlData?.sids || [], "SID");
+
+renderCanadaSIDs(dpWrap, caData?.sids || []);
 
 if (!deps.length && !dpWrap.children.length) {
   dpWrap.textContent = "(none found)";
@@ -2486,7 +2584,7 @@ for (const p of arrs) {
 
 if (ausData?.procedures) {
   const ausStWrap = document.createElement("div");
-  renderAusProcsByRunway(ausStWrap, ausData.procedures, "STAR");
+  renderAusProcsByRunway(ausStWrap, ausData.procedures, "STAR", dapLinks);
   if (ausStWrap.children.length) stWrap.appendChild(ausStWrap);
 }
 
@@ -2507,6 +2605,8 @@ renderIrelandProcsByRunway(stWrap, eiData?.STARs || [], "STAR");
   }));
   renderNlProcsByRunway(stWrap, [...nlStars, ...nlStarTrans], "STAR");
 }
+
+renderCanadaSTARs(stWrap, caData?.stars || []);
 
 if (!arrs.length && !stWrap.children.length) {
   stWrap.textContent = "(none found)";
@@ -2566,7 +2666,8 @@ if (ausData?.procedures) {
       apWrap,
       airportIdent,
       a.runways || [],
-      ausApproaches
+      ausApproaches,
+      dapLinks
     );
   }
 }
@@ -2576,6 +2677,8 @@ renderSwissIAPsByRunway(apWrap, chData?.procedures?.approaches || []);
 renderIrelandIAPsByRunwayPair(apWrap, eiData?.IAPs || []);
 
 renderNlIAPsByRunway(apWrap, nlData?.iaps || []);
+
+renderCanadaIAPsByRunwayPair(apWrap, caData?.iaps || caData?.approaches || []);
 
 if (!aps.length && !apWrap.children.length) {
   apWrap.textContent =
@@ -2589,6 +2692,119 @@ const apPanel = document.createElement("div");
 apPanel.className = "section-panel approaches";
 apPanel.appendChild(apWrap);
 proc.appendChild(apPanel);
+
+/* ---------------- Charts (AUS aerodrome/apron/parking/noise) ---------------- */
+if (airportIdent.startsWith("Y") && (dapLinks || ausData?.procedures)) {
+  const localNames = new Set(Object.keys(ausData?.procedures || {}).map(n => n.toUpperCase()));
+
+  const isAusProcChart = name =>
+    !/^(SID|STAR|RNP|ILS|LOC|VOR|NDB|GNSS|DME)\b/i.test(name);
+
+  const fromLocal = Object.entries(ausData?.procedures || {})
+    .filter(([name]) => isAusProcChart(name))
+    .map(([name, fixes]) => ({ name, fixes, url: dapLinks?.[name.toUpperCase()] || null }));
+
+  const fromDap = Object.entries(dapLinks || {})
+    .filter(([name]) => isAusProcChart(name) && !localNames.has(name))
+    .map(([name, url]) => ({ name, fixes: [], url }));
+
+  const allCharts = [...fromLocal, ...fromDap];
+
+  if (allCharts.length) {
+    const chartsLabel = document.createElement("div");
+    chartsLabel.className = "section-title";
+    chartsLabel.textContent = "Charts";
+    proc.appendChild(chartsLabel);
+
+    const chartsWrap = document.createElement("div");
+    chartsWrap.style.cssText = "padding:2px 0 4px 0;";
+    for (const { name, fixes, url } of allCharts) {
+      const row = document.createElement("div");
+      row.style.cssText = "display:flex;align-items:center;gap:4px;padding:1px 0;";
+
+      const label = document.createElement("span");
+      const displayName = name.replace(/\s*-\s*PAGE\s+(\d+(?:\/\d+)?)\s*$/i, " $1").trim();
+      label.textContent = displayName;
+      label.style.cssText = "font-size:0.68em;opacity:0.55;letter-spacing:0.02em;text-transform:uppercase;";
+
+      row.appendChild(label);
+
+      if (url) {
+        const link = document.createElement("span");
+        link.textContent = "↗";
+        link.title = "View chart PDF";
+        link.style.cssText = "font-size:0.6em;opacity:0.35;cursor:pointer;flex-shrink:0;";
+        link.addEventListener("click", e => {
+          e.stopPropagation();
+          chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url });
+        });
+        row.appendChild(link);
+        label.style.cursor = "pointer";
+        label.addEventListener("click", e => {
+          e.stopPropagation();
+          chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url });
+        });
+      }
+
+      chartsWrap.appendChild(row);
+    }
+
+    const chartsPanel = document.createElement("div");
+    chartsPanel.className = "section-panel";
+    chartsPanel.appendChild(chartsWrap);
+    proc.appendChild(chartsPanel);
+  }
+}
+
+/* ---------------- Charts (Canada / Ireland / Netherlands / Switzerland) ---------------- */
+if (ghoshaanCharts?.length && ghoshaanCountry) {
+  const ghLabel = document.createElement("div");
+  ghLabel.className = "section-title";
+  ghLabel.textContent = "Charts";
+  proc.appendChild(ghLabel);
+
+  const ghWrap = document.createElement("div");
+  ghWrap.style.cssText = "padding:2px 0 4px 0;";
+
+  for (const chartPath of ghoshaanCharts) {
+    // chartPath: "docs/charts_data/{country}/{folder}/{filename}.pdf"
+    const pathParts = chartPath.split("/");
+    const country = pathParts[2];
+    const folder = pathParts[3];
+    const filename = pathParts[4];
+    const url = `https://ghoshaan.github.io/aip-charts/${country}-${folder}.html#view=${filename}`;
+    const displayName = filename.replace(/\.pdf$/i, "").replace(/_/g, " ");
+
+    const row = document.createElement("div");
+    row.style.cssText = "display:flex;align-items:center;gap:4px;padding:1px 0;";
+
+    const label = document.createElement("span");
+    label.textContent = displayName;
+    label.style.cssText = "font-size:0.68em;opacity:0.55;letter-spacing:0.02em;text-transform:uppercase;cursor:pointer;";
+    label.addEventListener("click", e => {
+      e.stopPropagation();
+      chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url });
+    });
+
+    const icon = document.createElement("span");
+    icon.textContent = "↗";
+    icon.title = "View chart PDF";
+    icon.style.cssText = "font-size:0.6em;opacity:0.35;cursor:pointer;flex-shrink:0;";
+    icon.addEventListener("click", e => {
+      e.stopPropagation();
+      chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url });
+    });
+
+    row.appendChild(label);
+    row.appendChild(icon);
+    ghWrap.appendChild(row);
+  }
+
+  const ghPanel = document.createElement("div");
+  ghPanel.className = "section-panel";
+  ghPanel.appendChild(ghWrap);
+  proc.appendChild(ghPanel);
+}
 
 /* ---------------- Visual Approaches ---------------- */
 if (eiData?.visual_approaches?.length) {
@@ -2738,7 +2954,7 @@ async function appendNearbyWaypoints(lat, lon, radius_nm) {
 
   section.appendChild(header);
   section.appendChild(body);
-  root.appendChild(section);
+  root.prepend(section);
 }
 
 function prettyFreqName(f) {
@@ -2815,7 +3031,7 @@ function extractICAOFromKey(rawKey) {
   el.style.height = el.scrollHeight + "px";
 }
 
-async function handleNewPageKey(newRaw) {
+async function handleNewPageKey(newRaw, { skipAutolaunch = false } = {}) {
 
   if (!newRaw) return;
 
@@ -2847,15 +3063,16 @@ if (autoRefresh) {
   // 🔥 Update overlay header immediately
 chrome.storage.local.set({ overlayActiveICAO: normalizeAirport(newAirport) });
 
-  // 🔥 Run autolaunch
-  const { lbx_settings } =
-    await chrome.storage.local.get(["lbx_settings"]);
+  if (!skipAutolaunch) {
+    const { lbx_settings } =
+      await chrome.storage.local.get(["lbx_settings"]);
 
-  chrome.runtime.sendMessage({
-    type: "RUN_AUTOLAUNCH",
-    rawText: newRaw,
-    settings: lbx_settings || { adsb: true }
-  });
+    chrome.runtime.sendMessage({
+      type: "RUN_AUTOLAUNCH",
+      rawText: newRaw,
+      settings: lbx_settings || { adsb: true }
+    });
+  }
 }
 
 chrome.storage.onChanged.addListener((changes, area) => {
@@ -3067,6 +3284,12 @@ const resp = await chrome.runtime.sendMessage({
   }
 
 MASTER_RESULTS = dedupeAirportsByIdent(resp.results);
+
+  // Kick off background freq pre-indexing for all airports now in view
+  const _prefetchIcaos = MASTER_RESULTS.map(a => a.ident).filter(Boolean);
+  if (_prefetchIcaos.length) {
+    chrome.runtime.sendMessage({ type: "PREFETCH_NEARBY_FREQS", icaos: _prefetchIcaos }).catch(() => {});
+  }
 
   buildAirportNameMap();
 
@@ -3373,7 +3596,8 @@ async function refreshActiveFlightPanel() {
     "adsb_active_flight_fixes",
     "adsb_active_flight_freqs",
     "adsb_active_flight_vfr_waypoints",
-    "adsb_flight_loading"
+    "adsb_flight_loading",
+    "adsb_flight_status"
   ]);
 
   if (renderId !== ACTIVE_ROUTE_RENDER) return;
@@ -3391,6 +3615,9 @@ async function refreshActiveFlightPanel() {
   const routeBox = document.getElementById("routeResults");
   if (!routeBox) return;
 
+  const loadingBadge = document.getElementById("routeLoadingBadge");
+  if (loadingBadge) loadingBadge.classList.toggle("visible", !!data.adsb_flight_loading);
+
   let fixes = (data.adsb_active_flight_fixes || [])
     .map(f => String(f || "").toUpperCase())
     .filter(Boolean);
@@ -3402,13 +3629,20 @@ async function refreshActiveFlightPanel() {
 
 if (!fixes.length) {
   if (data.adsb_flight_loading) {
-    routeBox.innerHTML = "<div class='routeFix flight-loading-row'><span class='flight-loading-spinner'></span>Fetching flight data…</div>";
+    const statusText = data.adsb_flight_status || "Fetching flight data…";
+    routeBox.innerHTML = `<div class='flight-loading-block'><span class='flight-loading-spinner-lg'></span><span class='flight-loading-status'>${statusText}</span></div>`;
   } else {
     routeBox.innerHTML = "<div class='routeFix'>No active flight</div>";
     renderFlightFreqs(null);
     renderFlightAirports(null, "");
   }
   return;
+}
+
+if (data.adsb_flight_loading) {
+  const statusText = data.adsb_flight_status || "Fetching flight data…";
+  const existing = routeBox.querySelector(".flight-loading-status");
+  if (existing) existing.textContent = statusText;
 }
 
   if (fixes.length > 100) fixes = fixes.slice(0, 100);
@@ -3659,6 +3893,18 @@ async function getAusProceduresForAirport(icao) {
   });
 }
 
+async function getAusDapLinksForAirport(icao) {
+  return Promise.race([
+    new Promise(resolve => {
+      chrome.runtime.sendMessage(
+        { type: "GET_AUS_DAP_LINKS", icao },
+        r => resolve(r?.links || null)
+      );
+    }),
+    new Promise(resolve => setTimeout(() => resolve(null), 8000))
+  ]);
+}
+
 async function getSwissProceduresForAirport(icao) {
   return new Promise(resolve => {
     chrome.runtime.sendMessage(
@@ -3681,6 +3927,15 @@ async function getNlProceduresForAirport(icao) {
   return new Promise(resolve => {
     chrome.runtime.sendMessage(
       { type: "GET_NL_PROCEDURES", icao },
+      response => { resolve(response?.data || null); }
+    );
+  });
+}
+
+async function getCanadaProceduresForAirport(icao) {
+  return new Promise(resolve => {
+    chrome.runtime.sendMessage(
+      { type: "GET_CANADA_PROCEDURES", icao },
       response => { resolve(response?.data || null); }
     );
   });
@@ -4294,7 +4549,7 @@ function extractAusProcRunway(name) {
   return "ALL";
 }
 
-function renderAusProcsByRunway(container, procedures, procType) {
+function renderAusProcsByRunway(container, procedures, procType, dapLinks = null) {
   // procedures: object { procName: fixes[] }
   const entries = Object.entries(procedures).filter(([name]) => {
     if (procType === "SID") return /^SID\b/i.test(name);
@@ -4333,7 +4588,7 @@ function renderAusProcsByRunway(container, procedures, procType) {
       container.dataset[stateKey] = rwy;
       // Only re-render the AUS section — clear and re-call
       container.innerHTML = "";
-      renderAusProcsByRunway(container, procedures, procType);
+      renderAusProcsByRunway(container, procedures, procType, dapLinks);
     });
     selectorRow.appendChild(btn);
   }
@@ -4349,7 +4604,9 @@ function renderAusProcsByRunway(container, procedures, procType) {
   block.appendChild(h);
 
   const wrap = document.createElement("div");
-  for (const { name, fixes } of rwyProcs) wrap.appendChild(ausProcChip(name, fixes, procType));
+  for (const { name, fixes } of rwyProcs) {
+    wrap.appendChild(ausProcChip(name, fixes, procType, dapLinks?.[name.toUpperCase()] || null));
+  }
   block.appendChild(wrap);
   container.appendChild(block);
 }
@@ -4487,6 +4744,298 @@ function renderIrelandIAPsByRunwayPair(container, iaps) {
 
 
 /* =============================
+   CANADA PROCEDURES
+============================= */
+
+// Collect every fix string from a Canada proc (SID/STAR/IAP).
+function caExtractAllFixes(proc) {
+  const fixes = new Set();
+  const addStr = s => { const f = String(s || "").trim().toUpperCase(); if (f) fixes.add(f); };
+
+  for (const t of (proc.transitions || [])) {
+    for (const w of (t.waypoints || [])) addStr(w);
+  }
+  for (const w of (proc.waypoints || [])) {
+    if (typeof w === "string") { addStr(w); }
+    else if (w && Array.isArray(w.waypoints)) { for (const s of w.waypoints) addStr(s); }
+  }
+  for (const r of (proc.routes || [])) {
+    for (const w of (r.waypoints || [])) addStr(w);
+  }
+  return [...fixes];
+}
+
+// Build popover sections for a Canada proc's waypoints/transitions.
+// Returns [{header, fixes:[string]}]
+function caBuildSections(proc) {
+  const sections = [];
+
+  if (proc.transitions?.length) {
+    for (const t of proc.transitions) {
+      const fixes = (t.waypoints || []).map(s => String(s || "").trim().toUpperCase()).filter(Boolean);
+      if (fixes.length) sections.push({ header: `via ${t.name || "?"}`, fixes });
+    }
+  }
+
+  const wps = proc.waypoints || [];
+  if (!wps.length) return sections;
+
+  const isRunwayKeyed = wps.some(w => w && typeof w === "object" && !Array.isArray(w) && (w.runway !== undefined));
+  if (isRunwayKeyed) {
+    for (const entry of wps) {
+      if (!entry || typeof entry !== "object") continue;
+      const rwys = Array.isArray(entry.runway) ? entry.runway : [entry.runway];
+      const rwyLabel = rwys.map(r => String(r || "").replace(/^RWY/i, "").trim()).filter(Boolean).join("/");
+      const fixes = (entry.waypoints || []).map(s => String(s || "").trim().toUpperCase()).filter(Boolean);
+      if (fixes.length) sections.push({ header: rwyLabel ? `RWY ${rwyLabel}` : "Finals", fixes });
+    }
+  } else {
+    const fixes = wps.map(s => String(s || "").trim().toUpperCase()).filter(Boolean);
+    if (fixes.length) sections.push({ header: null, fixes });
+  }
+
+  return sections;
+}
+
+async function renderCanadaFixListInPopover(title, sections) {
+  const pop = document.getElementById("fixPopover");
+  const titleEl = document.getElementById("fixPopoverTitle");
+  const content = document.getElementById("fixPopoverContent");
+
+  titleEl.textContent = title;
+  content.innerHTML = "";
+
+  for (const { header, fixes } of sections) {
+    if (header) {
+      const hdr = document.createElement("div");
+      hdr.className = "fixRow";
+      hdr.style.cssText = "opacity:0.6;font-size:0.75em;padding:4px 0 2px 0;cursor:default;";
+      hdr.textContent = header;
+      content.appendChild(hdr);
+    }
+    const seen = new Set();
+    for (const fx of fixes) {
+      if (seen.has(fx)) continue;
+      seen.add(fx);
+      const nav = NAVAIDS?.[fx] || null;
+      const row = document.createElement("div");
+      row.className = "fixRow";
+      row.style.cursor = "pointer";
+      if (nav) row.classList.add("isNav");
+      row.title = nav ? `${nav.type || "NAVAID"}${nav.freq ? " • " + nav.freq : ""}` : "Fix/Waypoint";
+
+      const left = document.createElement("div");
+      left.className = "fixCode";
+      left.textContent = fx;
+
+      const right = document.createElement("div");
+      right.className = "fixMeta";
+      const parts = [];
+      if (nav?.name) parts.push(nav.name.toUpperCase());
+      if (nav?.freq) parts.push(nav.freq);
+      right.textContent = parts.join(" · ");
+
+      row.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        await copyWithFeedback(row, nav?.name ? nav.name.toUpperCase() : fx);
+        row.classList.add("copied");
+        const orig = right.textContent;
+        right.textContent = "Copied ✓";
+        setTimeout(() => { right.textContent = orig; row.classList.remove("copied"); }, 800);
+      });
+      row.appendChild(left);
+      row.appendChild(right);
+      content.appendChild(row);
+    }
+  }
+
+  pop.classList.remove("hidden");
+}
+
+function canadaSIDChip(proc) {
+  const label = proc.identifier || proc.name || "(unnamed)";
+  const span = makeChip(label, "pointer");
+  span.classList.add("procSID");
+
+  span.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    const pop = document.getElementById("fixPopover");
+    const titleEl = document.getElementById("fixPopoverTitle");
+    const content = document.getElementById("fixPopoverContent");
+    titleEl.textContent = proc.name || label;
+    content.innerHTML = "";
+
+    const meta = document.createElement("div");
+    meta.style.cssText = "opacity:0.7;font-size:0.78em;margin-bottom:6px;";
+    const parts = [proc.type || "SID"];
+    if (proc.altitude?.initial) parts.push(`Initial: ${proc.altitude.initial} ft`);
+    meta.textContent = parts.join(" — ");
+    content.appendChild(meta);
+
+    const routes = proc.routes || [];
+    if (!routes.length) {
+      const none = document.createElement("div");
+      none.style.opacity = "0.6";
+      none.textContent = "No routes defined.";
+      content.appendChild(none);
+    }
+    for (const r of routes) {
+      const rwy = String(r.runway || "").replace(/^RWY/i, "").trim();
+      const hdg = r.departure_heading != null ? `hdg ${r.departure_heading}°` : "";
+      const wps = (r.waypoints || []).filter(Boolean);
+
+      const row = document.createElement("div");
+      row.className = "fixRow";
+      row.style.cursor = "default";
+
+      const left = document.createElement("div");
+      left.className = "fixCode";
+      left.textContent = rwy ? `RWY ${rwy}` : "ALL";
+
+      const right = document.createElement("div");
+      right.className = "fixMeta";
+      right.textContent = wps.length ? wps.join(" → ") : hdg || "—";
+
+      row.appendChild(left);
+      row.appendChild(right);
+      content.appendChild(row);
+    }
+
+    pop.classList.remove("hidden");
+  });
+
+  return span;
+}
+
+function canadaSTARChip(proc) {
+  const label = proc.identifier || proc.name || "(unnamed)";
+  const allFixes = caExtractAllFixes(proc);
+  const span = makeChip(label, "pointer");
+  span.classList.add("procSTAR");
+
+  for (const fx of allFixes) {
+    if (!FIX_PROCEDURE_MAP[fx]) FIX_PROCEDURE_MAP[fx] = [];
+    if (!FIX_PROCEDURE_MAP[fx].some(e => e.proc === proc.name)) {
+      FIX_PROCEDURE_MAP[fx].push({ airport: "", type: "STAR", proc: proc.name, procDisplay: proc.name });
+    }
+  }
+
+  span.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    if (!allFixes.length) { openFixPopover(span, proc.name || label, "No waypoints."); return; }
+    openFixPopover(span, proc.name || label, " ");
+    await renderCanadaFixListInPopover(proc.name || label, caBuildSections(proc));
+  });
+
+  return span;
+}
+
+function canadaIAPChip(proc) {
+  const label = proc.name || "(unnamed)";
+  const allFixes = caExtractAllFixes(proc);
+  const span = makeChip(label, "pointer");
+  span.classList.add("procAPP");
+
+  span.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    if (!allFixes.length) { openFixPopover(span, label, "No waypoints."); return; }
+    openFixPopover(span, label, " ");
+    await renderCanadaFixListInPopover(label, caBuildSections(proc));
+  });
+
+  return span;
+}
+
+function renderCanadaSIDs(container, sids) {
+  if (!sids.length) return;
+  for (const sid of sids) container.appendChild(canadaSIDChip(sid));
+}
+
+function renderCanadaSTARs(container, stars) {
+  if (!stars.length) return;
+  for (const star of stars) container.appendChild(canadaSTARChip(star));
+}
+
+function renderCanadaIAPsByRunwayPair(container, iaps) {
+  if (!iaps.length) return;
+
+  const byRunway = new Map();
+  const other = [];
+  for (const proc of iaps) {
+    const rwy = (proc.runway || "").replace(/^RWY/i, "").trim();
+    if (rwy) {
+      if (!byRunway.has(rwy)) byRunway.set(rwy, []);
+      byRunway.get(rwy).push(proc);
+    } else {
+      other.push(proc);
+    }
+  }
+
+  const pairs = buildIrelandRunwayPairs(iaps);
+  if (!pairs.length) {
+    for (const proc of iaps) container.appendChild(canadaIAPChip(proc));
+    return;
+  }
+
+  const selected = container.dataset.selectedCaPairKey || pairs[0].pairKey;
+  container.dataset.selectedCaPairKey = selected;
+
+  const selectorRow = document.createElement("div");
+  selectorRow.className = "rwy-selector";
+  for (const p of pairs) {
+    const btn = makeButtonChip(p.label, selected === p.pairKey);
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      container.dataset.selectedCaPairKey = p.pairKey;
+      container.innerHTML = "";
+      renderCanadaIAPsByRunwayPair(container, iaps);
+    });
+    selectorRow.appendChild(btn);
+  }
+  container.appendChild(selectorRow);
+
+  const content = document.createElement("div");
+  const sel = pairs.find(x => x.pairKey === selected) || pairs[0];
+  let any = false;
+
+  for (const end of [sel.end1, sel.end2].filter(Boolean)) {
+    const procs = byRunway.get(end) || [];
+    if (!procs.length) continue;
+    any = true;
+    const block = document.createElement("div");
+    block.className = "rwy-block";
+    const h = document.createElement("div");
+    h.className = "rwy-header";
+    h.textContent = `RWY ${end} (${procs.length})`;
+    block.appendChild(h);
+    const wrap = document.createElement("div");
+    for (const proc of procs) wrap.appendChild(canadaIAPChip(proc));
+    block.appendChild(wrap);
+    content.appendChild(block);
+  }
+
+  if (!any) {
+    const none = document.createElement("div");
+    none.style.opacity = "0.75";
+    none.textContent = "(no approaches tagged to this runway pair)";
+    content.appendChild(none);
+  }
+
+  if (other.length) {
+    const h = document.createElement("div");
+    h.style.cssText = "font-weight:700;margin-top:10px;";
+    h.textContent = `Other (${other.length})`;
+    content.appendChild(h);
+    const wrap = document.createElement("div");
+    for (const proc of other) wrap.appendChild(canadaIAPChip(proc));
+    content.appendChild(wrap);
+  }
+
+  container.appendChild(content);
+}
+
+/* =============================
    PANEL TOGGLE WIRING (FINAL)
 ============================= */
 
@@ -4587,7 +5136,7 @@ try {
 
   if (lb_pageKey) {
     console.log("Bootstrapping from lb_pageKey:", lb_pageKey);
-    await handleNewPageKey(lb_pageKey);
+    await handleNewPageKey(lb_pageKey, { skipAutolaunch: true });
   }
 } catch (err) {
   console.warn("lb_pageKey bootstrap failed:", err);
@@ -4670,6 +5219,12 @@ chrome.storage.local.get(
       );
 
       console.log("Restored nearby airport cache");
+
+      // Trigger prefetch for any airports not yet indexed (e.g. after extension reload)
+      const _cacheIcaos = MASTER_RESULTS.map(a => a.ident).filter(Boolean);
+      if (_cacheIcaos.length) {
+        chrome.runtime.sendMessage({ type: "PREFETCH_NEARBY_FREQS", icaos: _cacheIcaos }).catch(() => {});
+      }
     }
 
 const airport = document.getElementById("airportInput")?.value;
@@ -5216,7 +5771,8 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
     changes.adsb_active_flight_origin ||
     changes.adsb_active_flight_destination ||
     changes.adsb_active_flight_vfr_waypoints ||
-    changes.adsb_flight_loading
+    changes.adsb_flight_loading ||
+    changes.adsb_flight_status
   ) {
     refreshActiveFlightPanel().catch(err => {
       console.error("Active flight panel refresh failed:", err);
@@ -5471,45 +6027,84 @@ if (typeof initAirportSearch === "function") {
       ? "Type what you heard, e.g. 'dulles' or 'LAX'"
       : "Airport name or ICAO...";
     if (contextInput && !showUS && !showFreq) contextInput.placeholder =
-      "Add context clues: nearby NAVAIDs, waypoints, city, frequencies...";
+      "Country (e.g. Australia, France), city, NAVAID, waypoint...";
 
     if (region === "global") runGlobalAptSearch();
     if (showFreq && freqQueryInput) freqQueryInput.focus();
     if (showFreq && !freqCountriesLoaded) { freqCountriesLoaded = true; populateFreqCountries(); }
   }
 
-  function extractContextIdents(text) {
-    // Pull 2-5 char uppercase-looking tokens that could be idents/waypoints
-    const tokens = String(text || "").toUpperCase().match(/\b[A-Z]{2,5}\b/g) || [];
-    const stop = new Set(["AND","THE","FOR","ARE","YOU","HAS","HAD","BUT","NOT","THIS","THAT","WITH","FROM","THEY","HAVE","WILL","ALSO","BEEN","BEEN","WHEN","WHAT","SAID","EACH","THAN","THEN","THEM","SOME","MORE","VERY","JUST","OVER","KNOW","TAKE","INTO","YEAR","YOUR","GOOD","MOST","MUCH","BEFORE","AFTER","ABOUT","LIKE","BEEN","CALL","ONLY","COME","ITS","NOW","HOW","DID","GET","HIM","HIS","ALL","OUT","WAY","TWO","USE","HER","WHO","OIL","SIT","SET","PUT","FAR","LET","LOT","AGO","CAN","MAY","CAR","SKY","ALT","HDG","SPD","FLT","ATC","CTR","TWR","APP","DEP","GND","DEL","ATIS"]);
-    return [...new Set(tokens.filter(t => t.length >= 2 && !stop.has(t)))].slice(0, 8);
+  // Build a country-name → ISO-2 map at init time using Intl
+  const _GLOBAL_COUNTRY_MAP = (() => {
+    const codes = "AF,AL,DZ,AD,AO,AG,AR,AM,AU,AT,AZ,BS,BH,BD,BB,BY,BE,BZ,BJ,BT,BO,BA,BW,BR,BN,BG,BF,BI,CV,KH,CM,CA,CF,TD,CL,CN,CO,KM,CG,CD,CR,HR,CU,CY,CZ,DK,DJ,DM,DO,EC,EG,SV,GQ,ER,EE,SZ,ET,FJ,FI,FR,GA,GM,GE,DE,GH,GR,GD,GT,GN,GW,GY,HT,HN,HU,IS,IN,ID,IR,IQ,IE,IL,IT,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LV,LB,LS,LR,LY,LI,LT,LU,MG,MW,MY,MV,ML,MT,MH,MR,MU,MX,FM,MD,MC,MN,ME,MA,MZ,MM,NA,NR,NP,NL,NZ,NI,NE,NG,MK,NO,OM,PK,PW,PA,PG,PY,PE,PH,PL,PT,QA,RO,RU,RW,KN,LC,VC,WS,SM,ST,SA,SN,RS,SC,SL,SG,SK,SI,SB,SO,ZA,SS,ES,LK,SD,SR,SE,CH,SY,TW,TJ,TZ,TH,TL,TG,TO,TT,TN,TR,TM,TV,UG,UA,AE,GB,US,UY,UZ,VU,VE,VN,YE,ZM,ZW".split(",");
+    const dn = new Intl.DisplayNames(["en"], { type: "region" });
+    const map = new Map();
+    for (const code of codes) {
+      try { const n = dn.of(code)?.toLowerCase(); if (n) map.set(n, code); } catch {}
+    }
+    return map;
+  })();
+
+  function extractCountryCode(contextText) {
+    if (!contextText) return null;
+    const lower = contextText.toLowerCase();
+    let best = null, bestLen = 0;
+    for (const [name, code] of _GLOBAL_COUNTRY_MAP) {
+      if (name.length > bestLen && lower.includes(name)) {
+        best = code; bestLen = name.length;
+      }
+    }
+    // Also accept bare 2-letter codes like "AU" or "DE"
+    if (!best) {
+      const twoLetter = contextText.toUpperCase().match(/\b([A-Z]{2})\b/g) || [];
+      for (const c of twoLetter) {
+        if (_GLOBAL_COUNTRY_MAP.has(c.toLowerCase()) && c !== "US") { best = c; break; }
+      }
+    }
+    return best;
+  }
+
+  function extractContextTerms(text) {
+    const upper = String(text || "").toUpperCase();
+    const identStop = new Set(["AND","THE","FOR","ARE","YOU","HAS","HAD","BUT","NOT","THIS","THAT","WITH","FROM","THEY","HAVE","WILL","ALSO","BEEN","WHEN","WHAT","SAID","EACH","THAN","THEN","THEM","SOME","MORE","VERY","JUST","OVER","KNOW","TAKE","INTO","YEAR","YOUR","GOOD","MOST","MUCH","CALL","ONLY","COME","ITS","NOW","HOW","DID","GET","HIM","HIS","ALL","OUT","WAY","TWO","USE","HER","WHO","OIL","SIT","SET","PUT","FAR","LET","LOT","AGO","CAN","MAY","CAR","SKY","ALT","HDG","SPD","FLT","ATC","CTR","TWR","APP","DEP","GND","DEL","ATIS"]);
+    const idents = [...new Set((upper.match(/\b[A-Z]{2,5}\b/g) || []).filter(t => !identStop.has(t)))].slice(0, 6);
+
+    const cityStop = new Set(["with","from","that","this","have","been","will","also","when","what","then","them","more","very","just","over","into","your","most","much","airport","heliport","airfield","international","regional","municipal"]);
+    const cities = [...new Set((String(text || "").match(/\b[A-Za-z]{4,}\b/g) || []).map(w => w.toLowerCase()).filter(w => !cityStop.has(w) && !_GLOBAL_COUNTRY_MAP.has(w)))].slice(0, 4);
+
+    return { idents, cities };
   }
 
   async function runGlobalAptSearch() {
     if (!globalBox) return;
     const q = queryInput?.value.trim() || "";
     const contextRaw = contextInput?.value || "";
-    const contextIdents = extractContextIdents(contextRaw);
+    const { idents: contextIdents, cities: contextCities } = extractContextTerms(contextRaw);
+    const countryCode = extractCountryCode(contextRaw);
 
     if (!q || q.length < 2) {
       globalBox.innerHTML = `<div class="routeFix" style="color:#4b5563;font-size:11px">Type to search global airports...</div>`;
       return;
     }
 
-    // Run main query + any context ident queries in parallel
-    const queries = [q, ...contextIdents.filter(id => id !== q)].slice(0, 5);
+    const baseMsg = { type: "SEARCH_AIRPORTS_GLOBAL", globalOnly: true, countryFilter: countryCode || undefined };
+
+    // Main query + context ident queries + city/municipality queries
+    const qUpper = q.toUpperCase();
+    const extraIdents = contextIdents.filter(id => id !== qUpper).slice(0, 4);
+    const extraCities = contextCities.filter(c => c !== q.toLowerCase()).slice(0, 3);
+    const allQueries = [q, ...extraIdents, ...extraCities].slice(0, 7);
+
     const allRespArr = await Promise.all(
-      queries.map(qr => chrome.runtime.sendMessage({ type: "SEARCH_AIRPORTS_GLOBAL", query: qr }))
+      allQueries.map(qr => chrome.runtime.sendMessage({ ...baseMsg, query: qr }))
     );
 
-    // Merge, deduplicate, and sort (main query matches first)
+    // Merge, deduplicate (main query matches first)
     const seen = new Set();
     const merged = [];
-    // First pass: main query results
     for (const a of (allRespArr[0]?.results || [])) {
       if (!seen.has(a.ident)) { seen.add(a.ident); merged.push({ ...a, _primary: true }); }
     }
-    // Second pass: context results
     for (let i = 1; i < allRespArr.length; i++) {
       for (const a of (allRespArr[i]?.results || [])) {
         if (!seen.has(a.ident)) { seen.add(a.ident); merged.push(a); }
@@ -5517,17 +6112,21 @@ if (typeof initAirportSearch === "function") {
     }
 
     if (!merged.length) {
-      globalBox.innerHTML = `<div class="routeFix" style="color:#4b5563;font-size:11px">No airports found</div>`;
+      const hint = countryCode ? ` in ${countryCode}` : "";
+      globalBox.innerHTML = `<div class="routeFix" style="color:#4b5563;font-size:11px">No airports found${hint}</div>`;
       return;
     }
 
+    const dn = new Intl.DisplayNames(["en"], { type: "region" });
     globalBox.innerHTML = "";
-    for (const a of merged.slice(0, 40)) {
+    for (const a of merged.slice(0, 50)) {
       const card = document.createElement("div");
       card.className = "airportLookupCard compact";
       card.dataset.airportIdent = a.ident;
       const title = a.name || a.ident;
-      const metaParts = [a.ident, a.municipality, a.country].filter(Boolean);
+      let countryDisplay = a.country || "";
+      try { countryDisplay = dn.of(a.country) || a.country; } catch {}
+      const metaParts = [a.ident, a.municipality, countryDisplay].filter(Boolean);
       const metaLine = metaParts.join(" • ");
       const chips = (a.freqs || []).slice(0, 6).map(f => {
         const mhz = typeof f.freq === "number" ? f.freq.toFixed(3) : f.freq;
@@ -5569,6 +6168,35 @@ if (typeof initAirportSearch === "function") {
     try { return freqCountryNames.of(code) || code; } catch { return code; }
   }
 
+  // ── Prefetch status bar ───────────────────────────────────────────────────
+  const freqStatusEl = document.getElementById("freqPrefetchStatus");
+  function updatePrefetchStatus(status) {
+    if (!freqStatusEl) return;
+    if (!status || status.done >= status.total) {
+      freqStatusEl.classList.remove("active");
+      freqStatusEl.innerHTML = "";
+      return;
+    }
+    const pct = Math.round((status.done / status.total) * 100);
+    freqStatusEl.classList.add("active");
+    freqStatusEl.innerHTML =
+      `<span class="fp-spinner"></span>` +
+      `<span>Indexing ${status.done}/${status.total} airports…</span>` +
+      `<span class="fp-bar-wrap"><span class="fp-bar" style="width:${pct}%"></span></span>`;
+  }
+
+  chrome.storage.local.get("freq_prefetch_status", d => updatePrefetchStatus(d.freq_prefetch_status));
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "local" && "freq_prefetch_status" in changes) {
+      updatePrefetchStatus(changes.freq_prefetch_status.newValue);
+      // Re-run open search so new results appear automatically when indexing finishes
+      if (!changes.freq_prefetch_status.newValue) {
+        clearTimeout(freqRevTimer);
+        freqRevTimer = setTimeout(runFreqSearch, 100);
+      }
+    }
+  });
+
   async function runFreqSearch() {
     if (!freqResultsDiv) return;
     const raw = (freqQueryInput?.value || "").trim();
@@ -5579,29 +6207,78 @@ if (typeof initAirportSearch === "function") {
     }
     freqResultsDiv.innerHTML = `<div style="color:#4b5563;font-size:11px">Searching...</div>`;
     const country = freqCountryFilter?.value || "";
+    const nearby_icaos = (MASTER_RESULTS || []).map(a => a.ident).filter(Boolean);
     let resp;
-    try { resp = await chrome.runtime.sendMessage({ type: "SEARCH_BY_FREQUENCY", freq: raw, country }); }
+    try { resp = await chrome.runtime.sendMessage({ type: "SEARCH_BY_FREQUENCY", freq: raw, country, nearby_icaos }); }
     catch (e) { freqResultsDiv.innerHTML = `<div style="color:#ef4444;font-size:11px">Error: ${e.message}</div>`; return; }
     if (!resp?.ok || !resp.results?.length) {
       freqResultsDiv.innerHTML = `<div style="color:#4b5563;font-size:11px">No facilities found for "${escapeHtmlLocal(raw)}"</div>`;
       return;
     }
+
     freqResultsDiv.innerHTML = "";
-    for (const r of resp.results) {
+
+    const nearbyResults = resp.results.filter(r => r.nearby);
+    const globalResults = resp.results.filter(r => !r.nearby);
+    const useTwoCols = nearby_icaos.length > 0;
+
+    function makeCard(r) {
       const card = document.createElement("div");
-      card.className = "freqRevCard";
-      const meta = [r.airport_icao, freqCountryLabel(r.country)].filter(Boolean).join(" • ");
+      card.className = r.nearby ? "freqRevCard nearby" : "freqRevCard";
+      const metaParts = [r.airport_icao, freqCountryLabel(r.country)].filter(Boolean);
+      const metaStr = metaParts.join(" • ");
       card.innerHTML =
         `<div class="freqRevCardFreq">${escapeHtmlLocal(r.freq)}</div>` +
         `<div class="freqRevCardLabel">${escapeHtmlLocal(r.label || r.airport_icao || "")}</div>` +
-        (meta ? `<div class="freqRevCardMeta">${escapeHtmlLocal(meta)}</div>` : "");
+        (metaStr ? `<div class="freqRevCardMeta">${escapeHtmlLocal(metaStr)}</div>` : "");
       card.addEventListener("click", () => {
         if (!r.airport_icao) return;
         const airportInput = document.getElementById("airportInput");
         if (airportInput) airportInput.value = r.airport_icao;
         maybeQueryNearby(r.airport_icao);
       });
-      freqResultsDiv.appendChild(card);
+      return card;
+    }
+
+    if (useTwoCols) {
+      const grid = document.createElement("div");
+      grid.className = "freqRevGrid";
+
+      const leftCol = document.createElement("div");
+      leftCol.className = "freqRevCol";
+      const leftHdr = document.createElement("div");
+      leftHdr.className = "freqRevColHdr freqRevColHdr--nearby";
+      leftHdr.textContent = "Search radius";
+      leftCol.appendChild(leftHdr);
+      if (nearbyResults.length === 0) {
+        const empty = document.createElement("div");
+        empty.style.cssText = "color:#4b5563;font-size:11px;padding:4px 2px;";
+        empty.textContent = "None in radius";
+        leftCol.appendChild(empty);
+      } else {
+        nearbyResults.forEach(r => leftCol.appendChild(makeCard(r)));
+      }
+
+      const rightCol = document.createElement("div");
+      rightCol.className = "freqRevCol";
+      const rightHdr = document.createElement("div");
+      rightHdr.className = "freqRevColHdr freqRevColHdr--global";
+      rightHdr.textContent = "Global";
+      rightCol.appendChild(rightHdr);
+      if (globalResults.length === 0) {
+        const empty = document.createElement("div");
+        empty.style.cssText = "color:#4b5563;font-size:11px;padding:4px 2px;";
+        empty.textContent = "No global results";
+        rightCol.appendChild(empty);
+      } else {
+        globalResults.forEach(r => rightCol.appendChild(makeCard(r)));
+      }
+
+      grid.appendChild(leftCol);
+      grid.appendChild(rightCol);
+      freqResultsDiv.appendChild(grid);
+    } else {
+      resp.results.forEach(r => freqResultsDiv.appendChild(makeCard(r)));
     }
   }
 
@@ -5636,6 +6313,7 @@ document.getElementById("filterNoApproaches")
   const input = document.getElementById("waypointSearch");
   const clearBtn = document.getElementById("waypointClearBtn");
   const toggle = document.getElementById("procGlobalToggle");
+  const intlToggle = document.getElementById("procIntlToggle");
 
   if (!input) return;
 
@@ -5665,6 +6343,10 @@ document.getElementById("filterNoApproaches")
   });
 
   toggle?.addEventListener("change", () => {
+    if (input.value.trim()) runSearch();
+  });
+
+  intlToggle?.addEventListener("change", () => {
     if (input.value.trim()) runSearch();
   });
 })();

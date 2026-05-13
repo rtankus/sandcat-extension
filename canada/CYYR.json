@@ -1,0 +1,419 @@
+{
+  "airport": "CYYR",
+  "comms":[
+    {
+      "name": "ATIS",
+      "frequency": "128.1"
+    },
+    {
+      "name": "Clearance Delivery",
+      "frequency": "118.1"
+    },
+    {
+      "name": "Ground",
+      "frequency": "132.0"
+    },
+    {
+      "name": "Tower",
+      "frequency": "124.5"
+    },
+    {
+      "name": "Terminal",
+      "frequency": "119.5"
+    },
+    {
+      "name": "Gander Centre",
+      "frequency": "120.4"
+    }
+  ],
+  "sids":[
+    {
+      "name": "LABRADOR ONE DEP",
+      "identifier": "LABDR1",
+      "type": "RNAV",
+      "routes":[
+        {
+          "runway": "RWY26",
+          "waypoints":[
+            "TUDER"
+          ],
+          "departure_heading": 255
+        }
+      ],
+      "altitude": {
+        "initial": 6000
+      }
+    },
+    {
+      "name": "MEALY ONE DEP",
+      "identifier": "MEALY1",
+      "type": "RNAV",
+      "routes":[
+        {
+          "runway": "RWY08",
+          "waypoints": [
+            "ILIMA"
+          ],
+          "departure_heading": 75
+        }
+      ],
+      "altitude": {
+        "initial": 6000
+      }
+    },
+    {
+      "name": "GOOSE BAY ONE DEP",
+      "identifier": "GSBAY1",
+      "type": "RNAV",
+      "routes":[
+        {
+          "runway": "RWY15",
+          "waypoints":[
+            "SELIT"
+          ],
+          "departure_heading": 153
+        }
+      ],
+      "altitude": {
+        "initial": 6000
+      }
+    },
+    {
+      "name": "TORNGAT ONE DEP",
+      "identifier": "TRNGT1",
+      "type": "RNAV",
+      "routes":[
+        {
+          "runway": "RWY33",
+          "waypoints": [
+            "SEBIM"
+          ],
+          "departure_heading": 333
+        }
+      ],
+      "altitude": {
+        "initial": 6000
+      }
+    }
+  ],
+  "stars":[],
+  "iaps":[
+    {
+      "name": "ILS Z RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "ILS",
+      "transitions":[
+        {
+          "name": "TEVEV",
+          "waypoints":[
+            "TEVEV",
+            "UDNOD",
+            "FAFKO"
+          ]
+        },
+        {
+          "name": "SASUV",
+          "waypoints": [
+            "SASUV",
+            "UDNOD",
+            "FAFKO"
+          ]
+        }
+      ],
+      "waypoints":[
+        "FAFKO",
+        "ANIDI"
+      ]
+    },
+    {
+      "name": "ILS Y RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "ILS",
+      "transitions": [],
+      "waypoints":[
+        "BODGO",
+        "UYR"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 33 (DND)",
+      "runway": "RWY33",
+      "type": "RNAV",
+      "transitions":[
+        {
+          "name": "NABUB",
+          "waypoints":[
+            "DUMRO",
+            "NABUB",
+            "EBMEB"
+          ]
+        },
+        {
+          "name": "BOGLO",
+          "waypoints": [
+            "BOGLO",
+            "DUMRO",
+            "EBMEB"
+          ]
+        },
+        {
+          "name": "GOXOP",
+          "waypoints":[
+            "GOXOP",
+            "DUMRO",
+            "EBMEB"
+          ]
+        }
+      ],
+      "waypoints":[
+        "EBMEB",
+        "NABTU"
+      ]
+    },
+    {
+      "name": "LOC(BC) RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "LOC",
+      "transitions": [],
+      "waypoints":[
+        "MOBUT",
+        "UYR"
+      ]
+    },
+    {
+      "name": "HI TACAN RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "TACAN",
+      "waypoints":[
+        "RAVEN",
+        "AVTEX",
+        "UYR"
+      ]
+    },
+    {
+      "name": "TACAN RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "TACAN",
+      "transitions": [],
+      "waypoints":[
+        "TAKNO",
+        "DUNID"
+      ]
+    },
+    {
+      "name": "HI TACAN RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "TACAN",
+      "transitions":[
+        {
+          "name": "LAKE",
+          "waypoints":[
+            "LAKE",
+            "DUNID",
+            "UYR"
+          ]
+        }
+      ],
+      "waypoints":[
+        "LAKE",
+        "DUNID",
+        "RW26"
+      ]
+    },
+    {
+      "name": "NDB RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "NDB",
+      "transitions": [],
+      "waypoints":[
+        "YYR"
+      ]
+    },
+    {
+      "name": "TACAN RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "TACAN",
+      "transitions": [],
+      "waypoints":[
+        "REXEP",
+        "AVTEX"
+      ]
+    },
+    {
+      "name": "ILS X RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "ILS",
+      "transitions":[
+        {
+          "name": "ALOGU",
+          "waypoints":[
+            "ALOGU",
+            "LESIX",
+            "FAFKO"
+          ]
+        },
+        {
+          "name": "BADDY",
+          "waypoints":[
+            "BADDY",
+            "LESIX",
+            "FAFKO"
+          ]
+        },
+        {
+          "name": "DAVIG",
+          "waypoints":[
+            "DAVIG",
+            "LESIX",
+            "FAFKO"
+          ]
+        }
+      ],
+      "waypoints":[
+        "SATAK",
+        "FAFKO",
+        "KIKAV",
+        "DUXUR"
+      ]
+    },
+    {
+      "name": "HI TACAN RWY 33 (DND)",
+      "runway": "RWY33",
+      "type": "TACAN",
+      "transitions":[
+        {
+          "name": "EAGLE",
+          "waypoints": [
+            "EAGLE",
+            "DUNOR",
+            "UYR"
+          ]
+        }
+      ],
+      "waypoints":[
+        "EAGLE",
+        "DUNOR",
+        "RW33"
+      ]
+    },
+    {
+      "name": "TACAN RWY 33 (DND)",
+      "runway": "RWY33",
+      "type": "TACAN",
+      "transitions": [],
+      "waypoints":[
+        "PENRO",
+        "DUNOR"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 15 (DND)",
+      "runway": "RWY15",
+      "type": "RNAV",
+      "transitions":[
+        {
+          "name": "KEDAL",
+          "waypoints":[
+            "KEDAL",
+            "LIBOD",
+            "NOVOV"
+          ]
+        },
+        {
+          "name": "BOGPI",
+          "waypoints": [
+            "BOGPI",
+            "LIBOD",
+            "NOVOV"
+          ]
+        },
+        {
+          "name": "IGVES",
+          "waypoints":[
+            "IGVES",
+            "LIBOD",
+            "NOVOV"
+          ]
+        }
+      ],
+      "waypoints":[
+        "ALRER",
+        "NOVOV",
+        "METGI",
+        "BOKBU"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "RNAV",
+      "transitions":[
+        {
+          "name": "BADDY",
+          "waypoints":[
+            "BADDY",
+            "LESIX",
+            "FAFKO"
+          ]
+        },
+        {
+          "name": "ALOGU",
+          "waypoints":[
+            "ALOGU",
+            "LESIX",
+            "FAFKO"
+          ]
+        },
+        {
+          "name": "DAVIG",
+          "waypoints": [
+            "DAVIG",
+            "LESIX",
+            "FAFKO"
+          ]
+        }
+      ],
+      "waypoints":[
+        "FAFKO",
+        "SATAK",
+        "KIVAV",
+        "DUXUR"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "RNAV",
+      "transitions":[
+        {
+          "name": "RADUL",
+          "waypoints": [
+            "RADUL",
+            "BAJER",
+            "DATKA"
+          ]
+        },
+        {
+          "name": "SCOAT",
+          "waypoints":[
+            "SCOAT",
+            "BAJER",
+            "DATKA"
+          ]
+        },
+        {
+          "name": "MASIN",
+          "waypoints": [
+            "MASIN",
+            "BAJER",
+            "DATKA"
+          ]
+        }
+      ],
+      "waypoints":[
+        "DATKA",
+        "TALOV"
+      ]
+    }
+  ]
+}

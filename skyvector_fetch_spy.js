@@ -42,7 +42,9 @@
     var pts = _trackPts.map(function (p) {
       return {
         x: (p.lon - _bbox.lon1) / (_bbox.lon2 - _bbox.lon1) * W,
-        y: (mercY(p.lat) - my2) / mySpan * H
+        y: (mercY(p.lat) - my2) / mySpan * H,
+        alt: p.alt != null ? p.alt : null,
+        ts:  p.ts  != null ? p.ts  : null
       };
     });
 

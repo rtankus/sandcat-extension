@@ -108,18 +108,176 @@ let GLOBAL_POINTS = [];
 let AUS_PROC_DB = {};
 let AUS_PROC_BY_ICAO = {};
 
+let AUS_DAP_LINK_MAP = {};  // { ICAO: { "PROC NAME UPPERCASE": "https://...pdf" } }
+let AUS_DAP_LOADED   = false;
+
+let GHOSHAAN_CHART_INDEX = {};  // { ICAO: ["AERODROME_CHART.pdf", ...] }
+let GHOSHAAN_CHART_LOADED = false;
+const GHOSHAAN_API_URL = "https://api.github.com/repos/ghoshaan/aip-charts/git/trees/HEAD?recursive=1";
+const GHOSHAAN_BASE_URL = "https://ghoshaan.github.io/aip-charts/";
+const GHOSHAAN_COUNTRY_PREFIXES = { EI: "ireland", CY: "canada", EH: "netherlands", LS: "switzerland" };
+const DAP_BASE = "https://www.airservicesaustralia.com/aip/current/dap/";
+
+// AIRAC reference: cycle 2603 started 2026-03-19 UTC
+const AIRAC_EPOCH_MS = Date.UTC(2026, 2, 19);
+const AIRAC_CYCLE_MS = 28 * 24 * 60 * 60 * 1000;
+const AIRAC_MONTHS   = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+// Airservices Australia updates "current/dap/" on their own schedule, not every AIRAC cycle.
+// Generate candidate date strings covering ~6 months back and 1 forward, then probe for the live one.
+function candidateDapDates() {
+  const now = Date.now();
+  const cycleNum = Math.floor((now - AIRAC_EPOCH_MS) / AIRAC_CYCLE_MS);
+  const dates = [];
+  for (let i = -1; i <= 8; i++) {  // next cycle + up to ~7 months back
+    const d = new Date(AIRAC_EPOCH_MS + (cycleNum - i) * AIRAC_CYCLE_MS);
+    dates.push(`${String(d.getUTCDate()).padStart(2,"0")}${AIRAC_MONTHS[d.getUTCMonth()]}${d.getUTCFullYear()}`);
+  }
+  return dates;
+}
+
+function parseDapHtml(html, baseUrl) {
+  // DOMParser is not available in service workers — parse with regex instead.
+  const map = {};
+
+  // Find all <h3>...</h3> blocks and record their ICAO + end position
+  const h3Re = /<h3[^>]*>([\s\S]*?)<\/h3>/gi;
+  const sections = [];
+  let m;
+  while ((m = h3Re.exec(html)) !== null) {
+    const text = m[1].replace(/<[^>]+>/g, "").trim();
+    const icaoMatch = text.match(/\(([A-Z]{4})\)\s*$/);
+    if (icaoMatch) {
+      sections.push({ icao: icaoMatch[1], contentStart: m.index + m[0].length });
+    }
+  }
+
+  // For each airport section, extract <a href="*.pdf"> links
+  const aRe = /<a\s[^>]*href=["']?([^"'\s>]+\.pdf)["']?[^>]*>([\s\S]*?)<\/a>/gi;
+  for (let i = 0; i < sections.length; i++) {
+    const { icao, contentStart } = sections[i];
+    const contentEnd = i + 1 < sections.length ? sections[i + 1].contentStart : html.length;
+    const chunk = html.slice(contentStart, contentEnd);
+
+    map[icao] = {};
+    aRe.lastIndex = 0;
+    let am;
+    while ((am = aRe.exec(chunk)) !== null) {
+      const href = am[1];
+      const procName = am[2].replace(/<[^>]+>/g, "").trim().toUpperCase();
+      if (procName && href) {
+        map[icao][procName] = new URL(href, baseUrl).href;
+      }
+    }
+  }
+
+  return map;
+}
+
+async function loadAusDapLinks() {
+  if (AUS_DAP_LOADED) return;
+
+  // Check if we cached the last known good date
+  const CACHE_INDEX_KEY = "aus-dap-url-index";
+  let knownDate = null;
+  try {
+    const cs = await caches.open("sandcat-data");
+    const idx = await cs.match(CACHE_INDEX_KEY);
+    if (idx) {
+      const { date, expires } = await idx.json();
+      if (Date.now() < expires) knownDate = date;
+    }
+  } catch {}
+
+  // Try known-good date's cached data first — only trust if non-empty
+  if (knownDate) {
+    try {
+      const cs = await caches.open("sandcat-data");
+      const cached = await cs.match(`aus-dap-links-${knownDate}`);
+      if (cached) {
+        const parsed = await cached.json();
+        if (Object.keys(parsed).length > 0) {
+          AUS_DAP_LINK_MAP = parsed;
+          AUS_DAP_LOADED = true;
+          console.log(`AUS DAP: loaded ${Object.keys(AUS_DAP_LINK_MAP).length} airports from cache (${knownDate})`);
+          return;
+        }
+        console.warn(`AUS DAP: cached map for ${knownDate} is empty, re-fetching`);
+      }
+    } catch {}
+  }
+
+  // Probe candidate dates to find the live DAP page (most recent first)
+  const candidates = knownDate
+    ? [knownDate, ...candidateDapDates().filter(d => d !== knownDate)]
+    : candidateDapDates();
+
+  console.log("AUS DAP: probing candidates:", candidates.slice(0, 5));
+
+  let foundDate = null;
+  let html = null;
+
+  for (const date of candidates) {
+    try {
+      console.log(`AUS DAP: trying dap_${date}.htm ...`);
+      const res = await fetch(`${DAP_BASE}dap_${date}.htm`);
+      console.log(`AUS DAP: dap_${date}.htm → ${res.status}`);
+      if (res.ok) { html = await res.text(); foundDate = date; break; }
+    } catch (err) {
+      console.warn(`AUS DAP: fetch error for dap_${date}.htm:`, err);
+    }
+  }
+
+  if (!html || !foundDate) {
+    console.warn("AUS DAP: could not find a live DAP page (chart links unavailable)");
+    AUS_DAP_LOADED = true;
+    return;
+  }
+
+  console.log(`AUS DAP: fetched dap_${foundDate}.htm (${html.length} bytes), parsing...`);
+
+  try {
+    AUS_DAP_LINK_MAP = parseDapHtml(html, `${DAP_BASE}dap_${foundDate}.htm`);
+    console.log(`AUS DAP: parsed ${Object.keys(AUS_DAP_LINK_MAP).length} airports`);
+  } catch (err) {
+    console.warn("AUS DAP: parse failed:", err);
+    AUS_DAP_LOADED = true;
+    return;
+  }
+
+  try {
+    const cs = await caches.open("sandcat-data");
+    await cs.put(`aus-dap-links-${foundDate}`, new Response(JSON.stringify(AUS_DAP_LINK_MAP),
+      { headers: { "Content-Type": "application/json" } }));
+    await cs.put(CACHE_INDEX_KEY, new Response(JSON.stringify({ date: foundDate, expires: Date.now() + 48 * 60 * 60 * 1000 }),
+      { headers: { "Content-Type": "application/json" } }));
+  } catch {}
+
+  AUS_DAP_LOADED = true;
+  console.log(`Loaded AUS DAP links (${foundDate}): ${Object.keys(AUS_DAP_LINK_MAP).length} airports`);
+}
+
 let SWISS_AD2_DB = {};
 
 let IRELAND_PROC_DB = {};
 
 let NL_PROC_DB = {};
 
-let CH_ENROUTE_FREQS = null;
-let FR_ENROUTE_FREQS = null;
-let DE_ENROUTE_FREQS = null;
-let IT_ENROUTE_FREQS = null;
+let CANADA_PROC_DB = {};
 
 let FREQ_REVERSE_INDEX = null;
+
+// Central registry — add one entry here to wire a new frequency file everywhere
+const FREQ_FILES = [
+  { file: "frequencies/switzerland_frequencies.json",        country: "CH" },
+  { file: "frequencies/france_frequencies.json",             country: "FR" },
+  { file: "frequencies/france_additional_frequencies.json",  country: "FR" },
+  { file: "frequencies/germany_frequencies.json",            country: "DE" },
+  { file: "frequencies/germany_additional_frequencies.json", country: "DE" },
+  { file: "frequencies/italy_frequencies.json",              country: "IT" },
+];
+
+let COUNTRY_FREQ_DB = null; // { "FR": [{freq, name, icao}], ... }
 
 let OURAIRPORTS_NAMES = {};
 
@@ -147,6 +305,7 @@ const GITHUB_RAW = {
   files: [
     "waypoints.csv",
     "navaids.csv",
+    "aus_waypoints_merged.json",
     "aus_waypoints_complete.json",
     "australia_vfr_visual_waypoints.json",
     "swiss_ad2_sandcat.json",
@@ -158,7 +317,8 @@ const GITHUB_RAW = {
     "netherlands/EHKD/Netherlands_EHKD_final.json",
     "netherlands/EHLE/Netherlands_EHLE_final.json",
     "netherlands/EHRD/Netherlands_EHRD_final.json",
-    "netherlands/EHTE/Netherlands_EHTE_final.json"
+    "netherlands/EHTE/Netherlands_EHTE_final.json",
+    ...FREQ_FILES.map(f => f.file)
   ]
 };
 
@@ -212,9 +372,9 @@ loadSwissProcedures();
 
 async function loadAustraliaProcedures() {
   try {
-    const cached = await getCachedFile("aus_waypoints_complete.json");
+    const cached = await getCachedFile("aus_waypoints_merged.json");
     AUS_PROC_DB = cached ?? await (async () => {
-      const url = chrome.runtime.getURL("aus_waypoints_complete.json");
+      const url = chrome.runtime.getURL("aus_waypoints_merged.json");
       const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed loading AU procedures: ${res.status}`);
       return res.json();
@@ -244,6 +404,7 @@ async function loadAustraliaProcedures() {
 }
 
 loadAustraliaProcedures();
+loadAusDapLinks();
 
 async function loadIrelandProcedures() {
   try {
@@ -260,28 +421,32 @@ async function loadIrelandProcedures() {
 loadIrelandProcedures();
 
 async function loadCountryFrequencies() {
-  if (CH_ENROUTE_FREQS && FR_ENROUTE_FREQS && DE_ENROUTE_FREQS && IT_ENROUTE_FREQS) return;
+  if (COUNTRY_FREQ_DB) return;
   try {
-    const [chUrl, frUrl, deUrl, itUrl] = [
-      chrome.runtime.getURL("frequencies/switzerland_frequencies.json"),
-      chrome.runtime.getURL("frequencies/france_frequencies.json"),
-      chrome.runtime.getURL("frequencies/germany_frequencies.json"),
-      chrome.runtime.getURL("frequencies/italy_frequencies.json"),
-    ];
-    const [chRes, frRes, deRes, itRes] = await Promise.all([fetch(chUrl), fetch(frUrl), fetch(deUrl), fetch(itUrl)]);
-    const [chData, frData, deData, itData] = await Promise.all([chRes.json(), frRes.json(), deRes.json(), itRes.json()]);
-    CH_ENROUTE_FREQS = chData.frequencies || [];
-    FR_ENROUTE_FREQS = frData.frequencies || [];
-    DE_ENROUTE_FREQS = Array.isArray(deData) ? deData : (deData.frequencies || []);
-    IT_ENROUTE_FREQS = itData.frequencies || [];
+    const responses = await Promise.all(
+      FREQ_FILES.map(({ file }) => fetch(chrome.runtime.getURL(file)).then(r => r.json()))
+    );
+    const db = {};
+    for (let i = 0; i < FREQ_FILES.length; i++) {
+      const { country } = FREQ_FILES[i];
+      const data = responses[i];
+      const entries = Array.isArray(data) ? data : (data.frequencies || []);
+      if (!db[country]) db[country] = [];
+      for (const e of entries) {
+        const freq = e.frequency_mhz != null ? String(e.frequency_mhz) : String(e.frequency || "");
+        const icaoMatch = (e.airspace || "").match(/\(([A-Z]{4})\)/);
+        const icao = icaoMatch ? icaoMatch[1] : null;
+        const name = e.airspace ? `${e.name} — ${e.airspace}` : (e.name || "");
+        db[country].push({ freq, name, icao });
+      }
+    }
+    COUNTRY_FREQ_DB = db;
     FREQ_REVERSE_INDEX = null;
-    console.log(`Loaded country freqs: CH=${CH_ENROUTE_FREQS.length} FR=${FR_ENROUTE_FREQS.length} DE=${DE_ENROUTE_FREQS.length} IT=${IT_ENROUTE_FREQS.length}`);
+    const summary = Object.entries(db).map(([c, v]) => `${c}=${v.length}`).join(" ");
+    console.log(`Loaded country freqs: ${summary}`);
   } catch (err) {
     console.error("Country frequency load failed:", err);
-    CH_ENROUTE_FREQS = CH_ENROUTE_FREQS || [];
-    FR_ENROUTE_FREQS = FR_ENROUTE_FREQS || [];
-    DE_ENROUTE_FREQS = DE_ENROUTE_FREQS || [];
-    IT_ENROUTE_FREQS = IT_ENROUTE_FREQS || [];
+    COUNTRY_FREQ_DB = {};
   }
 }
 loadCountryFrequencies();
@@ -316,6 +481,124 @@ async function loadNetherlandsProcedures() {
   }
 }
 loadNetherlandsProcedures();
+
+const CANADA_INDIVIDUAL_FILES = [
+  "canada/CYAM.json",
+  "canada/CYBW.json",
+  "canada/CYEG.json",
+  "canada/CYYC.json",
+  "canada/CYYJ.json",
+  "canada/CYYR.json",
+  "canada/CYZX.json",
+  "canada/cyfc_procedures.json",
+  "canada/cyhm_procedures.json",
+  "canada/cymm_procedures.json",
+  "canada/cyxu_procedures.json",
+  "canada/cyyg_procedures.json",
+];
+
+// Normalize Canada comms to [{name, frequency}] regardless of source format.
+// Handles: array (pass-through), dict with string/array values, nested {name,frequency} objects.
+function normalizeCanadaComms(comms) {
+  if (Array.isArray(comms)) return comms;
+  if (!comms || typeof comms !== "object") return [];
+  const labelMap = {
+    atis: "ATIS", awos: "AWOS", arr: "Approach", dep: "Departure",
+    twr: "Tower", gnd: "Ground", tfc: "Traffic", centre: "Centre",
+    tower: "Tower", ground: "Ground", traffic: "Traffic",
+    ATIS: "ATIS", AWOS: "AWOS", ARR: "Approach", DEP: "Departure",
+    TWR: "Tower", GND: "Ground", TFC: "Traffic",
+  };
+  const result = [];
+  for (const [key, val] of Object.entries(comms)) {
+    const name = labelMap[key] || key;
+    if (Array.isArray(val)) {
+      for (const v of val) {
+        if (typeof v === "string") result.push({ name, frequency: v });
+        else if (v?.frequency) result.push({ name: v.name || name, frequency: v.frequency });
+      }
+    } else if (typeof val === "string") {
+      result.push({ name, frequency: val });
+    } else if (val && typeof val === "object" && val.frequency) {
+      result.push({ name: val.name || name, frequency: val.frequency });
+    }
+  }
+  return result;
+}
+
+async function loadCanadaProcedures() {
+  try {
+    CANADA_PROC_DB = {};
+    for (const file of CANADA_INDIVIDUAL_FILES) {
+      const res = await fetch(chrome.runtime.getURL(file));
+      if (!res.ok) throw new Error(`Failed ${file}: ${res.status}`);
+      const data = await res.json();
+      const key = (data?.airport || data?.icao || "").toUpperCase();
+      if (!key) continue;
+      // Normalize: unify approaches → iaps so popup always reads data.iaps
+      if (!data.iaps && data.approaches?.length) data.iaps = data.approaches;
+      // Normalize comms to array format for frequency building
+      data.comms = normalizeCanadaComms(data.comms);
+      CANADA_PROC_DB[key] = data;
+    }
+    console.log(`Loaded Canada procedures: ${Object.keys(CANADA_PROC_DB).length} airports`);
+  } catch (err) {
+    console.error("Canada procedure load failed:", err);
+  }
+}
+loadCanadaProcedures();
+
+async function loadGhoshaanChartIndex() {
+  if (GHOSHAAN_CHART_LOADED) return;
+  try {
+    const CACHE_KEY = "ghoshaan-chart-index-v2";
+    let index = null;
+
+    // Try CacheStorage first
+    try {
+      const cs = await caches.open("sandcat-data");
+      const cached = await cs.match(CACHE_KEY);
+      if (cached) {
+        const ts = cached.headers.get("x-cached-at");
+        if (ts && Date.now() - Number(ts) < 7 * 24 * 60 * 60 * 1000) {
+          index = await cached.json();
+        }
+      }
+    } catch { /* ignore */ }
+
+    if (!index) {
+      const resp = await fetch(GHOSHAAN_API_URL);
+      if (!resp.ok) throw new Error(`GitHub API error: ${resp.status}`);
+      const data = await resp.json();
+      index = {};
+      for (const item of data.tree || []) {
+        if (item.type !== "blob" || !item.path.endsWith(".pdf")) continue;
+        // Path: docs/charts_data/{country}/{folder}/{filename}.pdf
+        const parts = item.path.split("/");
+        if (parts.length !== 5 || parts[0] !== "docs" || parts[1] !== "charts_data") continue;
+        const folder = parts[3]; // e.g. "lszh" or "cyam-sault-ste-marie"
+        // Canada folders are "{icao}-{name-slug}", others are just "{icao}"
+        const icao = folder.split("-")[0].toUpperCase();
+        if (!index[icao]) index[icao] = [];
+        index[icao].push(item.path); // store full path for URL construction
+      }
+      // Cache result
+      try {
+        const cs = await caches.open("sandcat-data");
+        const headers = { "Content-Type": "application/json", "x-cached-at": String(Date.now()) };
+        await cs.put(CACHE_KEY, new Response(JSON.stringify(index), { headers }));
+      } catch { /* ignore */ }
+    }
+
+    GHOSHAAN_CHART_INDEX = index;
+    GHOSHAAN_CHART_LOADED = true;
+    console.log(`Loaded Ghoshaan chart index: ${Object.keys(index).length} airports`);
+  } catch (err) {
+    console.error("Ghoshaan chart index load failed:", err);
+  }
+}
+
+loadGhoshaanChartIndex();
 
 async function loadAusVfrVisualWaypoints() {
   try {
@@ -1929,9 +2212,9 @@ function commLabelToType(label) {
 async function loadAusFrequencies() {
   if (AUS_FREQ_INDEX) return;
   try {
-    const url = chrome.runtime.getURL("aus_waypoints_complete.json");
+    const url = chrome.runtime.getURL("aus_waypoints_merged.json");
     const res = await fetch(url);
-    if (!res.ok) throw new Error("Failed to load aus_waypoints_complete.json");
+    if (!res.ok) throw new Error("Failed to load aus_waypoints_merged.json");
     const data = await res.json();
     const out = {};
     for (const [key, val] of Object.entries(data)) {
@@ -1950,7 +2233,7 @@ async function loadAusFrequencies() {
     FREQ_REVERSE_INDEX = null; // force rebuild to include AU data
     console.log("AU frequencies loaded:", Object.keys(out).length);
   } catch (err) {
-    console.error("Failed to load aus_waypoints_complete.json:", err);
+    console.error("Failed to load aus_waypoints_merged.json:", err);
     AUS_FREQ_INDEX = {};
   }
 }
@@ -2009,34 +2292,29 @@ function buildFreqReverseIndex() {
     }
   }
 
+  // Canada — comms array [{name, frequency}]
+  for (const [icao, data] of Object.entries(CANADA_PROC_DB || {})) {
+    for (const c of (data.comms || [])) {
+      if (c.frequency) add(c.frequency, c.name || "", commLabelToType(c.name || ""), icao, "CA");
+    }
+  }
+
   // Australia
   for (const [icao, freqs] of Object.entries(AUS_FREQ_INDEX || {})) {
     for (const f of freqs) add(f.freq, f.name || f.type, f.type, icao, "AU");
   }
 
-  // Switzerland enroute ACC sectors (no airport ICAO)
-  for (const e of (CH_ENROUTE_FREQS || [])) {
-    add(e.frequency, e.name, "CTR", null, "CH");
+  // Bundled country frequency files — all formats normalized in loadCountryFrequencies()
+  for (const [country, entries] of Object.entries(COUNTRY_FREQ_DB || {})) {
+    for (const e of entries) {
+      add(e.freq, e.name, "", e.icao, country);
+    }
   }
 
-  // France enroute ACC sectors (no airport ICAO)
-  for (const e of (FR_ENROUTE_FREQS || [])) {
-    const freq = e.frequency_mhz != null ? String(e.frequency_mhz) : e.frequency;
-    add(freq, e.name || "", e.service || "CTR", null, "FR");
-  }
-
-  // Germany — plain array {name, frequency, airspace}, ICAO in airspace parentheses
-  // name already contains type (e.g. "RHEIN RADAR"), so pass "" to avoid redundant badge
-  for (const e of (DE_ENROUTE_FREQS || [])) {
-    const icaoMatch = (e.airspace || "").match(/\(([A-Z]{4})\)/);
-    const icao = icaoMatch ? icaoMatch[1] : null;
-    const label = e.airspace ? `${e.name} — ${e.airspace}` : e.name;
-    add(e.frequency, label, "", icao, "DE");
-  }
-
-  // Italy — {country, source, frequencies: [{name, frequency (number)}]}
-  for (const e of (IT_ENROUTE_FREQS || [])) {
-    add(String(e.frequency), e.name, commLabelToType(e.name || ""), null, "IT");
+  // Facility-panel frequencies (airports clicked by user or from active flight)
+  for (const e of (FACILITY_FREQ_INDEX || [])) {
+    const country = icaoCountry.get(e.airport) || "";
+    add(e.freq, e.label, "", e.airport, country);
   }
 
   console.log(`[SandCat] FREQ_REVERSE_INDEX built: ${FREQ_REVERSE_INDEX.size} unique frequencies`);
@@ -2429,34 +2707,51 @@ console.log("Airport candidates:", candidates.length);
   return best.ident;
 }
 
+function setFlightStatus(msg) {
+  chrome.storage.local.set({ adsb_flight_status: msg });
+  chrome.runtime.sendMessage({ type: "ACTIVE_FLIGHT_UPDATED" }).catch(() => {});
+}
+
 async function reconstructRouteFromTrack(points){
 const start = points[0];
 const end = points[points.length - 1];
 
   if(!points?.length) return { ok:false };
 
+  setFlightStatus("Simplifying track…");
   const reduced = reduceTrack(points);
 
   console.log("Reduced track nodes:", reduced.length);
 
-  let fixes = detectFixCrossings(reduced);
+  setFlightStatus("Scanning for fixes along route…");
+  let fixes = await detectFixCrossings(reduced);
 
+  setFlightStatus("Narrowing down fixes…");
   fixes = collapseFixSequence(fixes);
   fixes = filterFixBacktracking(fixes);
   fixes = [...new Set(fixes)];
 
   console.log("Full route fixes:", fixes);
 
+  setFlightStatus("Compressing airways…");
   const airwayRoute = compressAirways(fixes);
 
   const routeString = buildRouteString(airwayRoute);
 
   console.log("Airway compressed route:", airwayRoute);
   console.log("ATC route:", routeString);
+
+  setFlightStatus("Identifying departure & arrival…");
 const origin = await detectAirportFromPoint(start.lat, start.lon);
 const destination = await detectAirportFromPoint(end.lat, end.lon);
+
+  setFlightStatus("Finding enroute airports…");
 const enrouteAirports = await findAirportsAlongTrack(reduced, 60);
+
+  setFlightStatus("Loading frequencies…");
 const freqs = await buildFlightFreqs(origin, destination, enrouteAirports);
+
+  setFlightStatus("Finding VFR waypoints…");
 const vfrWaypoints = await findVfrWaypointsAlongTrack(reduced, 30);
   console.log("[VFR] Saving to storage:", vfrWaypoints.length, "waypoints");
   return {
@@ -2800,7 +3095,9 @@ if (replaySec == null) return { ok:false, error:"Could not determine replay time
     .filter(p => p[1] && p[2])
     .map(p => ({
       lat: p[1],
-      lon: p[2]
+      lon: p[2],
+      alt: p[3] ?? null,
+      ts:  p[0] ?? null
     }));
 
   return {
@@ -2992,11 +3289,18 @@ function gridKey(lat, lon){
   return `${latBin.toFixed(2)}|${lonBin.toFixed(2)}`;
 }
 
-function detectFixCrossings(track){
+async function detectFixCrossings(track){
 
   const fixes = [];
 
   for(let i=0;i<track.length-1;i++){
+
+    if (i > 0 && i % 25 === 0) {
+      await new Promise(r => setTimeout(r, 0));
+      const pct = Math.round((i / (track.length - 1)) * 100);
+      chrome.storage.local.set({ adsb_flight_status: `Scanning for fixes… ${pct}%` });
+      chrome.runtime.sendMessage({ type: "ACTIVE_FLIGHT_UPDATED" }).catch(() => {});
+    }
 
     const a = track[i];
     const b = track[i+1];
@@ -3006,7 +3310,7 @@ function detectFixCrossings(track){
 
     const dist = haversineNm(a.lat,a.lon,b.lat,b.lon);
 
-    const steps = Math.max(1,Math.ceil(dist/0.5)); // 1 NM sampling
+    const steps = Math.max(1,Math.ceil(dist/1.0)); // 1 NM sampling
 
     for(let s=0;s<=steps;s++){
 
@@ -3015,7 +3319,7 @@ function detectFixCrossings(track){
       const lat = a.lat + dLat*t;
       const lon = a.lon + dLon*t;
 
-      const nearby = searchFixesNearby(lat,lon,5);
+      const nearby = searchFixesNearby(lat,lon,10);
 
       for (const fx of nearby) {
   const ident = fx[0];
@@ -3079,6 +3383,7 @@ function addFacilityToIndex(freq, label, airport){
       label: label || "",
       airport
     });
+    FREQ_REVERSE_INDEX = null; // rebuild on next search to include this entry
   }
 
 }
@@ -3273,34 +3578,70 @@ async function findAirportsAlongTrack(reducedPoints, radiusNm = 60) {
   return found.map(f => f.airport);
 }
 
+function parseSkyVectorComms(svHtml) {
+  const comms = [];
+  if (!svHtml) return comms;
+  const idx = svHtml.indexOf('id="aptcomms"');
+  if (idx === -1) return comms;
+  const section = svHtml.slice(idx, idx + 3000);
+  const rowRegex = /<th[^>]*>([^<]+)<\/th>\s*<td[^>]*>([^<]+)<\/td>/gi;
+  let m;
+  while ((m = rowRegex.exec(section)) !== null) {
+    const label = m[1].replace(/&nbsp;/g, " ").replace(/:$/, "").trim();
+    const freq = m[2].trim();
+    if (label && freq) comms.push({ label, freq });
+  }
+  return comms;
+}
+
+const _prefetchAttempted = new Set(); // airports already attempted, don't retry
+
 async function fetchAndCacheFacilityFreqs(ident) {
   if (!ident) return;
+  if (_prefetchAttempted.has(ident)) return;
   if (FACILITY_FREQ_INDEX.some(f => f.airport === ident)) return;
+  _prefetchAttempted.add(ident);
   try {
-    const url = `https://www.airnav.com/airport/${ident}`;
-    const html = await fetchText(url);
-    const commsMatch = html.match(/Airport Communications([\s\S]*?)<\/TABLE>/i);
-    if (!commsMatch) return;
-    const table = commsMatch[1];
-    const rowRegex = /<TR[^>]*>([\s\S]*?)<\/TR>/gi;
-    let row;
-    while ((row = rowRegex.exec(table)) !== null) {
-      let clean = row[1].replace(/&nbsp;/gi, " ").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-      if (!clean) continue;
-      const freqMatches = clean.match(/\d{3}\.\d{1,3}/g);
-      if (!freqMatches) continue;
-      const firstFreqIndex = clean.search(/\d{3}\.\d{1,3}/);
-      let facilityName = clean.slice(0, firstFreqIndex).trim().replace(/\s+/g, " ").toUpperCase();
-      const segments = clean.slice(firstFreqIndex).split(";");
-      for (let seg of segments) {
-        seg = seg.replace(/\s+/g, " ").trim();
-        const freq = seg.match(/\d{3}\.\d{1,3}/);
-        if (!freq) continue;
-        addFacilityToIndex(freq[0], facilityName, ident);
+    const [html, svHtml] = await Promise.all([
+      fetchText(`https://www.airnav.com/airport/${ident}`).catch(() => null),
+      fetchText(`https://skyvector.com/airport/${ident}`).catch(() => null)
+    ]);
+
+    // AirNav comms
+    if (html) {
+      const commsMatch = html.match(/Airport Communications([\s\S]*?)<\/TABLE>/i);
+      if (commsMatch) {
+        const table = commsMatch[1];
+        const rowRegex = /<TR[^>]*>([\s\S]*?)<\/TR>/gi;
+        let row;
+        while ((row = rowRegex.exec(table)) !== null) {
+          let clean = row[1].replace(/&nbsp;/gi, " ").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+          if (!clean) continue;
+          const freqMatches = clean.match(/\d{3}\.\d{1,3}/g);
+          if (!freqMatches) continue;
+          const firstFreqIndex = clean.search(/\d{3}\.\d{1,3}/);
+          let facilityName = clean.slice(0, firstFreqIndex).trim().replace(/\s+/g, " ").toUpperCase();
+          const segments = clean.slice(firstFreqIndex).split(";");
+          for (let seg of segments) {
+            seg = seg.replace(/\s+/g, " ").trim();
+            const freq = seg.match(/\d{3}\.\d{1,3}/);
+            if (!freq) continue;
+            addFacilityToIndex(freq[0], facilityName, ident);
+          }
+        }
       }
     }
+
+    // SkyVector comms — primary source for international/military airports not on AirNav
+    for (const c of parseSkyVectorComms(svHtml)) {
+      const freqMatch = c.freq.match(/\d{2,3}\.\d{1,3}/);
+      if (!freqMatch) continue;
+      const f = parseFloat(freqMatch[0]);
+      if (isNaN(f) || f < 108 || f > 400) continue; // allow HF/mil freqs too
+      addFacilityToIndex(freqMatch[0], c.label, ident);
+    }
   } catch (e) {
-    // silent — airnav unreachable or airport not found
+    // silent
   }
 }
 
@@ -3523,7 +3864,7 @@ chrome.runtime.sendMessage({
   if(!routeData.ok){
     console.log("Route extraction failed:", routeData.error);
     lastProcessedIcao = null; // allow retry on next click
-    await chrome.storage.local.set({ adsb_flight_loading: false });
+    await chrome.storage.local.set({ adsb_flight_loading: false, adsb_flight_status: null });
     chrome.runtime.sendMessage({ type: "ACTIVE_FLIGHT_UPDATED" }).catch(()=>{});
     return;
   }
@@ -3533,12 +3874,12 @@ chrome.runtime.sendMessage({
   const prev = await chrome.storage.local.get("adsb_active_flight_route");
 
   if(prev.adsb_active_flight_route === result.routeString){
-    await chrome.storage.local.set({ adsb_flight_loading: false });
+    await chrome.storage.local.set({ adsb_flight_loading: false, adsb_flight_status: null });
     chrome.runtime.sendMessage({ type: "ACTIVE_FLIGHT_UPDATED" }).catch(()=>{});
     return;
   }
 
-  const trackReduced = reduceTrack(routeData.points, 0.3).slice(0, 800).map(p => ({ lat: p.lat, lon: p.lon }));
+  const trackReduced = reduceTrack(routeData.points, 0.3).slice(0, 800).map(p => ({ lat: p.lat, lon: p.lon, alt: p.alt ?? null, ts: p.ts ?? null }));
 
   await chrome.storage.local.set({
     adsb_active_flight_fixes: result.fixes,
@@ -3552,7 +3893,8 @@ chrome.runtime.sendMessage({
     adsb_active_flight_icao: msg.icao,
     adsb_active_flight_vfr_waypoints: result.vfrWaypoints || [],
     adsb_active_flight_fixes_at: Date.now(),
-    adsb_flight_loading: false
+    adsb_flight_loading: false,
+    adsb_flight_status: null
   });
 
   chrome.runtime.sendMessage({
@@ -3649,12 +3991,17 @@ if (msg?.type === "SEARCH_AIRPORTS_GLOBAL") {
     const query = String(msg.query || "").toUpperCase().trim();
     if (!query) { sendResponse({ ok: true, results: [] }); return; }
 
+    const globalOnly = !!msg.globalOnly;
+    const countryFilter = msg.countryFilter ? String(msg.countryFilter).toUpperCase() : null;
+
     await ensureOurAirportsLoaded();
     await loadOurAirportsFrequencies();
     await loadAusFrequencies();
 
     const results = [];
     for (const a of AIRPORT_MAP.values()) {
+      if (globalOnly && a.country === "US") continue;
+      if (countryFilter && a.country !== countryFilter) continue;
       const identMatch = a.ident && a.ident.toUpperCase().includes(query);
       const nameMatch = a.name && a.name.toUpperCase().includes(query);
       const muniMatch = a.municipality && a.municipality.toUpperCase().includes(query);
@@ -3662,7 +4009,7 @@ if (msg?.type === "SEARCH_AIRPORTS_GLOBAL") {
       if (a.type !== "large_airport" && a.type !== "medium_airport" && a.type !== "small_airport") continue;
       const freqs = getEnrichedFreqs(a.ident);
       results.push({ ident: a.ident, name: a.name, type: a.type, municipality: a.municipality, country: a.country, lat: a.lat, lon: a.lon, freqs });
-      if (results.length >= 30) break;
+      if (results.length >= 50) break;
     }
 
     results.sort((a, b) => {
@@ -3676,32 +4023,81 @@ if (msg?.type === "SEARCH_AIRPORTS_GLOBAL") {
   return true;
 }
 
+if (msg?.type === "PREFETCH_NEARBY_FREQS") {
+  (async () => {
+    const icaos = (msg.icaos || [])
+      .map(s => String(s).toUpperCase())
+      .filter(id => id && !FACILITY_FREQ_INDEX.some(f => f.airport === id));
+
+    if (!icaos.length) {
+      sendResponse({ ok: true, skipped: true });
+      return;
+    }
+
+    sendResponse({ ok: true, total: icaos.length });
+
+    const BATCH = 3;
+    const DELAY = 350;
+    let done = 0;
+
+    for (let i = 0; i < icaos.length; i += BATCH) {
+      const batch = icaos.slice(i, i + BATCH);
+      await Promise.all(batch.map(fetchAndCacheFacilityFreqs));
+      done += batch.length;
+      chrome.storage.local.set({ freq_prefetch_status: { done, total: icaos.length } });
+      if (i + BATCH < icaos.length) await new Promise(r => setTimeout(r, DELAY));
+    }
+
+    FREQ_REVERSE_INDEX = null; // force rebuild with all newly indexed data
+    chrome.storage.local.set({ freq_prefetch_status: null });
+  })();
+  return true;
+}
+
 if (msg?.type === "SEARCH_BY_FREQUENCY") {
   (async () => {
     const raw = String(msg.freq || "").trim();
     const queryKey = normalizeFreqKey(raw);
     if (!queryKey || queryKey.length < 3) { sendResponse({ ok: true, results: [] }); return; }
     const filterCountry = String(msg.country || "").toUpperCase().trim();
+    const nearbySet = new Set((msg.nearby_icaos || []).map(s => String(s).toUpperCase()));
 
     await loadCountryFrequencies();
     buildFreqReverseIndex();
 
     const results = [];
     const seen = new Set();
-    for (const [key, entries] of FREQ_REVERSE_INDEX) {
-      if (!key.includes(queryKey)) continue;
+
+    function collect(entries, key, nearbyOnly) {
       for (const e of entries) {
+        if (nearbyOnly && !nearbySet.has(e.airport_icao)) continue;
+        if (!nearbyOnly && nearbySet.has(e.airport_icao)) continue; // already covered in phase 1
         if (filterCountry && e.country !== filterCountry) continue;
         const dk = `${key}|${e.airport_icao}|${e.label}`;
         if (seen.has(dk)) continue;
         seen.add(dk);
-        results.push({ freq: e.origFreq, label: e.label, type: e.type, airport_icao: e.airport_icao, country: e.country });
-        if (results.length >= 25) break;
+        results.push({ freq: e.origFreq, label: e.label, type: e.type, airport_icao: e.airport_icao, country: e.country, nearby: nearbyOnly });
       }
-      if (results.length >= 25) break;
+    }
+
+    // Phase 1: all matches within the nearby set (no cap — user asked for all of them)
+    if (nearbySet.size > 0) {
+      for (const [key, entries] of FREQ_REVERSE_INDEX) {
+        if (!key.includes(queryKey)) continue;
+        collect(entries, key, true);
+      }
+    }
+
+    // Phase 2: global fill up to 50 total
+    const GLOBAL_CAP = 50;
+    for (const [key, entries] of FREQ_REVERSE_INDEX) {
+      if (results.length >= GLOBAL_CAP) break;
+      if (!key.includes(queryKey)) continue;
+      collect(entries, key, false);
     }
 
     results.sort((a, b) => {
+      if (a.nearby !== b.nearby) return a.nearby ? -1 : 1;
       const aExact = normalizeFreqKey(a.freq) === queryKey ? 0 : 1;
       const bExact = normalizeFreqKey(b.freq) === queryKey ? 0 : 1;
       return aExact - bExact || String(a.freq).localeCompare(String(b.freq));
@@ -3772,6 +4168,36 @@ if (msg?.type === "GET_AUS_PROCEDURES") {
   return true;
 }
 
+if (msg?.type === "GET_AUS_DAP_LINKS") {
+  const icao = String(msg.icao || "").toUpperCase();
+  (async () => {
+    try { await loadAusDapLinks(); } catch (err) { console.warn("GET_AUS_DAP_LINKS: loadAusDapLinks threw:", err); }
+    sendResponse({ ok: true, links: AUS_DAP_LINK_MAP[icao] || null });
+  })();
+  return true;
+}
+
+if (msg?.type === "OPEN_CHART_URL") {
+  const url = String(msg.url || "");
+  if (url.startsWith("https://www.airservicesaustralia.com/") ||
+      url.startsWith("https://ghoshaan.github.io/aip-charts/")) {
+    chrome.tabs.create({ url });
+  }
+  sendResponse({ ok: true });
+  return true;
+}
+
+if (msg?.type === "GET_GHOSHAAN_CHARTS") {
+  const icao = String(msg.icao || "").toUpperCase();
+  (async () => {
+    if (!GHOSHAAN_CHART_LOADED) await loadGhoshaanChartIndex();
+    const prefix = icao.slice(0, 2);
+    const country = GHOSHAAN_COUNTRY_PREFIXES[prefix] || null;
+    sendResponse({ charts: GHOSHAAN_CHART_INDEX[icao] || [], country });
+  })();
+  return true;
+}
+
 if (msg?.type === "GET_SWISS_PROCEDURES") {
   const icao = String(msg.icao || "").toUpperCase();
   sendResponse({ ok: true, icao, data: SWISS_AD2_DB[icao] || null });
@@ -3787,6 +4213,12 @@ if (msg?.type === "GET_IRELAND_PROCEDURES") {
 if (msg?.type === "GET_NL_PROCEDURES") {
   const icao = String(msg.icao || "").toUpperCase();
   sendResponse({ ok: true, icao, data: NL_PROC_DB[icao] || null });
+  return true;
+}
+
+if (msg?.type === "GET_CANADA_PROCEDURES") {
+  const icao = String(msg.icao || "").toUpperCase();
+  sendResponse({ ok: true, icao, data: CANADA_PROC_DB[icao] || null });
   return true;
 }
 
@@ -4311,20 +4743,6 @@ if (msg?.type === "GET_LAST_AIRPORT") {
     return;
   }
 
-  function parseSkyVectorComms(svHtml) {
-    const comms = [];
-    const idx = svHtml.indexOf('id="aptcomms"');
-    if (idx === -1) return comms;
-    const section = svHtml.slice(idx, idx + 3000);
-    const rowRegex = /<th[^>]*>([^<]+)<\/th>\s*<td[^>]*>([^<]+)<\/td>/gi;
-    let m;
-    while ((m = rowRegex.exec(section)) !== null) {
-      const label = m[1].replace(/&nbsp;/g, " ").replace(/:$/, "").trim();
-      const freq = m[2].trim();
-      if (label && freq) comms.push({ label, freq });
-    }
-    return comms;
-  }
 
   function parseSkyVectorNavaids(svHtml) {
     const navaids = [];
@@ -4862,6 +5280,100 @@ if (msg?.type === "SEARCH_PROCEDURES") {
     results: results.slice(0,200)
   });
 
+  return;
+}
+
+
+/* ===============================
+   SEARCH GLOBAL (NON-US) PROCEDURES
+=============================== */
+
+if (msg?.type === "SEARCH_GLOBAL_PROCEDURES") {
+
+  const query = String(msg.query || "").trim().toUpperCase();
+  // Optional: limit to a set of nearby ICAOs
+  const icaoFilter = msg.icaos ? new Set(msg.icaos.map(s => String(s).toUpperCase())) : null;
+
+  if (!query) {
+    sendResponse({ ok: true, results: [] });
+    return;
+  }
+
+  const results = [];
+
+  function scoreProc(name) {
+    const n = name.toUpperCase();
+    return fuzzyScore(n, query) + phoneticScore(n, query);
+  }
+
+  // Australia — strip "SID "/"STAR " prefix before scoring so "adela" matches "ADELAIDE ONE DEP"
+  for (const [icao, airportData] of Object.entries(AUS_PROC_BY_ICAO || {})) {
+    if (icaoFilter && !icaoFilter.has(icao)) continue;
+    for (const procName of Object.keys(airportData.procedures || {})) {
+      const isAusSID = /^SID\b/i.test(procName);
+      const isAusSTAR = /^STAR\b/i.test(procName);
+      if (!isAusSID && !isAusSTAR) continue;
+      const shortName = procName.replace(/^(SID|STAR)\s+/i, "");
+      const score = Math.max(scoreProc(procName), scoreProc(shortName));
+      if (score <= 0) continue;
+      results.push({ airport: icao, type: isAusSID ? "SID" : "STAR", name: shortName, country: "AU", score });
+    }
+  }
+
+  // Switzerland
+  for (const [icao, data] of Object.entries(SWISS_AD2_DB || {})) {
+    if (icaoFilter && !icaoFilter.has(icao)) continue;
+    for (const p of (data.procedures?.sids || [])) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "SID", name: p.name, country: "CH", score });
+    }
+    for (const p of (data.procedures?.stars || [])) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "STAR", name: p.name, country: "CH", score });
+    }
+  }
+
+  // Ireland
+  for (const [icao, data] of Object.entries(IRELAND_PROC_DB || {})) {
+    if (icaoFilter && !icaoFilter.has(icao)) continue;
+    for (const p of (data.SIDs || [])) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "SID", name: p.name, country: "IE", score });
+    }
+    for (const p of (data.STARs || [])) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "STAR", name: p.name, country: "IE", score });
+    }
+  }
+
+  // Netherlands
+  for (const [icao, data] of Object.entries(NL_PROC_DB || {})) {
+    if (icaoFilter && !icaoFilter.has(icao)) continue;
+    for (const p of (data.sids || [])) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "SID", name: p.name, country: "NL", score });
+    }
+    for (const p of [...(data.stars || []), ...(data.star_transitions || [])]) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "STAR", name: p.name, country: "NL", score });
+    }
+  }
+
+  // Canada
+  for (const [icao, data] of Object.entries(CANADA_PROC_DB || {})) {
+    if (icaoFilter && !icaoFilter.has(icao)) continue;
+    for (const p of (data.sids || [])) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "SID", name: p.name, country: "CA", score });
+    }
+    for (const p of (data.stars || [])) {
+      const score = scoreProc(p.name || "");
+      if (score > 0) results.push({ airport: icao, type: "STAR", name: p.name, country: "CA", score });
+    }
+  }
+
+  results.sort((a, b) => b.score - a.score);
+  sendResponse({ ok: true, results: results.slice(0, 200) });
   return;
 }
 
@@ -5996,10 +6508,7 @@ chrome.runtime.onMessage.addListener((msg) => {
       GLOBAL_DATA_READY.navaids = false;
       GLOBAL_DATA_READY.all = false;
       FREQ_REVERSE_INDEX = null;
-      CH_ENROUTE_FREQS = null;
-      FR_ENROUTE_FREQS = null;
-      DE_ENROUTE_FREQS = null;
-      IT_ENROUTE_FREQS = null;
+      COUNTRY_FREQ_DB = null;
       await Promise.all([
         loadSwissProcedures(),
         loadAustraliaProcedures(),

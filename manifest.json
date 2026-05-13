@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SandCat",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "homepage_url": "https://rtankus.github.io/sandcat-privacy/",
   "permissions": [
   "storage",
@@ -22,7 +22,8 @@
     "https://globe.adsbexchange.com/*",
     "https://ourairports.com/*",
     "https://skyvector.com/*",
-    "https://raw.githubusercontent.com/*"
+    "https://raw.githubusercontent.com/*",
+    "https://www.airservicesaustralia.com/*"
   ],
 
   "icons": {
@@ -57,6 +58,7 @@
     "navaids.js",
     "waypoints.csv",
     "navaids.csv",
+    "aus_waypoints_merged.json",
     "aus_waypoints_complete.json",
     "swiss_ad2_sandcat.json",
     "australia_vfr_visual_waypoints.json",
@@ -66,7 +68,21 @@
     "frequencies/switzerland_frequencies.json",
     "frequencies/france_frequencies.json",
     "frequencies/germany_frequencies.json",
-    "frequencies/italy_frequencies.json"
+    "frequencies/italy_frequencies.json",
+    "frequencies/france_additional_frequencies.json",
+    "frequencies/germany_additional_frequencies.json",
+    "canada/CYAM.json",
+    "canada/CYBW.json",
+    "canada/CYEG.json",
+    "canada/CYYC.json",
+    "canada/CYYJ.json",
+    "canada/CYYR.json",
+    "canada/CYZX.json",
+    "canada/cyfc_procedures.json",
+    "canada/cyhm_procedures.json",
+    "canada/cymm_procedures.json",
+    "canada/cyxu_procedures.json",
+    "canada/cyyg_procedures.json"
   ],
   "matches": ["<all_urls>"],
   "allFrames": true

@@ -1,0 +1,268 @@
+{
+  "airport": "CYYJ",
+  "comms": [
+    {
+      "name": "ATIS",
+      "frequency": "118.8"
+    },
+    {
+      "name": "LWIS",
+      "frequency": "118.8"
+    },
+    {
+      "name": "Clearance Delivery",
+      "frequency": "126.4"
+    },
+    {
+      "name": "Ground",
+      "frequency": "121.9"
+    },
+    {
+      "name": "Tower",
+      "frequency": "119.7"
+    },
+    {
+      "name": "Arrival",
+      "frequency": "125.45"
+    },
+    {
+      "name": "Departure",
+      "frequency": "125.95"
+    },
+    {
+      "name": "Kamloops Radio",
+      "frequency": "119.7"
+    }
+  ],
+  "sids": [
+    {
+      "name": "CLOAKE SEVEN DEP",
+      "identifier": "CLOAK7",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY32",
+          "waypoints": [
+            "ALUBO",
+            "YVR"
+          ],
+          "departure_heading": 315
+        }
+      ],
+      "altitude": {
+        "initial": 3000
+      }
+    },
+    {
+      "name": "VICTORIA SIX DEP",
+      "identifier": "CYYJ6",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY03",
+          "waypoints": [],
+          "departure_heading": 27
+        },
+        {
+          "runway": "RWY09",
+          "waypoints": [],
+          "departure_heading": 89
+        }
+      ],
+      "altitude": {
+        "initial": 3000
+      }
+    },
+    {
+      "name": "MILL BAY ONE DEP",
+      "identifier": "MILLB1",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY27",
+          "waypoints": [
+            "IMUSO"
+          ]
+        },
+        {
+          "runway": "RWY32",
+          "waypoints": [
+            "IMUSO"
+          ],
+          "departure_heading": 315
+        }
+      ],
+      "transitions": [
+        {
+            "name": "KELNA",
+            "waypoints": ["IMUSO", "EMETU", "KELNA"]
+        },
+        {
+            "name": "YVR",
+            "waypoints": ["IMUSO", "ALONA", "YVR"]
+        }
+      ],
+      "altitude": {
+        "initial": 4000
+      }
+    }
+  ],
+  "stars": [
+    {
+      "name": "APASS EIGHT ARR",
+      "identifier": "APASS8",
+      "transitions": [
+        {
+          "name": "AMEBO",
+          "waypoints": [
+            "ADSIK",
+            "OBSOP",
+            "BOOTH",
+            "IKLER",
+            "PELTI",
+            "DAXET",
+            "KELKU"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DISCO FIVE ARR",
+      "identifier": "DISCO5",
+      "transitions": [
+        {
+          "name": "DISCO",
+          "waypoints": [
+            "DISCO",
+            "UKNUP",
+            "LAFFO",
+            "LUSHE",
+            "LIDIS",
+            "OMINU"
+          ]
+        }
+      ]
+    }
+  ],
+  "iaps": [
+    {
+      "name": "ILS RWY 09",
+      "runway": "RWY09",
+      "type": "ILS",
+          "waypoints": [
+            "BRANY",
+            "VIXAS",
+            "MEDBA",
+            "DUSAG",
+            "YVR"
+          ]
+    },
+    {
+      "name": "ILS RWY 27",
+      "runway": "RWY27",
+      "type": "ILS",
+      "waypoints": [
+        "LAFFO",
+        "DUNJY",
+        "EBGEP"
+      ]
+    },
+    {
+      "name": "LOC RWY 27",
+      "runway": "RWY27",
+      "type": "LOC",
+      "waypoints": [
+        "LAFOO",
+        "DUNJY",
+        "EBGEP"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) X RWY 09",
+      "runway": "RWY09",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "DAXET",
+          "waypoints": [
+            "DAXET",
+            "AGBAR",
+            "NADEP"
+          ]
+        },
+        {
+          "name": "LIDIS",
+          "waypoints": [
+            "LIDIS",
+            "IKLAG",
+            "AGBAR",
+            "NADEP"
+          ]
+        }
+      ],
+      "waypoints": [
+        "NADEP",
+        "AMEBO"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 09",
+      "runway": "RWY09",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "DAXET",
+          "waypoints": [
+            "DAXET",
+            "AGBAR",
+            "NADEP"
+          ]
+        },
+        {
+          "name": "LIDIS",
+          "waypoints": [
+            "LIDIS",
+            "IKLAG",
+            "AGBAR",
+            "NADEP"
+          ]
+        }
+      ],
+      "waypoints": [
+        "NADEP",
+        "XOVIK",
+        "AMEBO"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 27",
+      "runway": "RWY27",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "OBSOP",
+          "waypoints": [
+            "OBSOP",
+            "LAFFO",
+            "TUGUK"
+          ]
+        },
+        {
+          "name": "UKNUP",
+          "waypoints": [
+            "UKNUP",
+            "LAFFO",
+            "TUGUK"
+          ]
+        }
+      ],
+      "waypoints": [
+        "TUGUK",
+        "XOTAN",
+        "APKOS",
+        "ITPIV",
+        "AMEBO"
+      ]
+    }
+  ]
+}

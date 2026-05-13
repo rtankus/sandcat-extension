@@ -1,0 +1,267 @@
+{
+  "airport": "CYMM",
+  "comms": [
+    {
+      "name": "ATIS",
+      "frequency": "128.5"
+    },
+    {
+      "name": "AWOS",
+      "frequency": "128.5"
+    },
+    {
+      "name": "Edmonton Centre",
+      "frequency": "135.7"
+    },
+    {
+      "name": "Tower",
+      "frequency": "118.1"
+    },
+    {
+      "name": "Tower",
+      "frequency": "236.6"
+    },
+    {
+      "name": "Yellowknife Radio",
+      "frequency": "118.1"
+    },
+    {
+      "name": "Ground",
+      "frequency": "121.9"
+    }
+  ],
+  "sids": [
+    {
+      "name": "FORT MAC TWO DEP",
+      "identifier": "CYMM2",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY08",
+          "waypoints": [],
+          "departure_heading": 75
+        },
+        {
+          "runway": "RWY26",
+          "waypoints": [],
+          "departure_heading": 255
+        }
+      ],
+      "altitude": {
+        "initial": 5000
+      }
+    },
+    {
+      "name": "TEXAL ONE DEP",
+      "identifier": "TEXAL1",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY08",
+          "waypoints": [
+            "TEXAL"
+          ]
+        }
+      ],
+      "altitude": {
+        "initial": 5000
+      }
+    },
+    {
+      "name": "VIKTU ONE DEP",
+      "identifier": "VIKTU1",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY26",
+          "waypoints": [
+            "VIKTU"
+          ]
+        }
+      ],
+      "altitude": {
+        "initial": 5000
+      }
+    }
+  ],
+  "stars": [
+    {
+      "name": "LEXON FIVE ARR",
+      "identifier": "LEXON5",
+      "type": "RNAV",
+      "initial_fix": "LEXON",
+      "routes": [
+        {
+          "runway": "RWY08",
+          "waypoints": [
+            "LEXON",
+            "NANLU",
+            "VILTA",
+            "NOPOV",
+            "PENVU"
+          ]
+        },
+        {
+          "runway": "RWY26",
+          "waypoints": [
+            "LEXON",
+            "ONGUT",
+            "ROMSA",
+            "UKPIG",
+            "LESUT",
+            "LOLMU"
+          ]
+        }
+      ]
+    }
+  ],
+  "iaps": [
+    {
+      "name": "RNAV (GNSS) Z RWY 08",
+      "runway": "RWY08",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "TUMIG",
+          "waypoints": [
+            "TUMIG",
+            "BOXUN"
+          ]
+        },
+        {
+          "name": "NOPOV",
+          "waypoints": [
+            "NOPOV",
+            "BOXUN"
+          ]
+        }
+      ],
+      "waypoints": [
+        "BOXUN",
+        "PETBI",
+        "NABNI",
+        "OTRIL"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 26",
+      "runway": "RWY26",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "LIDAB",
+          "waypoints": [
+            "LIDAB",
+            "OTRIL"
+          ]
+        },
+        {
+          "name": "LESUT",
+          "waypoints": [
+            "LESUT",
+            "OTRIL"
+          ]
+        }
+      ],
+      "waypoints": [
+        "OTRIL",
+        "DUSEG",
+        "KEVPA",
+        "BOXUN"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 08",
+      "runway": "RWY08",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "KELBA",
+          "waypoints": [
+            "KELBA",
+            "VESPU",
+            "PETBI"
+          ]
+        },
+        {
+          "name": "VILTA",
+          "waypoints": [
+            "VILTA",
+            "MEKSU",
+            "PETBI"
+          ]
+        },
+        {
+          "name": "BOXUN",
+          "waypoints": [
+            "BOXUN",
+            "PETBI"
+          ]
+        }
+      ],
+      "waypoints": [
+        "PETBI",
+        "OTRIL"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 26",
+      "runway": "RWY26",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "OTRIL",
+          "waypoints": [
+            "OTRIL",
+            "DUSEG"
+          ]
+        },
+        {
+          "name": "DUVNA",
+          "waypoints": [
+            "DUVNA",
+            "DUSEG"
+          ]
+        },
+        {
+          "name": "UKPIG",
+          "waypoints": [
+            "UKPIG",
+            "DUVNA",
+            "DUSEG"
+          ]
+        }
+      ],
+      "waypoints": [
+        "DUSEG",
+        "BOXUN"
+      ]
+    },
+    {
+      "name": "ILS RWY 26",
+      "runway": "RWY26",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "LIDAB",
+          "waypoints": [
+            "LIDAB",
+            "OTRIL"
+          ]
+        },
+        {
+          "name": "LESUT",
+          "waypoints": [
+            "LESUT",
+            "OTRIL"
+          ]
+        }
+      ],
+      "waypoints": [
+        "OTRIL",
+        "PERVA",
+        "BOXUN"
+      ]
+    }
+  ]
+}

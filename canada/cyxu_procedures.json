@@ -1,0 +1,446 @@
+{
+  "airport": "CYXU",
+  "comms": [
+    {
+      "name": "ATIS",
+      "frequency": "127.8"
+    },
+    {
+      "name": "Toronto Centre",
+      "frequency": "135.3"
+    },
+    {
+      "name": "Tower",
+      "frequency": "119.4"
+    },
+    {
+      "name": "Tower",
+      "frequency": "125.65"
+    },
+    {
+      "name": "Sudbury Radio",
+      "frequency": "119.4"
+    },
+    {
+      "name": "Ground",
+      "frequency": "121.9"
+    }
+  ],
+  "sids": [
+    {
+      "name": "LONDON TWO DEP",
+      "identifier": "CYXU2",
+      "type": "VECTOR",
+      "runways": [
+        "RWY09",
+        "RWY15",
+        "RWY27",
+        "RWY33"
+      ],
+      "waypoints": [],
+      "departure_headings": {
+        "RWY09": 88,
+        "RWY15": 148,
+        "RWY27": 268,
+        "RWY33": 328
+      },
+      "altitude": {
+        "initial": 4000,
+        "expect_flight_plan_altitude_after_minutes": 10
+      }
+    }
+  ],
+  "stars": [],
+  "iaps": [
+    {
+      "name": "VOR/DME RWY 09",
+      "runway": "RWY09",
+      "type": "VOR/DME",
+      "transitions": [],
+      "waypoints": [
+        {
+          "fix": "AVTIK"
+        },
+        {
+          "fix": "RONGI"
+        },
+        {
+          "fix": "MIVUG"
+        },
+        {
+          "fix": "XEVIP"
+        }
+      ]
+    },
+    {
+      "name": "VOR/DME RWY 27",
+      "runway": "RWY27",
+      "type": "VOR/DME",
+      "transitions": [],
+      "waypoints": [
+        {
+          "fix": "GABUB"
+        },
+        {
+          "fix": "LODMO"
+        },
+        {
+          "fix": "XETAV"
+        },
+        {
+          "fix": "DUVEN"
+        },
+        {
+          "fix": "AVTIK"
+        }
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 09",
+      "runway": "RWY09",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "BEMIK",
+          "waypoints": [
+            {
+              "fix": "BEMIK",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "VIMSA"
+            }
+          ]
+        },
+        {
+          "name": "ALITI",
+          "waypoints": [
+            {
+              "fix": "ALITI",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "VIMSA"
+            }
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "fix": "VIMSA"
+        },
+        {
+          "fix": "KIXIV"
+        },
+        {
+          "fix": "GOTOL"
+        }
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 27",
+      "runway": "RWY27",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "GOPEX",
+          "waypoints": [
+            {
+              "fix": "GOPEX",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "GOTOL"
+            }
+          ]
+        },
+        {
+          "name": "ONDUL",
+          "waypoints": [
+            {
+              "fix": "ONDUL",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "GOTOL"
+            }
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "fix": "GOTOL"
+        },
+        {
+          "fix": "OTNUP"
+        },
+        {
+          "fix": "VIMSA"
+        }
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 15",
+      "runway": "RWY15",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "URLOS",
+          "waypoints": [
+            {
+              "fix": "URLOS",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "TUDAR"
+            }
+          ]
+        },
+        {
+          "name": "OLEXI",
+          "waypoints": [
+            {
+              "fix": "OLEXI",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "TUDAR"
+            }
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "fix": "TUDAR"
+        },
+        {
+          "fix": "ITLOL"
+        },
+        {
+          "fix": "XOSPA"
+        },
+        {
+          "fix": "DAVOK"
+        }
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 33",
+      "runway": "RWY33",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "KERPO",
+          "waypoints": [
+            {
+              "fix": "KERPO",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "DAVOK"
+            }
+          ]
+        },
+        {
+          "name": "LOMSU",
+          "waypoints": [
+            {
+              "fix": "LOMSU",
+              "altitude": 3000,
+              "constraint": "at_or_above"
+            },
+            {
+              "fix": "DAVOK"
+            }
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "fix": "DAVOK"
+        },
+        {
+          "fix": "NORAP"
+        },
+        {
+          "fix": "XOXAS"
+        },
+        {
+          "fix": "TUDAR"
+        }
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 15",
+      "runway": "RWY15",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "EMOKI",
+          "waypoints": [
+            {
+              "fix": "EMOKI"
+            },
+            {
+              "fix": "UKOVO"
+            },
+            {
+              "fix": "ITLOL"
+            }
+          ]
+        },
+        {
+          "name": "TUDAR",
+          "waypoints": [
+            {
+              "fix": "TUDAR"
+            },
+            {
+              "fix": "ITLOL"
+            }
+          ]
+        },
+        {
+          "name": "ATUKO",
+          "waypoints": [
+            {
+              "fix": "ATUKO"
+            },
+            {
+              "fix": "XLUPU"
+            },
+            {
+              "fix": "ITLOL"
+            }
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "fix": "ITLOL"
+        },
+        {
+          "fix": "DAVOK"
+        }
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 33",
+      "runway": "RWY33",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "BIVTO",
+          "waypoints": [
+            {
+              "fix": "BIVTO"
+            },
+            {
+              "fix": "XOPGA"
+            },
+            {
+              "fix": "NAGEB"
+            },
+            {
+              "fix": "NORAP"
+            }
+          ]
+        },
+        {
+          "name": "IRDEN",
+          "waypoints": [
+            {
+              "fix": "IRDEN"
+            },
+            {
+              "fix": "NAGEB"
+            },
+            {
+              "fix": "NORAP"
+            }
+          ]
+        },
+        {
+          "name": "DAVOK",
+          "waypoints": [
+            {
+              "fix": "DAVOK"
+            },
+            {
+              "fix": "NORAP"
+            }
+          ]
+        },
+        {
+          "name": "TADOM",
+          "waypoints": [
+            {
+              "fix": "TADOM"
+            },
+            {
+              "fix": "XUBET"
+            },
+            {
+              "fix": "NORAP"
+            }
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "fix": "NORAP"
+        },
+        {
+          "fix": "TUDAR"
+        }
+      ]
+    },
+    {
+      "name": "ILS RWY 15",
+      "runway": "RWY15",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "URLOS",
+          "waypoints": [
+            {
+              "fix": "URLOS"
+            },
+            {
+              "fix": "TUDAR"
+            }
+          ]
+        },
+        {
+          "name": "OLEXI",
+          "waypoints": [
+            {
+              "fix": "OLEXI"
+            },
+            {
+              "fix": "TUDAR"
+            }
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "fix": "TUDAR"
+        },
+        {
+          "fix": "ITLOL"
+        },
+        {
+          "fix": "SEKUS"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1157 @@
+{
+  "airport": "CYYC",
+  "comms": [
+    {
+      "name": "ATIS",
+      "frequency": "128.22"
+    },
+    {
+      "name": "Clearance Delivery",
+      "frequency": "120.82"
+    },
+    {
+      "name": "Apron",
+      "frequency": "121.3"
+    },
+    {
+      "name": "Ground",
+      "frequency": "121.9"
+    },
+    {
+      "name": "Tower",
+      "frequency": "118.4"
+    },
+    {
+      "name": "Arrival",
+      "frequency": "126.52"
+    },
+    {
+      "name": "Departure",
+      "frequency": "124.52"
+    }
+  ],
+  "sids": [
+    {
+      "name": "CALGARY EIGHT DEP",
+      "identifier": "YYC8",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY11",
+          "waypoints": [],
+          "departure_heading": 105
+        },
+        {
+          "runway": "RWY17L",
+          "waypoints": [],
+          "departure_heading": 165
+        },
+        {
+          "runway": "RWY17R",
+          "waypoints": [],
+          "departure_heading": 165
+        },
+        {
+          "runway": "RWY29",
+          "waypoints": [],
+          "departure_heading": 285
+        },
+        {
+          "runway": "RWY35L",
+          "waypoints": [],
+          "departure_heading": 345
+        },
+        {
+          "runway": "RWY35R",
+          "waypoints": [],
+          "departure_heading": 345
+        }
+      ],
+      "altitude": {
+        "initial": 7000
+      }
+    },
+    {
+      "name": "RODEO TWO DEP",
+      "identifier": "RODEO2",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY17L",
+          "waypoints": [],
+          "departure_heading": 155
+        },
+        {
+          "runway": "RWY17R",
+          "waypoints": [],
+          "departure_heading": 165
+        },
+        {
+          "runway": "RWY35L",
+          "waypoints": [],
+          "departure_heading": 345
+        },
+        {
+          "runway": "RWY35R",
+          "waypoints": [],
+          "departure_heading": 360
+        }
+      ],
+      "altitude": {
+        "initial": 7000
+      }
+    },
+    {
+      "name": "COWBOY TWO DEP",
+      "identifier": "CWBOY2",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY17L",
+          "waypoints": [],
+          "departure_heading": 155
+        },
+        {
+          "runway": "RWY17R",
+          "waypoints": [],
+          "departure_heading": 165
+        },
+        {
+          "runway": "RWY35L",
+          "waypoints": [],
+          "departure_heading": 345
+        },
+        {
+          "runway": "RWY35R",
+          "waypoints": [],
+          "departure_heading": 360
+        }
+      ],
+      "altitude": {
+        "initial": 7000
+      }
+    },
+    {
+      "name": "STAMPEDE TWO DEP",
+      "identifier": "STAMP2",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY11",
+          "waypoints": [],
+          "departure_heading": 105
+        },
+        {
+          "runway": "RWY17L",
+          "waypoints": [],
+          "departure_heading": 165
+        },
+        {
+          "runway": "RWY17R",
+          "waypoints": [],
+          "departure_heading": 165
+        },
+        {
+          "runway": "RWY29",
+          "waypoints": [],
+          "departure_heading": 285
+        },
+        {
+          "runway": "RWY35L",
+          "waypoints": [],
+          "departure_heading": 345
+        },
+        {
+          "runway": "RWY35R",
+          "waypoints": [],
+          "departure_heading": 345
+        }
+      ],
+      "altitude": {
+        "initial": 7000
+      }
+    }
+  ],
+  "stars": [
+    {
+      "name": "ADVOX NINE ARR",
+      "identifier": "ADVOX9",
+      "transitions": [
+        {
+          "name": "MATIR",
+          "waypoints": [
+            "MATIR",
+            "ALSIV",
+            "SEKAN",
+            "AMUNO",
+            "ADVOX"
+          ]
+        },
+        {
+          "name": "ALSIV",
+          "waypoints": [
+            "ALSIV",
+            "SEKAN",
+            "AMUNO",
+            "ADVOX"
+          ]
+        },
+        {
+          "name": "SEKAN",
+          "waypoints": [
+            "SEKAN",
+            "AMUNO",
+            "ADVOX"
+          ]
+        },
+        {
+          "name": "AMUNO",
+          "waypoints": [
+            "AMUNO",
+            "ADVOX"
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "runway": "RWY29",
+          "waypoints": [
+            "ADVOX", "FLAAM", "OTMAG", "DEMLO", "PENDL"
+          ]
+        },
+        {
+          "runway": ["RWY35L", "RWY35R"],
+          "waypoints":[
+            "ADVOX", "FLAAM", "OTMAG", "SELEV", "MESKA"
+          ]
+        },
+        {
+          "runway": ["RWY17L", "RWY17R"],
+          "waypoints": [
+            "ADVOX", "FLAAM", "LEXOK", "UBTON", "SEPSO"
+          ]
+        },
+        {
+          "runway": ["RWY11"],
+          "waypoints": [
+            "ADVOX", "FLAAM", "LEXOK", "KISIL"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BIRKO SIX ARR",
+      "identifier": "BIRKO6",
+      "transitions": [
+        {
+          "name": "ILADA",
+          "waypoints": [
+            "ILADA",
+            "BIRKO"
+          ]
+        },
+        {
+          "name": "DUDNI",
+          "waypoints": [
+            "DUDNI",
+            "BIRKO"
+          ]
+        },
+        {
+          "name": "PIKLA",
+          "waypoints": [
+            "PIKLA",
+            "ONBOS",
+            "DATAV",
+            "KELNU",
+            "BIRKO"
+          ]
+        },
+        {
+          "name": "ONBOS",
+          "waypoints": [
+            "ONBOS",
+            "DATAV",
+            "KELNU",
+            "BIRKO"
+          ]
+        },
+        {
+          "name": "DATAV",
+          "waypoints": [
+            "DATAV",
+            "KELNU",
+            "BIRKO"
+          ]
+        },
+        {
+          "name": "KELNU",
+          "waypoints": [
+            "KELNU",
+            "BIRKO"
+          ]
+        },
+        {
+          "name": "UDPAV",
+          "waypoints": [
+            "UDPAV",
+            "BIRKO"
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "runway": "RWY11",
+          "waypoints": [
+            "BIRKO", "TOTUB", "EBDIK", "LETUT", "BOTAX"
+          ]
+        },
+        {
+          "runway": ["RWY35L", "RWY35R"],
+          "waypoints": [
+            "BIRKO", "TOTUB", "EBDIK", "LIBUX", "MATAV"
+          ]
+        },
+        {
+          "runway": ["RWY17L", "RWY17R"],
+          "waypoints": [
+            "BIRKO", "TOTUB", "ELSOG", "UDNON"
+          ]
+        },
+        {
+          "runway": "RWY29",
+          "waypoints": [
+            "BIRKO", "TOTUB", "PENDL", "SIMGI"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EBGAL SEVEN ARR",
+      "identifier": "EBGAL7",
+      "transitions": [
+        {
+          "name": "TOVUM",
+          "waypoints": [
+            "TOVUM",
+            "ETLEM",
+            "EBGAL"
+          ]
+        },
+        {
+          "name": "ETLEM",
+          "waypoints": [
+            "ETLEM",
+            "EBGAL"
+          ]
+        },
+        {
+          "name": "MOBEK",
+          "waypoints": [
+            "MOBEK",
+            "OMRIT",
+            "NAMTI",
+            "ILOSA",
+            "EBGAL"
+          ]
+        },
+        {
+          "name": "OMRIT",
+          "waypoints": [
+            "OMRIT",
+            "NAMTI",
+            "ILOSA",
+            "EBGAL"
+          ]
+        },
+        {
+          "name": "NAMTI",
+          "waypoints": [
+            "NAMTI",
+            "ILOSA",
+            "EBGAL"
+          ]
+        },
+        {
+          "name": "ILOSA",
+          "waypoints": [
+            "ILOSA",
+            "EBGAL"
+          ]
+        },
+        {
+          "name": "VESDO",
+          "waypoints": [
+            "VESDO",
+            "EBGAL"
+          ]
+        }
+      ],
+      "waypoints": [
+        {
+          "runway": ["RWY17L", "RWY17R"],
+          "waypoints": [
+            "EBGAL", "TIDUK", "KEBNO", "MUPUV", "ELSOG"
+          ]
+        },
+        {
+          "runway": "RWY11",
+          "waypoints": [
+            "EBGAL", "TIDUK", "PIDLA", "ITPAK"
+          ]
+        },
+        {
+          "runway": "RWY19",
+          "waypoints": [
+            "EBGAL", "TIDUK", "HENRI"
+          ]
+        },
+        {
+          "runway": ["RWY35L","RWY35R"],
+          "waypoints": [
+            "EBGAL", "TIDUK", "MATAV", "ANEVO"
+          ]
+        }
+      ]
+    },
+{
+  "name": "FLAAM SEVEN ARR",
+  "identifier": "FLAAM7",
+  "transitions": [
+    {
+      "name": "MATIR",
+      "waypoints": ["MATIR", "ALSIV", "SEKAN", "AMUNO", "ADVOX"]
+    },
+    {
+      "name": "ALSIV",
+      "waypoints": ["ALSIV", "SEKAN", "AMUNO", "ADVOX"]
+    },
+    {
+      "name": "SEKAN",
+      "waypoints": ["SEKAN", "AMUNO", "ADVOX"]
+    },
+    {
+      "name": "AMUNO",
+      "waypoints": ["AMUNO", "ADVOX"]
+    }
+  ],
+  "waypoints": [
+    {
+      "runway": ["RWY17L", "RWY17R"],
+      "waypoints": ["ADVOX", "FLAAM", "LEXOK", "SEPSO", "UBTON"]
+    },
+    {
+      "runway": "RWY11",
+      "waypoints": ["ADVOX", "FLAAM", "LEXOK", "SEPSO", "KISIL"]
+    },
+    {
+      "runway": ["RWY35L", "RWY35R"],
+      "waypoints": ["ADVOX", "FLAAM", "OTMAG", "SELEV", "MESKA"]
+    },
+    {
+      "runway": "RWY29",
+      "waypoints": ["ADVOX", "FLAAM", "OTMAG", "DEMLO", "PENDL"]
+    }
+  ]
+},
+{
+  "name": "IGVEP SEVEN ARR",
+  "identifier": "IGVEP7",
+  "transitions": [
+    {
+      "name": "ANTAK",
+      "waypoints": ["ANTAK", "SIGPA", "TULOB", "IGVEP"]
+    },
+    {
+      "name": "SIGPA",
+      "waypoints": ["SIGPA", "TULOB", "IGVEP"]
+    },
+    {
+      "name": "TULOB",
+      "waypoints": ["TULOB", "IGVEP"]
+    },
+    {
+      "name": "NORET",
+      "waypoints": ["NORET", "PIBSO", "AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "PIBSO",
+      "waypoints": ["PIBSO", "AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "AMITO",
+      "waypoints": ["AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "SEDEL",
+      "waypoints": ["SEDEL", "IGVEP"]
+    }
+  ],
+  "waypoints": [
+    {
+      "runway": "RWY11",
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "ADSAK", "ITPAK"]
+    },
+    {
+      "runway": ["RWY17L", "RWY17R"],
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "NABON", "OVEBI", "UBTON"]
+    },
+    {
+      "runway": "RWY29",
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "NABON", "AVTIS", "VIMVO", "TEXIT"]
+    },
+    {
+      "runway": ["RWY35L", "RWY35R"],
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "MESKA", "DEPTU"]
+    }
+  ]
+},
+{
+  "name": "TIDUK SEVEN ARR",
+  "identifier": "TIDUK7",
+  "transitions": [
+    {
+      "name": "TOVUM",
+      "waypoints": ["TOVUM", "ETLEM", "EBGAL"]
+    },
+    {
+      "name": "ETLEM",
+      "waypoints": ["ETLEM", "EBGAL"]
+    },
+    {
+      "name": "MOBEK",
+      "waypoints": ["MOBEK", "OMRIT", "NAMTI", "ILOSA", "EBGAL"]
+    },
+    {
+      "name": "OMRIT",
+      "waypoints": ["OMRIT", "NAMTI", "ILOSA", "EBGAL"]
+    },
+    {
+      "name": "NAMTI",
+      "waypoints": ["NAMTI", "ILOSA", "EBGAL"]
+    },
+    {
+      "name": "ILOSA",
+      "waypoints": ["ILOSA", "EBGAL"]
+    },
+    {
+      "name": "VESDO",
+      "waypoints": ["VESDO", "EBGAL"]
+    }
+  ],
+  "waypoints": [
+    {
+      "runway": ["RWY17L", "RWY17R"],
+      "waypoints": ["EBGAL", "TIDUK", "KEBNO", "MUPUV", "ELSOG"]
+    },
+    {
+      "runway": "RWY11",
+      "waypoints": ["EBGAL", "TIDUK", "PIDLA", "ITPAK"]
+    },
+    {
+      "runway": "RWY29",
+      "waypoints": ["EBGAL", "TIDUK", "HENRI"]
+    },
+    {
+      "runway": ["RWY35L", "RWY35R"],
+      "waypoints": ["EBGAL", "TIDUK", "MATAV", "ANEVO"]
+    }
+  ]
+},
+{
+  "name": "TOTUB FIVE ARR",
+  "identifier": "TOTUB5",
+  "transitions": [
+    {
+      "name": "ILADA",
+      "waypoints": ["ILADA", "BIRKO"]
+    },
+    {
+      "name": "DUDNI",
+      "waypoints": ["DUDNI", "BIRKO"]
+    },
+    {
+      "name": "PIKLA",
+      "waypoints": ["PIKLA", "ONBOS", "DATAV", "KELNU", "BIRKO"]
+    },
+    {
+      "name": "ONBOS",
+      "waypoints": ["ONBOS", "DATAV", "KELNU", "BIRKO"]
+    },
+    {
+      "name": "DATAV",
+      "waypoints": ["DATAV", "KELNU", "BIRKO"]
+    },
+    {
+      "name": "KELNU",
+      "waypoints": ["KELNU", "BIRKO"]
+    },
+    {
+      "name": "UDPAV",
+      "waypoints": ["UDPAV", "BIRKO"]
+    }
+  ],
+  "waypoints": [
+    {
+      "runway": "RWY11",
+      "waypoints": ["BIRKO", "TOTUB", "EBDIK", "LETUT", "BOTAX"]
+    },
+    {
+      "runway": ["RWY17L", "RWY17R"],
+      "waypoints": ["BIRKO", "TOTUB", "ELSOG", "UDNON"]
+    },
+    {
+      "runway": "RWY29",
+      "waypoints": ["BIRKO", "TOTUB", "PENDL", "SIMGI"]
+    },
+    {
+      "runway": ["RWY35L", "RWY35R"],
+      "waypoints": ["BIRKO", "TOTUB", "EBDIK", "LIBUX", "MATAV"]
+    }
+  ]
+},
+{
+  "name": "VESGA SIX ARR",
+  "identifier": "VESGA6",
+  "transitions": [
+    {
+      "name": "ANTAK",
+      "waypoints": ["ANTAK", "SIGPA", "TULOB", "IGVEP"]
+    },
+    {
+      "name": "SIGPA",
+      "waypoints": ["SIGPA", "TULOB", "IGVEP"]
+    },
+    {
+      "name": "TULOB",
+      "waypoints": ["TULOB", "IGVEP"]
+    },
+    {
+      "name": "NORET",
+      "waypoints": ["NORET", "PIBSO", "AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "PIBSO",
+      "waypoints": ["PIBSO", "AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "AMITO",
+      "waypoints": ["AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "SEDEL",
+      "waypoints": ["SEDEL", "IGVEP"]
+    }
+  ],
+  "waypoints": [
+    {
+      "runway": "RWY11",
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "ADSEK", "ITPAK"]
+    },
+    {
+      "runway": ["RWY17L", "RWY17R"],
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "NABON", "UBTON", "OVEBI"]
+    },
+    {
+      "runway": "RWY29",
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "NABON", "AVTIS", "VIMVO", "TEXIT"]
+    },
+    {
+      "runway": ["RWY35L", "RWY35R"],
+      "waypoints": ["IGVEP", "XUGAV", "URVUG", "VESGA", "MESKA", "DEPTU"]
+    }
+  ]
+}
+
+  ],
+  "iaps": [
+    {
+      "name": "RNAV (GNSS) Z RWY 35R",
+      "runway": "RWY35R",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "MUTRA",
+          "waypoints": [
+            "MUTRA",
+            "TASBU",
+            "KIRIK"
+          ]
+        },
+        {
+          "name": "MATAV",
+          "waypoints": [
+            "MATAV",
+            "TASBU",
+            "KIRIK"
+          ]
+        }
+      ],
+      "waypoints": [
+        "TASBU",
+        "KIRIK",
+        "IMONU",
+        "OMREK"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 29",
+      "runway": "RWY29",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "AVTIS",
+          "waypoints": [
+            "AVTIS",
+            "ESPUN",
+            "DEDEN",
+            "GABEG",
+            "TAMLI"
+          ]
+        },
+        {
+          "name": "LEVAP",
+          "waypoints": [
+            "LEVAP",
+            "DEDEN",
+            "GABEG",
+            "TAMLI"
+          ]
+        },
+        {
+          "name": "HENRI",
+          "waypoints": [
+            "HENRI",
+            "TAMLI"
+          ]
+        },
+        {
+          "name": "TOTUB",
+          "waypoints": [
+            "OVDAV",
+            "BONEX",
+            "LOBTO",
+            "TAMLI"
+          ]
+        },
+        {
+          "name": "DEMLO",
+          "waypoints": [
+            "DEMLO",
+            "OVDAV",
+            "BONEX",
+            "LOBTO",
+            "TAMLI"
+          ]
+        }
+      ],
+      "waypoints": [
+        "TAMLI",
+        "BOTEG"
+      ]
+    },
+  {
+    "name": "RNAV (RNP) Y RWY 17L",
+    "runway": "RWY17L",
+    "type": "RNP",
+    "transitions": [
+      {
+        "name": "OVEBI",
+        "waypoints": ["OVEBI", "OMRAP", "OKUMI", "MAXEN"]
+      },
+      {
+        "name": "VIKTI",
+        "waypoints": ["VIKTI", "MAXEN"]
+      },
+      {
+        "name": "TOTUB",
+        "waypoints": ["TOTUB", "DATOT", "MAXEN"]
+      },
+      {
+        "name": "MUPUV",
+        "waypoints": ["MUPUV", "KISUT", "DATOT", "MAXEN"]
+      }
+    ],
+    "waypoints": ["MAXEN", "OXANI"]
+  },
+  {
+    "name": "RNAV (RNP) Y RWY 11",
+    "runway": "RWY11",
+    "type": "RNP",
+    "transitions": [
+  {
+    "name": "KISIL",
+    "waypoints": ["KISIL", "PIDKU"]
+  },
+  {
+    "name": "PIDLA",
+    "waypoints": ["PIDLA", "MEVTI", "REVUT", "PIDKU"]
+  },
+  {
+    "name": "LETUT",
+    "waypoints": ["LETUT", "KENVO", "NOTIP", "PIDKU"]
+  }
+],
+    "waypoints": ["PIDKU", "DURAL"]
+  },
+  {
+    "name": "RNAV (RNP) Y RWY 35L",
+    "runway": "RWY35L",
+    "type": "RNP",
+    "transitions": [
+      {
+        "name": "VESGA",
+        "waypoints": ["VESGA", "MIDVI", "ERDAL"]
+      },
+      {
+        "name": "SELEV",
+        "waypoints": ["SELEV", "AVRET", "MIDVI", "ERDAL"]
+      },
+      {
+        "name": "GABOL",
+        "waypoints": ["GABOL", "ERDAL"]
+      },
+      {
+        "name": "LIBUX",
+        "waypoints": ["LIBUX", "TIBUD", "SEPMO", "ERDAL"]
+      }
+    ],
+    "waypoints": ["ERDAL", "REXUB"]
+  },
+    {
+      "name": "ILS RWY 29",
+      "runway": "RWY29",
+      "type": "ILS",
+      "waypoints": [
+        "HENRI",
+        "PIBMU",
+        "REXUB"
+      ]
+    },
+    {
+      "name": "ILS CAT II RWY 17R",
+      "runway": "RWY17R",
+      "type": "ILS",
+      "waypoints": [
+        "ELERO",
+        "VIXOS",
+        "OMVUM",
+        "RIKED"
+      ]
+    },
+    {
+      "name": "ILS RWY 35L",
+      "runway": "RWY35L",
+      "type": "ILS",
+          "waypoints": [
+            "GABOL",
+            "UKTAP",
+            "ALTUL",
+            "BOVIX",
+            "REXUB"
+          ]
+    },
+    {
+      "name": "ILS CAT II or III RWY 35R",
+      "runway": "RWY35R",
+      "type": "ILS",
+      "waypoints": [
+        "TASBU",
+        "UKNEG",
+        "SIKNI",
+        "DEGRI"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 17L",
+      "runway": "RWY17L",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "UBVEG",
+          "waypoints": [
+            "UBVEG",
+            "VIKTI",
+            "DURVA"
+          ]
+        },
+        {
+          "name": "ELSOG",
+          "waypoints": [
+            "ELSOG",
+            "VIKTI",
+            "DURVA"
+          ]
+        }
+      ],
+      "waypoints": [
+        "DURVA",
+        "OXANI"
+      ]
+    },
+    {
+      "name": "ILS CAT II RWY 35L",
+      "runway": "RWY35L",
+      "type": "ILS",
+          "waypoints": [
+            "GABOL",
+            "UKTAP",
+            "BOVIX",
+            "REXUB"
+          ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 11",
+      "runway": "RWY11",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "BOTAX",
+          "waypoints": [
+            "BOTAX",
+            "KISIL",
+            "NOVUS"
+          ]
+        },
+        {
+          "name": "ITPAK",
+          "waypoints": [
+            "ITPAK",
+            "KISIL",
+            "NOVUS"
+          ]
+        }
+      ],
+      "waypoints": [
+        "NOVUS",
+        "LEVIM",
+        "DURAL"
+      ]
+    },
+    {
+      "name": "ILS RWY 17L",
+      "runway": "RWY17L",
+      "type": "ILS",
+          "waypoints": [
+            "VIKTI",
+            "EBKOP",
+            "ULBUD",
+            "OXANI"
+          ]
+    },
+        {
+      "name": "ILS RWY 35R",
+      "runway": "RWY35R",
+      "type": "ILS",
+          "waypoints": [
+            "TASBU",
+            "UKNEG",
+            "SIKNI",
+            "DEGRI"
+          ]
+    },
+    {
+      "name": "ILS CAT II or III RWY 17L",
+      "runway": "RWY17L",
+      "type": "ILS",
+      "waypoints": [
+            "VIKTI",
+            "EBKOP",
+            "ULBUD",
+            "OXANI"
+          ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 35L",
+      "runway": "RWY35L",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "MESKA",
+          "waypoints": [
+            "MESKA",
+            "GABOL",
+            "REVIG"
+          ]
+        },
+        {
+          "name": "BARIE",
+          "waypoints": [
+            "BARIE",
+            "GABOL",
+            "REVIG"
+          ]
+        }
+      ],
+      "waypoints": [
+        "REVIG",
+        "REXUB"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 17R",
+      "runway": "RWY17R",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "UBTON",
+          "waypoints": [
+            "UBTON",
+            "ELERO",
+            "PERNA"
+          ]
+        },
+        {
+          "name": "VOBAR",
+          "waypoints": [
+            "VOBAR",
+            "ELERO",
+            "PERNA"
+          ]
+        }
+      ],
+          "waypoints": [
+            "ALNIG",
+            "PERNA"
+          ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 17R",
+      "runway": "RWY17R",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "OVEBI",
+          "waypoints": [
+            "OVEBI",
+            "SIBKI",
+            "PETRU",
+            "GOVIB"
+          ]
+        },
+        {
+          "name": "LEXOK",
+          "waypoints": [
+            "LEXOK",
+            "PETRU",
+            "GOVIB"
+          ]
+        },
+        {
+          "name": "ELERO",
+          "waypoints": [
+            "ELERO",
+            "GOVIB"
+          ]
+        },
+        {
+          "name": "MUPUV",
+          "waypoints": [
+            "MUPUV",
+            "LETOK",
+            "VITAS",
+            "GOVIB"
+          ]
+        }
+      ],
+      "waypoints": [
+        "GOVIB",
+        "ALNIG"
+      ]
+    },
+        {
+      "name": "RNAV (RNP) Y RWY 35R",
+      "runway": "RWY35R",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "SELEV",
+          "waypoints": [
+            "SELEV",
+            "VIMDA",
+            "UMABO",
+            "IKNUV"
+          ]
+        },
+        {
+          "name": "TASBU",
+          "waypoints": [
+            "TASBU",
+            "IKNUV"
+          ]
+        },
+        {
+          "name": "TIDUK",
+          "waypoints": [
+            "TIDUK",
+            "AGNIK",
+            "IKNUV"
+          ]
+        },
+        {
+          "name": "LIBUX",
+          "waypoints": [
+            "LIBUX",
+            "NAPNI",
+            "AGNIK",
+            "IKNUV"
+          ]
+        }
+      ],
+      "waypoints": [
+        "IKNUV",
+        "OMREK"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 29",
+      "runway": "RWY29",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "PENDL",
+          "waypoints": [
+            "PENDL",
+            "HENRI",
+            "KEGPU"
+          ]
+        },
+        {
+          "name": "TEXIT",
+          "waypoints": [
+            "TEXIT",
+            "HENRI",
+            "KEGPU"
+          ]
+        }
+      ],
+      "waypoints": [
+        "KEGPU",
+        "BOTEG"
+      ]
+    },
+    {
+      "name": "ILS RWY 11",
+      "runway": "RWY11",
+      "type": "ILS",
+          "waypoints": [
+            "KISIL",
+            "ILOGA",
+            "IKDOG",
+            "GOPAG",
+            "OXANI"
+          ]
+    },
+    {
+      "name": "ILS RWY 17R",
+      "runway": "RWY17R",
+      "type": "ILS",
+      "waypoints": [
+            "ELERO",
+            "VIXOS",
+            "OMVUM",
+            "RIKED"
+          ]
+    }
+  ]
+}

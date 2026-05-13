@@ -1,0 +1,454 @@
+{
+  "airport": "CYZX",
+  "comms": [
+    {
+      "name": "ATIS",
+      "frequency": "128.85"
+    },
+    {
+      "name": "Clearance Delivery",
+      "frequency": "128.02"
+    },
+    {
+      "name": "Ground",
+      "frequency": "133.75"
+    },
+    {
+      "name": "Tower",
+      "frequency": "119.5"
+    },
+    {
+      "name": "Terminal",
+      "frequency": "120.6"
+    }
+  ],
+  "sids": [
+    {
+      "name": "SEBET ONE DEP",
+      "identifier": "SEBET1",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY26",
+          "waypoints": [
+            "SEBET"
+          ],
+          "departure_heading": 260
+        }
+      ],
+      "altitude": {
+        "initial": 3000
+      }
+    },
+    {
+      "name": "UDGOR ONE DEP",
+      "identifier": "UDGOR1",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY08",
+          "waypoints": [
+            "UDGOR"
+          ],
+          "departure_heading": 80
+        }
+      ],
+      "altitude": {
+        "initial": 3000
+      }
+    },
+    {
+      "name": "DAXIP ONE DEP",
+      "identifier": "DAXIP1",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY30",
+          "waypoints": [
+            "DAXIP"
+          ],
+          "departure_heading": 302
+        }
+      ],
+      "altitude": {
+        "initial": 3000
+      }
+    },
+    {
+      "name": "DUVRO ONE DEP",
+      "identifier": "DUVRO1",
+      "type": "RNAV",
+      "routes": [
+        {
+          "runway": "RWY12",
+          "waypoints": [
+            "DUVRO"
+          ],
+          "departure_heading": 122
+        }
+      ],
+      "altitude": {
+        "initial": 3000
+      }
+    }
+  ],
+  "stars": [],
+  "iaps": [
+    {
+      "name": "NDB RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "NDB",
+      "transitions": [],
+      "waypoints": [
+        "YZX",
+        "GREENWOOD"
+      ]
+    },
+    {
+      "name": "ILS Z RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "GOXID",
+          "waypoints": [
+            "GOXID",
+            "AMIDU",
+            "OTPEK"
+          ]
+        },
+        {
+          "name": "UDGOR",
+          "waypoints": [
+            "UDGOR",
+            "AMIDU",
+            "OTPEK"
+          ]
+        },
+        {
+          "name": "PEPTU",
+          "waypoints": [
+            "PEPTU",
+            "AMIDU",
+            "OTPEK"
+          ]
+        }
+      ],
+      "waypoints": [
+        "OTPEK",
+        "DEDSI"
+      ]
+    },
+    {
+      "name": "NDB RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "NDB",
+      "transitions": [],
+      "waypoints": [
+        "GF",
+        "AYLESFORD",
+        "UZX",
+        "GREENWOOD"
+      ]
+    },
+    {
+      "name": "TACAN RWY 30 (DND)",
+      "runway": "RWY30",
+      "type": "TACAN",
+      "transitions": [
+        {
+          "name": "DELPU",
+          "waypoints": [
+            "DELPU",
+            "XIKIK",
+            "ITROR"
+          ]
+        },
+        {
+          "name": "SEKEP",
+          "waypoints": [
+            "SEKEP",
+            "XIKIK",
+            "ITROR"
+          ]
+        }
+      ],
+      "waypoints": [
+        "XIKIK",
+        "ITROR",
+        "UZX",
+        "GREENWOOD"
+      ]
+    },
+    {
+      "name": "Precisio Approach Radar PAR (DND)",
+      "runway": "ALL",
+      "type": "PAR",
+      "transitions": [],
+      "waypoints": []
+    },
+    {
+      "name": "TACAN RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "TACAN",
+      "transitions": [
+        {
+          "name": "PURED",
+          "waypoints": [
+            "PURED",
+            "IRGOX",
+            "NUDAD"
+          ]
+        },
+        {
+          "name": "XETUD",
+          "waypoints": [
+            "XETUD",
+            "IRGOX",
+            "NUDAD"
+          ]
+        }
+      ],
+      "waypoints": [
+        "NUDAD",
+        "TAKRU",
+        "UZX",
+        "GREENWOOD"
+      ]
+    },
+    {
+      "name": "TACAN RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "TACAN",
+      "transitions": [
+        {
+          "name": "AXUPA",
+          "waypoints": [
+            "AXUPA",
+            "RIDOB",
+            "BUBUS"
+          ]
+        },
+        {
+          "name": "MAVAM",
+          "waypoints": [
+            "MAVAM",
+            "RIDOB",
+            "BUBUS"
+          ]
+        }
+      ],
+      "waypoints": [
+        "BUBUS",
+        "UZX",
+        "GREENWOOD"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 30 (DND)",
+      "runway": "RWY30",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "OMILA",
+          "waypoints": [
+            "OMILA",
+            "SEMAB"
+          ]
+        },
+        {
+          "name": "DUVRO",
+          "waypoints": [
+            "DUVRO",
+            "SEMAB",
+            "ROMRO"
+          ]
+        },
+        {
+          "name": "ILEVU",
+          "waypoints": [
+            "ILEVU",
+            "SEMAB",
+            "ROMRO"
+          ]
+        }
+      ],
+      "waypoints": [
+        "ROMRO",
+        "EPRIG",
+        "ALKUX"
+      ]
+    },
+    {
+      "name": "ILS X RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "UDGOR",
+          "waypoints": [
+            "UDGOR",
+            "OTPEK"
+          ]
+        }
+      ],
+      "waypoints": [
+        "OTPEK",
+        "URPIL"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "XESOX",
+          "waypoints": [
+            "XESOX",
+            "DEDSI",
+            "LETOL"
+          ]
+        },
+        {
+          "name": "MASOX",
+          "waypoints": [
+            "MASOX",
+            "DEDSI",
+            "LETOL"
+          ]
+        },
+        {
+          "name": "SEBET",
+          "waypoints": [
+            "SEBET",
+            "DEDSI",
+            "LETOL"
+          ]
+        }
+      ],
+      "waypoints": [
+        "LETOL",
+        "AMIDU"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 12 (DND)",
+      "runway": "RWY12",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "KEDNI",
+          "waypoints": [
+            "KEDNI",
+            "ALKUX",
+            "GUDEK"
+          ]
+        },
+        {
+          "name": "DAXIP",
+          "waypoints": [
+            "DAXIP", "ALKUX", "GUDEK"
+          ]
+        },
+        {
+          "name": "KEPKA",
+          "waypoints": [
+            "KEPKA",
+            "ALKUX",
+            "GUDEK"
+          ]
+        }
+      ],
+      "waypoints": [
+        "GUDEK",
+        "URMOS",
+        "SEMAB"
+      ]
+    },
+    {
+      "name": "TACAN RWY 12 (DND)",
+      "runway": "RWY12",
+      "type": "TACAN",
+      "transitions": [
+        {
+          "name": "VOGER",
+          "waypoints": [
+            "VOGER",
+            "IGRUL",
+            "EMTUX"
+          ]
+        },
+        {
+          "name": "LOKLU",
+          "waypoints": [
+            "LOKLU",
+            "IGRUL",
+            "EMTUX"
+          ]
+        }
+      ],
+      "waypoints": [
+        "EMTUX",
+        "UZX",
+        "GREENWOOD"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "GOXID",
+          "waypoints": [
+            "GOXID",
+            "AMIDU",
+            "OTPEK"
+          ]
+        },
+        {
+          "name": "UDGOR",
+          "waypoints": [
+            "UDGOR",
+            "AMIDU",
+            "OTPEK"
+          ]
+        },
+        {
+          "name": "PEPTU",
+          "waypoints": [
+            "PEPTU",
+            "AMIDU",
+            "OTPEK"
+          ]
+        }
+      ],
+      "waypoints": [
+        "OTPEK",
+        "DEDSI"
+      ]
+    },
+    {
+      "name": "ILS Y RWY 26 (DND)",
+      "runway": "RWY26",
+      "type": "ILS",
+      "transitions": [],
+      "waypoints": [
+        "GF",
+        "AYLESFORD"
+      ]
+    },
+    {
+      "name": "LOC(BC) RWY 08 (DND)",
+      "runway": "RWY08",
+      "type": "LOC",
+      "waypoints": [
+        "PEVRO",
+        "YZX",
+        "UZX",
+        "GREENWOOD"
+      ]
+    }
+  ]
+}

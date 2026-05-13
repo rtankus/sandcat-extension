@@ -1,0 +1,364 @@
+{
+  "airport": "CYYG",
+  "comms": [
+    {
+      "name": "Moncton Centre",
+      "frequency": "135.65"
+    },
+    {
+      "name": "Radio",
+      "frequency": "118.0"
+    }
+  ],
+  "sids": [
+    {
+      "name": "CHARLOTTETOWN THREE DEP",
+      "identifier": "CYYG3",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY03",
+          "waypoints": [],
+          "departure_heading": 27
+        },
+        {
+          "runway": "RWY10",
+          "waypoints": [],
+          "departure_heading": 97
+        },
+        {
+          "runway": "RWY21",
+          "waypoints": [],
+          "departure_heading": 207
+        },
+        {
+          "runway": "RWY28",
+          "waypoints": [],
+          "departure_heading": 277
+        }
+      ],
+      "altitude": {
+        "initial": 5000
+      }
+    }
+  ],
+  "stars": [],
+  "iaps": [
+    {
+      "name": "ILS RWY 03",
+      "runway": "RWY03",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "UKOBO",
+          "waypoints": [
+            "UKOBO",
+            "VILRI"
+          ]
+        },
+        {
+          "name": "VIKBO",
+          "waypoints": [
+            "VIKBO",
+            "VILRI"
+          ]
+        },
+        {
+          "name": "VILRI",
+          "waypoints": [
+            "VILRI"
+          ]
+        }
+      ],
+      "waypoints": [
+        "VILRI",
+        "PILKU"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 03",
+      "runway": "RWY03",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "UKOBO",
+          "waypoints": [
+            "UKOBO",
+            "VILRI",
+            "IKMAD"
+          ]
+        },
+        {
+          "name": "VIKBO",
+          "waypoints": [
+            "VIKBO",
+            "VILRI",
+            "IKMAD"
+          ]
+        },
+        {
+          "name": "VILRI",
+          "waypoints": [
+            "VILRI",
+            "IKMAD"
+          ]
+        }
+      ],
+      "waypoints": [
+        "IKMAD",
+        "OTETI"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 03",
+      "runway": "RWY03",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "LENUG",
+          "waypoints": [
+            "LENUG",
+            "UDBIK",
+            "URTEP"
+          ]
+        },
+        {
+          "name": "KESVU",
+          "waypoints": [
+            "KESVU",
+            "SUXAG",
+            "URTEP"
+          ]
+        },
+        {
+          "name": "VILRI",
+          "waypoints": [
+            "VILRI",
+            "URTEP"
+          ]
+        }
+      ],
+      "waypoints": [
+        "URTEP",
+        "OTETI"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 10",
+      "runway": "RWY10",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "IKNOX",
+          "waypoints": [
+            "IKNOX",
+            "ROGDO",
+            "TIMAT"
+          ]
+        },
+        {
+          "name": "HALIO",
+          "waypoints": [
+            "HALIO",
+            "ROGDO",
+            "TIMAT"
+          ]
+        }
+      ],
+      "waypoints": [
+        "TIMAT",
+        "EPLUN"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 10",
+      "runway": "RWY10",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "PEVMU",
+          "waypoints": [
+            "PEVMU",
+            "OTPEP",
+            "SIPDI"
+          ]
+        },
+        {
+          "name": "ROGDO",
+          "waypoints": [
+            "ROGDO",
+            "SIPDI"
+          ]
+        },
+        {
+          "name": "LOBDA",
+          "waypoints": [
+            "LOBDA",
+            "URVUL",
+            "SIPDI"
+          ]
+        }
+      ],
+      "waypoints": [
+        "SIPDI",
+        "EPLUN"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 21",
+      "runway": "RWY21",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "OVAPU",
+          "waypoints": [
+            "OVAPU",
+            "OTETI",
+            "XOVAT"
+          ]
+        },
+        {
+          "name": "XUBTO",
+          "waypoints": [
+            "XUBTO",
+            "OTETI",
+            "XOVAT"
+          ]
+        }
+      ],
+      "waypoints": [
+        "XOVAT",
+        "VILRI"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 21",
+      "runway": "RWY21",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "LIBIG",
+          "waypoints": [
+            "LIBIG",
+            "DEPDU",
+            "SESKU"
+          ]
+        },
+        {
+          "name": "OTETI",
+          "waypoints": [
+            "OTETI",
+            "SESKU"
+          ]
+        },
+        {
+          "name": "ITMED",
+          "waypoints": [
+            "ITMED",
+            "VIVOP",
+            "SESKU"
+          ]
+        },
+        {
+          "name": "VOKEM",
+          "waypoints": [
+            "VOKEM",
+            "IKNUP",
+            "DEPDU",
+            "SESKU"
+          ]
+        },
+        {
+          "name": "ONBAT",
+          "waypoints": [
+            "ONBAT",
+            "VOLIL",
+            "VIVOP",
+            "SESKU"
+          ]
+        }
+      ],
+      "waypoints": [
+        "SESKU",
+        "VILRI"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 28",
+      "runway": "RWY28",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "VIXUL",
+          "waypoints": [
+            "VIXUL",
+            "EPLUN",
+            "DUVEK"
+          ]
+        },
+        {
+          "name": "ONBOV",
+          "waypoints": [
+            "ONBOV",
+            "EPLUN",
+            "DUVEK"
+          ]
+        },
+        {
+          "name": "EPLUN",
+          "waypoints": [
+            "EPLUN",
+            "DUVEK"
+          ]
+        }
+      ],
+      "waypoints": [
+        "DUVEK",
+        "ROGDO"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 28",
+      "runway": "RWY28",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "NOVOD",
+          "waypoints": [
+            "NOVOD",
+            "VOMAM",
+            "TIBUB"
+          ]
+        },
+        {
+          "name": "EPLUN",
+          "waypoints": [
+            "EPLUN",
+            "TIBUB"
+          ]
+        },
+        {
+          "name": "URNID",
+          "waypoints": [
+            "URNID",
+            "ITKIR",
+            "OVOMI",
+            "TIBUB"
+          ]
+        },
+        {
+          "name": "MEDBO",
+          "waypoints": [
+            "MEDBO",
+            "OVOMI",
+            "TIBUB"
+          ]
+        }
+      ],
+      "waypoints": [
+        "TIBUB",
+        "ROGDO"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,378 @@
+{
+  "airport": "CYBW",
+  "comms": {
+    "ATIS": "127.9",
+    "AWOS": "127.9",
+    "ARR": "125.9",
+    "DEP": "124.52",
+    "TWR": [
+      "118.2",
+      "120.7"
+    ],
+    "GND": "121.8",
+    "TFC": "118.2"
+  },
+  "sids": [
+    {
+      "name": "SPRINGBANK FOUR DEP",
+      "identifier": "CYBW4",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY08",
+          "waypoints": [],
+          "departure_heading": 75
+        },
+        {
+          "runway": "RWY17",
+          "waypoints": [],
+          "departure_heading": 165
+        },
+        {
+          "runway": "RWY26",
+          "waypoints": [],
+          "departure_heading": 255
+        },
+        {
+          "runway": "RWY35",
+          "waypoints": [],
+          "departure_heading": 345
+        }
+      ]
+    }
+  ],
+  "stars": [
+{
+  "name": "BRAGG FIVE ARR",
+  "identifier": "BRAGG5",
+  "transitions": [
+    {
+      "name": "ANTAX",
+      "waypoints": ["ANTAX", "TULOB", "IGVEP"]
+    },
+    {
+      "name": "TULOB",
+      "waypoints": ["TULOB", "IGVEP"]
+    },
+    {
+      "name": "NORET",
+      "waypoints": ["NORET", "PIBSO", "AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "PIBSO",
+      "waypoints": ["PIBSO", "AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "AMITO",
+      "waypoints": ["AMITO", "SEDEL", "IGVEP"]
+    },
+    {
+      "name": "SEDEL",
+      "waypoints": ["SEDEL", "IGVEP"]
+    }
+  ],
+  "waypoints": [
+    {
+      "runway": "RWY17",
+      "waypoints": ["IGVEP", "DUDSA", "RIGOT", "NOSAB", "MEGMO"]
+    },
+    {
+      "runway": "RWY35",
+      "waypoints": ["IGVEP", "KETNU", "URSIG", "SEKEM"]
+    }
+  ]
+},
+{
+  "name": "ELBOW FOUR ARR",
+  "identifier": "ELBOW4",
+  "transitions": [
+    {
+      "name": "TOVUM",
+      "waypoints": [
+        "TOVUM",
+        "ETLEM",
+        "EBGAL"
+      ]
+    },
+    {
+      "name": "ETLEM",
+      "waypoints": [
+        "ETLEM",
+        "EBGAL"
+      ]
+    },
+    {
+      "name": "NAMTI",
+      "waypoints": [
+        "NAMTI",
+        "ILOSA",
+        "EBGAL"
+      ]
+    },
+    {
+      "name": "OMRIT",
+      "waypoints": [
+        "OMRIT",
+        "NAMTI",
+        "EBGAL"
+      ]
+    },
+    {
+      "name": "ILOSA",
+      "waypoints": [
+        "ILOSA",
+        "EBGAL"
+      ]
+    },
+    {
+      "name": "MOBEK",
+      "waypoints": [
+        "MOBEK",
+        "OMRIT",
+        "NAMTI",
+        "ILOSA",
+        "EBGAL"
+      ]
+    },
+    {
+      "name": "VESDO",
+      "waypoints": [
+        "VESDO",
+        "EBGAL"
+      ]
+    }
+  ],
+  "waypoints": [
+    {
+      "runway": "RWY17",
+      "waypoints": [
+        "EBGAL",
+        "TURNY",
+        "RIGOT",
+        "NOSAB",
+        "MEGMO"
+      ]
+    },
+    {
+      "runway": "RWY35",
+      "waypoints": [
+        "EBGAL",
+        "TURNY",
+        "SEKEM"
+      ]
+    }
+  ]
+},
+{
+
+    "name": "KIPEV FOUR ARR",
+
+    "identifier": "KIPEV4",
+
+    "transitions": [
+
+      {
+
+        "name": "MATIR",
+
+        "waypoints": ["MATIR", "ALSIV", "SEKAN", "AMUNO", "ADVOX"]
+
+      },
+
+      {
+
+        "name": "ALSIV",
+
+        "waypoints": ["ALSIV", "SEKAN", "AMUNO", "ADVOX"]
+
+      },
+
+      {
+
+        "name": "SEKAN",
+
+        "waypoints": ["SEKAN", "AMUNO", "ADVOX"]
+
+      },
+
+      {
+
+        "name": "AMUNO",
+
+        "waypoints": ["AMUNO", "ADVOX"]
+
+      }
+
+    ],
+
+    "waypoints": [
+
+      {
+
+        "runway": "RWY17",
+
+        "waypoints": ["ADVOX", "KIPEV", "MEGMO"]
+
+      },
+
+      {
+
+        "runway": "RWY35",
+
+        "waypoints": ["ADVOX", "KIPEV", "SEKEM"]
+
+      }
+
+    ]
+
+  },
+
+  {
+
+    "name": "MADYN THREE ARR",
+
+    "identifier": "MADYN3",
+
+    "transitions": [
+
+      {
+
+        "name": "DUDNI",
+
+        "waypoints": ["DUDNI", "BIRKO"]
+
+      },
+
+      {
+
+        "name": "UDPAV",
+
+        "waypoints": ["UDPAV", "BIRKO"]
+
+      },
+
+      {
+
+        "name": "PIKLA",
+
+        "waypoints": ["PIKLA", "ONBOS", "DATAV", "KELNU", "BIRKO"]
+
+      },
+
+      {
+
+        "name": "ONBOS",
+
+        "waypoints": ["ONBOS", "DATAV", "KELNU", "BIRKO"]
+
+      },
+
+      {
+
+        "name": "DATAV",
+
+        "waypoints": ["DATAV", "KELNU", "BIRKO"]
+
+      },
+
+      {
+
+        "name": "KELNU",
+
+        "waypoints": ["KELNU", "BIRKO"]
+
+      }
+
+    ],
+
+    "waypoints": [
+
+      {
+
+        "runway": "RWY17",
+
+        "waypoints": ["BIRKO", "MADYN", "MEGMO"]
+
+      },
+
+      {
+
+        "runway": "RWY35",
+
+        "waypoints": ["BIRKO", "MADYN", "NOSAB", "RIGOT", "SEGEM"]
+
+      }
+
+    ]
+
+  }
+  ],
+  "approaches": [
+    {
+      "name": "ILS RWY 35",
+      "runway": "RWY35",
+      "type": "ILS",
+      "waypoints": [
+        "BOTAG",
+        "TARTI"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 17",
+      "runway": "RWY17",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "NOSAB",
+          "waypoints": [
+            "NOSAB",
+            "MEGMO",
+            "KEMKO"
+          ]
+        },
+        {
+          "name": "OTSEN",
+          "waypoints": [
+            "OTSEN",
+            "MEGMO",
+            "KEMKO"
+          ]
+        }
+      ],
+      "waypoints": [
+        "KEMKO",
+        "LOPSI",
+        "RIGOT"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 35",
+      "runway": "RWY35",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "RIGOT",
+          "waypoints": [
+            "RIGOT",
+            "SEKEM",
+            "TARTI",
+            "XUBUM"
+          ]
+        },
+        {
+          "name": "LOBTA",
+          "waypoints": [
+            "LOBTA",
+            "SEKEM",
+            "TARTI",
+            "XUBUM"
+          ]
+        }
+      ],
+      "waypoints": [
+        "TARTI",
+        "RIGOT"
+      ]
+    }
+  ]
+}

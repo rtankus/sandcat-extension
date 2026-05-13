@@ -9,11 +9,28 @@
   let waypointPoints = [];
   let callsign = '';
   let visible = true;
+  let lastPixels = [];
+
+  // ── Label collision tracker (reset each draw call) ────────────────────────
+  let _placed = [];
+  function resetPlaced() { _placed = []; }
+  function claimRect(x, y, w, h) { _placed.push({ x, y, w, h }); }
+  function canPlace(x, y, w, h) {
+    const PAD = 3;
+    for (const r of _placed) {
+      if (x - PAD < r.x + r.w && x + w + PAD > r.x &&
+          y - PAD < r.y + r.h && y + h + PAD > r.y) return false;
+    }
+    return true;
+  }
 
   // ── Receive projected pixels from MAIN-world spy ──────────────────────────
   window.addEventListener('message', (e) => {
     if (e.source !== window) return;
-    if (e.data?.__sandcatPixels) draw(e.data.__sandcatPixels, e.data.__sandcatWaypointPixels || []);
+    if (e.data?.__sandcatPixels) {
+      lastPixels = e.data.__sandcatPixels;
+      draw(lastPixels, e.data.__sandcatWaypointPixels || []);
+    }
   });
 
   // ── Send track to MAIN-world spy (triggers reprojection) ──────────────────
@@ -28,6 +45,7 @@
   function initCanvas() {
     document.getElementById('sc-sv-canvas')?.remove();
     document.getElementById('sc-sv-hud')?.remove();
+    document.getElementById('sc-sv-alttip')?.remove();
 
     canvas = document.createElement('canvas');
     canvas.id = 'sc-sv-canvas';
@@ -87,6 +105,54 @@
 
     hud.appendChild(btnToggle);
     document.body.appendChild(hud);
+
+    // Altitude tooltip
+    const tip = document.createElement('div');
+    tip.id = 'sc-sv-alttip';
+    Object.assign(tip.style, {
+      position: 'fixed',
+      display: 'none',
+      background: 'rgba(15,23,42,0.92)',
+      color: '#22c55e',
+      fontFamily: 'monospace',
+      fontSize: '12px',
+      fontWeight: '700',
+      padding: '4px 9px',
+      borderRadius: '6px',
+      border: '1px solid rgba(34,197,94,0.35)',
+      pointerEvents: 'none',
+      zIndex: '99999',
+      whiteSpace: 'nowrap',
+      letterSpacing: '0.03em'
+    });
+    document.body.appendChild(tip);
+
+    window.addEventListener('mousemove', (e) => {
+      if (!visible || !lastPixels.length || !canvas) {
+        tip.style.display = 'none';
+        return;
+      }
+      const rect = canvas.getBoundingClientRect();
+      const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+      let best = null, bestDist = Infinity;
+      for (const p of lastPixels) {
+        const d = Math.hypot(p.x - mx, p.y - my);
+        if (d < bestDist) { bestDist = d; best = p; }
+      }
+
+      if (best && bestDist < 22 && best.alt != null) {
+        const altLabel = fmtAlt(best.alt);
+        const tsLabel  = fmtTs(best.ts);
+        tip.textContent = tsLabel ? `${altLabel}  ${tsLabel}` : altLabel;
+        tip.style.display = 'block';
+        tip.style.left = (e.clientX + 14) + 'px';
+        tip.style.top  = (e.clientY - 18) + 'px';
+      } else {
+        tip.style.display = 'none';
+      }
+    });
   }
 
   function syncCanvasSize() {
@@ -119,6 +185,7 @@
     if (!canvas || !ctx) return;
     syncCanvasSize();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    resetPlaced();
     if (!visible) return;
     if (!pixels || pixels.length < 2) {
       if (waypointPixels?.length) drawWaypointDots(waypointPixels);
@@ -143,6 +210,8 @@
     ctx.setLineDash([]);
     pts.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
     ctx.stroke();
+
+    drawAltitudeMarkers(pts);
 
     // Direction arrows
     ctx.fillStyle = 'rgba(34,197,94,0.85)';
@@ -174,34 +243,167 @@
     if (waypointPixels?.length) drawWaypointDots(waypointPixels);
   }
 
+  function fmtAlt(alt) {
+    if (alt == null) return null;
+    return alt >= 18000
+      ? `FL${String(Math.round(alt / 100)).padStart(3, '0')}`
+      : `${alt.toLocaleString()} ft`;
+  }
+
+  function fmtTs(secOfDay) {
+    if (secOfDay == null) return null;
+    const h = Math.floor(secOfDay / 3600) % 24;
+    const m = Math.floor((secOfDay % 3600) / 60);
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}Z`;
+  }
+
   function drawWaypointDots(wpts) {
+    const R = 10;
+    ctx.font = 'bold 11px monospace';
+
     for (const p of wpts) {
-      // Diamond
+      // Claim diamond footprint so labels don't overlap it
+      claimRect(p.x - R - 1, p.y - R - 1, (R + 1) * 2, (R + 1) * 2);
+
       ctx.save();
       ctx.translate(p.x, p.y);
-      ctx.beginPath();
-      ctx.moveTo(0, -5); ctx.lineTo(5, 0); ctx.lineTo(0, 5); ctx.lineTo(-5, 0);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(251,191,36,0.9)';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(0,0,0,0.55)';
-      ctx.lineWidth = 1;
       ctx.setLineDash([]);
+
+      // Glow halo
+      ctx.beginPath();
+      ctx.moveTo(0, -(R + 4)); ctx.lineTo(R + 4, 0); ctx.lineTo(0, R + 4); ctx.lineTo(-(R + 4), 0);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(34,211,238,0.18)';
+      ctx.fill();
+
+      // Outer ring diamond
+      ctx.beginPath();
+      ctx.moveTo(0, -R); ctx.lineTo(R, 0); ctx.lineTo(0, R); ctx.lineTo(-R, 0);
+      ctx.closePath();
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+      ctx.lineWidth = 2.5;
       ctx.stroke();
+
+      // Inner fill diamond
+      const IR = R - 2.5;
+      ctx.beginPath();
+      ctx.moveTo(0, -IR); ctx.lineTo(IR, 0); ctx.lineTo(0, IR); ctx.lineTo(-IR, 0);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(34,211,238,0.88)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
       ctx.restore();
 
-      // Label
+      // Label — try 4 candidate positions, pick first that fits
       if (p.ident) {
-        ctx.font = 'bold 9px monospace';
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = 'rgba(0,0,0,0.7)';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'alphabetic';
-        ctx.strokeText(p.ident, p.x + 7, p.y - 3);
-        ctx.fillStyle = 'rgba(251,191,36,1)';
-        ctx.fillText(p.ident, p.x + 7, p.y - 3);
+        const tw = ctx.measureText(p.ident).width;
+        const th = 11;
+        const gap = 4;
+        const candidates = [
+          { ax: p.x + R + gap,          ay: p.y - th / 2, align: 'left'   }, // right
+          { ax: p.x - R - gap - tw,     ay: p.y - th / 2, align: 'left'   }, // left
+          { ax: p.x - tw / 2,           ay: p.y - R - gap - th, align: 'left' }, // above
+          { ax: p.x - tw / 2,           ay: p.y + R + gap, align: 'left'  }, // below
+        ];
+
+        let chosen = null;
+        for (const c of candidates) {
+          if (canPlace(c.ax, c.ay, tw, th)) { chosen = c; break; }
+        }
+
+        if (chosen) {
+          claimRect(chosen.ax, chosen.ay, tw, th);
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'top';
+          ctx.lineWidth = 3.5;
+          ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+          ctx.strokeText(p.ident, chosen.ax, chosen.ay);
+          ctx.fillStyle = '#ffffff';
+          ctx.fillText(p.ident, chosen.ax, chosen.ay);
+        }
       }
     }
+  }
+
+  function drawAltitudeMarkers(pts) {
+    const MIN_DIST = 160;
+    let lastMarkerX = -MIN_DIST, lastMarkerY = -MIN_DIST;
+
+    ctx.font = 'bold 10px monospace';
+
+    for (let i = 1; i < pts.length - 1; i++) {
+      const p = pts[i];
+      if (p.alt == null) continue;
+      if (Math.hypot(p.x - lastMarkerX, p.y - lastMarkerY) < MIN_DIST) continue;
+
+      const altLabel = fmtAlt(p.alt) || '';
+      const tsLabel  = fmtTs(p.ts)   || '';
+      const bw = Math.max(ctx.measureText(altLabel).width, ctx.measureText(tsLabel).width) + 10;
+      const bh = tsLabel ? 28 : 16;
+
+      // Perpendicular normals — try both sides of the track
+      const prev = pts[i - 1];
+      const tx = p.x - prev.x, ty = p.y - prev.y;
+      const tLen = Math.hypot(tx, ty) || 1;
+      const tickLen = 14;
+      const normals = [
+        { nx: -ty / tLen, ny:  tx / tLen },
+        { nx:  ty / tLen, ny: -tx / tLen },
+      ];
+
+      let placed = false;
+      for (const { nx, ny } of normals) {
+        const tipX = p.x + nx * (tickLen + 2);
+        const tipY = p.y + ny * (tickLen + 2);
+        // Badge anchored on the side the tick points toward
+        const bx = tipX + (nx >= 0 ? 2 : -bw - 2);
+        const by = tipY + (ny >= 0 ? 2 : -bh - 2);
+
+        if (!canPlace(bx, by, bw, bh)) continue;
+
+        claimRect(bx, by, bw, bh);
+        lastMarkerX = p.x; lastMarkerY = p.y;
+
+        // Tick
+        ctx.beginPath();
+        ctx.setLineDash([]);
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+        ctx.lineWidth = 1.5;
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + nx * tickLen, p.y + ny * tickLen);
+        ctx.stroke();
+
+        // Badge background
+        ctx.fillStyle = 'rgba(15,23,42,0.88)';
+        ctx.beginPath();
+        ctx.roundRect(bx, by, bw, bh, 4);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(34,211,238,0.5)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Text
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = '#22d3ee';
+        ctx.font = 'bold 10px monospace';
+        ctx.fillText(altLabel, bx + bw / 2, by + 3);
+        if (tsLabel) {
+          ctx.fillStyle = 'rgba(148,163,184,0.9)';
+          ctx.font = '9px monospace';
+          ctx.fillText(tsLabel, bx + bw / 2, by + 15);
+        }
+
+        placed = true;
+        break;
+      }
+
+      if (!placed) lastMarkerX = p.x; // still advance so we skip this dense zone
+    }
+    ctx.setLineDash([]);
   }
 
   function drawArrow(x, y, angle) {

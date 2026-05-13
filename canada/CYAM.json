@@ -1,0 +1,225 @@
+{
+  "icao": "CYAM",
+  "name": "Sault Ste. Marie",
+  "comms": {
+    "atis": "133.05",
+    "centre": [
+      {
+        "name": "Toronto Centre",
+        "frequency": "132.65"
+      },
+      {
+        "name": "Toronto Centre",
+        "frequency": "344.5"
+      }
+    ],
+    "tower": "118.8",
+    "traffic": "118.8",
+    "ground": "121.7"
+  },
+  "sids": [
+    {
+      "name": "SAULT EIGHT DEP",
+      "identifier": "SSM8",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY04",
+          "waypoints": [],
+          "departure_heading": 40,
+          "climb_gradient": {
+            "value": 250,
+            "unit": "ft/NM",
+            "to_altitude": 1800
+          }
+        },
+        {
+          "runway": "RWY12",
+          "waypoints": [],
+          "departure_heading": 115
+        },
+        {
+          "runway": "RWY22",
+          "waypoints": [],
+          "departure_heading": 220
+        },
+        {
+          "runway": "RWY30",
+          "waypoints": [],
+          "departure_heading": 295,
+          "climb_gradient": {
+            "value": 240,
+            "unit": "ft/NM",
+            "to_altitude": 1400
+          }
+        }
+      ],
+      "altitude": {
+        "initial": 4000
+      }
+    }
+  ],
+  "stars": [],
+  "approaches": [
+    {
+      "name": "RNAV (GNSS) RWY 04",
+      "runway": "RWY04",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "ALVAD",
+          "waypoints": [
+            "ALVAD",
+            "SEBAN",
+            "EMKEX"
+          ]
+        },
+        {
+          "name": "INGHM",
+          "waypoints": [
+            "INGHM",
+            "SEBAN",
+            "EMKEX"
+          ]
+        }
+      ],
+      "waypoints": [
+        "EMKEX",
+        "TABTU"
+      ]
+    },
+    {
+  "name": "ILS RWY 12",
+  "runway": "RWY12",
+  "type": "ILS",
+  "transitions": [
+    {
+      "name": "RAGIV",
+      "waypoints": ["RAGIV", "LEREG", "DURLU"]
+    },
+    {
+      "name": "UDLIM",
+      "waypoints": ["UDLIM", "LEREG", "DURLU"]
+    }
+  ],
+  "waypoints": ["DURLU", "NUKAV"]
+},
+    {
+      "name": "RNAV (GNSS) Z RWY 12",
+      "runway": "RWY12",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "RAGVI",
+          "waypoints": [
+            "RAGVI",
+            "LEREG",
+            "IMOBA"
+          ]
+        },
+        {
+          "name": "UDLIM",
+          "waypoints": [
+            "UDLIM",
+            "LEREG",
+            "IMOBA"
+          ]
+        }
+      ],
+      "waypoints": [
+        "IMOBA",
+        "EBDOB"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 12",
+      "runway": "RWY12",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "LEREG",
+          "waypoints": [
+            "LEREG",
+            "IMOBA"
+          ]
+        },
+        {
+          "name": "SAXIS",
+          "waypoints": [
+            "SAXIS",
+            "PEPDO",
+            "IMOBA"
+          ]
+        }
+      ],
+      "waypoints": [
+        "IMOBA",
+        "EBDOB"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 22",
+      "runway": "RWY22",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "EMUXA",
+          "waypoints": [
+            "EMUXA",
+            "ITLUB",
+            "MUTOD"
+          ]
+        },
+        {
+          "name": "AVTOM",
+          "waypoints": [
+            "AVTOM",
+            "ITLUB",
+            "MUTOD"
+          ]
+        }
+      ],
+      "waypoints": [
+        "MUTOD",
+        "XONTI",
+        "SHOWL"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) RWY 30",
+      "runway": "RWY30",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "VIXEG",
+          "waypoints": [
+            "VIXEG",
+            "ESVED",
+            "ROMRU"
+          ]
+        },
+        {
+          "name": "OTMUN",
+          "waypoints": [
+            "OTMUN",
+            "ESVED",
+            "ROMRU"
+          ]
+        }
+      ],
+      "waypoints": [
+        "ROMRU",
+        "KEDGI"
+      ]
+    },
+    {
+      "name": "VOR/DME RWY 30",
+      "runway": "RWY30",
+      "type": "VOR",
+      "waypoints": [
+        "SSM",
+        "HALEV"
+      ]
+    }
+  ]
+}

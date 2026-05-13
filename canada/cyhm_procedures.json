@@ -1,0 +1,563 @@
+{
+  "airport": "CYHM",
+  "comms": [
+    {
+      "name": "ATIS",
+      "frequency": "128.1"
+    },
+    {
+      "name": "Toronto Centre",
+      "frequency": "119.7"
+    },
+    {
+      "name": "Tower",
+      "frequency": "125.0"
+    },
+    {
+      "name": "Ground",
+      "frequency": "121.6"
+    }
+  ],
+  "sids": [
+    {
+      "name": "HAMILTON ONE DEP",
+      "identifier": "CYHM1",
+      "type": "VECTOR",
+      "runways": [
+        "RWY06",
+        "RWY12",
+        "RWY24"
+      ],
+      "waypoints": [],
+      "departure_headings": {
+        "RWY06": 59,
+        "RWY12": 117,
+        "RWY24": 239
+      },
+      "altitude": {
+        "initial": 4000
+      }
+    },
+    {
+      "name": "MUNRO TWO DEP",
+      "identifier": "MUNR2",
+      "type": "VECTOR",
+      "runways": [
+        "RWY30"
+      ],
+      "waypoints": [],
+      "departure_headings": {
+        "RWY30": 297,
+        "RWY30_LEFT_TURN": 260
+      },
+      "altitude": {
+        "turn": 1300,
+        "initial": 4000
+      }
+    }
+  ],
+  "stars": [
+    {
+      "name": "AVSOX THREE ARR",
+      "identifier": "AVSOX3",
+      "type": "RNAV",
+      "initial_fix": "AVSOX",
+      "routes": [
+        {
+          "runway": "RWY06",
+          "waypoints": [
+            "AVSOX",
+            "DAXAT"
+          ]
+        },
+        {
+          "runway": "RWY12",
+          "waypoints": [
+            "AVSOX",
+            "APGOM"
+          ]
+        },
+        {
+          "runway": "RWY24",
+          "waypoints": [
+            "AVSOX",
+            "APGOM",
+            "BIMKI",
+            "TICAT"
+          ]
+        },
+        {
+          "runway": "RWY30",
+          "waypoints": [
+            "AVSOX",
+            "DAXAT",
+            "MIPID",
+            "KEDBU",
+            "OTPOK"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "COLTS EIGHT ARR",
+      "identifier": "COLTS8",
+      "type": "RNAV",
+      "initial_fix": "COLTS",
+      "routes": [
+        {
+          "runway": "RWY06",
+          "waypoints": [
+            "COLTS",
+            "IGTUT",
+            "AVTEG"
+          ]
+        },
+        {
+          "runway": "RWY12",
+          "waypoints": [
+            "COLTS",
+            "BOVUG",
+            "VIMRO",
+            "VIXOM"
+          ]
+        },
+        {
+          "runway": "RWY24",
+          "waypoints": [
+            "COLTS",
+            "EBKAG",
+            "NOPOP",
+            "XOXUS"
+          ]
+        },
+        {
+          "runway": "RWY30",
+          "waypoints": [
+            "COLTS",
+            "DELVA"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TETOS ONE ARR",
+      "identifier": "TETOS1",
+      "type": "RNAV",
+      "initial_fix": "TETOS",
+      "routes": [
+        {
+          "runway": "RWY06",
+          "waypoints": [
+            "TETOS",
+            "EMOKU",
+            "DAXAT"
+          ]
+        },
+        {
+          "runway": "RWY12",
+          "waypoints": [
+            "TETOS",
+            "EMOKU",
+            "APGOM"
+          ]
+        },
+        {
+          "runway": "RWY24",
+          "waypoints": [
+            "TETOS",
+            "EMOKU",
+            "APGOM",
+            "BIMKI",
+            "TICAT"
+          ]
+        },
+        {
+          "runway": "RWY30",
+          "waypoints": [
+            "TETOS",
+            "EMOKU",
+            "DAXAT",
+            "MIPID",
+            "KEDBU",
+            "OTPOK"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TICAT ONE ARR",
+      "identifier": "TICAT1",
+      "type": "RNAV",
+      "initial_fix": "ILUSI",
+      "routes": [
+        {
+          "runway": "RWY06",
+          "waypoints": [
+            "ILUSI",
+            "ERBAL",
+            "YYZ",
+            "TICAT",
+            "BIMKI",
+            "LEVEX"
+          ]
+        },
+        {
+          "runway": "RWY12",
+          "waypoints": [
+            "ILUSI",
+            "ERBAL",
+            "YYZ",
+            "TICAT",
+            "BIMKI",
+            "SAXIL"
+          ]
+        },
+        {
+          "runway": "RWY24",
+          "waypoints": [
+            "ILUSI",
+            "ERBAL",
+            "YYZ",
+            "MUXIG"
+          ]
+        },
+        {
+          "runway": "RWY30",
+          "waypoints": [
+            "ILUSI",
+            "ERBAL",
+            "YYZ",
+            "MUXIG",
+            "OTROX",
+            "ROVMU"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TIKUM THREE ARR",
+      "identifier": "TIKUM3",
+      "type": "RNAV",
+      "initial_fix": "TIKUM",
+      "routes": [
+        {
+          "runway": "RWY06",
+          "waypoints": [
+            "TIKUM",
+            "DAXAT"
+          ]
+        },
+        {
+          "runway": "RWY12",
+          "waypoints": [
+            "TIKUM",
+            "DAXAT",
+            "VIXOM",
+            "PIBRU"
+          ]
+        },
+        {
+          "runway": "RWY24",
+          "waypoints": [
+            "TIKUM",
+            "NOPOP",
+            "XOXUS"
+          ]
+        },
+        {
+          "runway": "RWY30",
+          "waypoints": [
+            "TIKUM",
+            "NOVOM",
+            "KEDBU",
+            "OTPOK"
+          ]
+        }
+      ]
+    }
+  ],
+  "iaps": [
+    {
+      "name": "RNAV (GNSS) Z RWY 06",
+      "runway": "RWY06",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "LEVEX",
+          "waypoints": [
+            "LEVEX",
+            "DAXAT"
+          ]
+        },
+        {
+          "name": "IGTUT",
+          "waypoints": [
+            "IGTUT",
+            "DAXAT"
+          ]
+        }
+      ],
+      "waypoints": [
+        "DAXAT",
+        "VIBKA",
+        "MUXIG"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 12",
+      "runway": "RWY12",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "SEFBY",
+          "waypoints": [
+            "SEFBY",
+            "APGOM"
+          ]
+        },
+        {
+          "name": "SAXIL",
+          "waypoints": [
+            "SAXIL",
+            "APGOM"
+          ]
+        },
+        {
+          "name": "VIXOM",
+          "waypoints": [
+            "VIXOM",
+            "APGOM"
+          ]
+        }
+      ],
+      "waypoints": [
+        "APGOM",
+        "IGTIG",
+        "NORAG"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 24",
+      "runway": "RWY24",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "TICAT",
+          "waypoints": [
+            "TICAT",
+            "MUXIG"
+          ]
+        },
+        {
+          "name": "NOPOP",
+          "waypoints": [
+            "NOPOP",
+            "MUXIG"
+          ]
+        }
+      ],
+      "waypoints": [
+        "MUXIG",
+        "KEDIS",
+        "IKLOP"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 30",
+      "runway": "RWY30",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "OTROX",
+          "waypoints": [
+            "OTROX",
+            "DELVA"
+          ]
+        },
+        {
+          "name": "KEDBU",
+          "waypoints": [
+            "KEDBU",
+            "DELVA"
+          ]
+        }
+      ],
+      "waypoints": [
+        "DELVA",
+        "GOPEB",
+        "EBKEM"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 12",
+      "runway": "RWY12",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "SEFBY",
+          "waypoints": [
+            "SEFBY",
+            "APGOM",
+            "IGTIG"
+          ]
+        },
+        {
+          "name": "BIMKI",
+          "waypoints": [
+            "BIMKI",
+            "DUSUG",
+            "IGTIG"
+          ]
+        },
+        {
+          "name": "VIMRO",
+          "waypoints": [
+            "VIMRO",
+            "LESUV",
+            "AMUVI",
+            "IGTIG"
+          ]
+        },
+        {
+          "name": "DAXAT",
+          "waypoints": [
+            "DAXAT",
+            "AMUVI",
+            "IGTIG"
+          ]
+        }
+      ],
+      "waypoints": [
+        "IGTIG",
+        "NORAG"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 30",
+      "runway": "RWY30",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "MIPID",
+          "waypoints": [
+            "MIPID",
+            "IKLUV",
+            "AXOGO",
+            "GOPEB"
+          ]
+        },
+        {
+          "name": "NOVOM",
+          "waypoints": [
+            "NOVOM",
+            "AXOGO",
+            "GOPEB"
+          ]
+        },
+        {
+          "name": "DELVA",
+          "waypoints": [
+            "DELVA",
+            "GOPEB"
+          ]
+        }
+      ],
+      "waypoints": [
+        "GOPEB",
+        "EBKEM"
+      ]
+    },
+    {
+      "name": "LOC RWY 30",
+      "runway": "RWY30",
+      "type": "LOC",
+      "transitions": [
+        {
+          "name": "OTROX",
+          "waypoints": [
+            "OTROX",
+            "DELVA"
+          ]
+        },
+        {
+          "name": "KEDBU",
+          "waypoints": [
+            "KEDBU",
+            "DELVA"
+          ]
+        }
+      ],
+      "waypoints": [
+        "DELVA",
+        "XUGSO",
+        "APGOM"
+      ]
+    },
+    {
+      "name": "ILS RWY 12",
+      "runway": "RWY12",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "SEFBY",
+          "waypoints": [
+            "SEFBY",
+            "APGOM"
+          ]
+        },
+        {
+          "name": "SAXIL",
+          "waypoints": [
+            "SAXIL",
+            "APGOM"
+          ]
+        },
+        {
+          "name": "VIXOM",
+          "waypoints": [
+            "VIXOM",
+            "APGOM"
+          ]
+        }
+      ],
+      "waypoints": [
+        "APGOM",
+        "XULRI",
+        "DELVA"
+      ]
+    },
+    {
+      "name": "ILS CAT II RWY 12",
+      "runway": "RWY12",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "SEFBY",
+          "waypoints": [
+            "SEFBY",
+            "APGOM"
+          ]
+        },
+        {
+          "name": "SAXIL",
+          "waypoints": [
+            "SAXIL",
+            "APGOM"
+          ]
+        },
+        {
+          "name": "VIXOM",
+          "waypoints": [
+            "VIXOM",
+            "APGOM"
+          ]
+        }
+      ],
+      "waypoints": [
+        "APGOM",
+        "XULRI",
+        "DELVA"
+      ]
+    }
+  ]
+}

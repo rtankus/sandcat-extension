@@ -1,0 +1,368 @@
+{
+  "airport": "CYFC",
+  "comms": [
+    {
+      "name": "ATIS",
+      "frequency": "127.55"
+    },
+    {
+      "name": "AWOS",
+      "frequency": "127.55"
+    },
+    {
+      "name": "Moncton Centre",
+      "frequency": "124.3"
+    },
+    {
+      "name": "Moncton Centre",
+      "frequency": "270.8"
+    },
+    {
+      "name": "Tower",
+      "frequency": "119.0"
+    },
+    {
+      "name": "Saint John Radio",
+      "frequency": "119.0"
+    },
+    {
+      "name": "Ground",
+      "frequency": "121.7"
+    }
+  ],
+  "sids": [
+    {
+      "name": "FREDERICTON TWO DEP",
+      "identifier": "CYFC2",
+      "type": "VECTOR",
+      "routes": [
+        {
+          "runway": "RWY09",
+          "waypoints": [],
+          "departure_heading": 87
+        },
+        {
+          "runway": "RWY15",
+          "waypoints": [],
+          "departure_heading": 148,
+          "turn": {
+            "altitude": 500,
+            "direction": "left",
+            "heading": 40
+          },
+          "speed_limit": {
+            "speed": 180,
+            "until": "established_on_heading_040"
+          },
+          "climb_gradient": {
+            "value": 400,
+            "unit": "ft_per_nm",
+            "until_altitude": 500
+          }
+        },
+        {
+          "runway": "RWY27",
+          "waypoints": [],
+          "departure_heading": 267
+        },
+        {
+          "runway": "RWY33",
+          "waypoints": [],
+          "departure_heading": 328
+        }
+      ],
+      "altitude": {
+        "initial": 5000
+      }
+    }
+  ],
+  "stars": [],
+  "iaps": [
+    {
+      "name": "ILS RWY 09",
+      "runway": "RWY09",
+      "type": "ILS",
+      "transitions": [
+        {
+          "name": "NOSUL",
+          "waypoints": [
+            "NOSUL",
+            "VIBMA",
+            "VESBI",
+            "OMPAP",
+            "NUGUM"
+          ]
+        },
+        {
+          "name": "VIBMA"
+        },
+        {"name": "VESBI"},
+        {"name": "OMPAP"},
+        {
+          "name": "HADRI",
+          "waypoints": [
+            "HADRI",
+            "NUGUM"
+          ]
+        }
+      ],
+      "waypoints": [
+        "NUGUM",
+        "KINAV",
+        "NUBEB",
+        "MUNLO"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 09",
+      "runway": "RWY09",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "NOSUL",
+          "waypoints": [
+            "NOSUL",
+            "VIBMA",
+            "VESBI",
+            "OMPAP",
+            "NUGUM"
+          ]
+        },
+        {
+          "name": "VIBMA"
+        },
+        {"name": "VESBI"},
+        {"name": "OMPAP"},
+        {
+          "name": "HADRI",
+          "waypoints": [
+            "HADRI",
+            "NUGUM"
+          ]
+        }
+      ],
+      "waypoints": [
+        "NUGUM",
+        "NUBEB",
+        "OXABU",
+        "OTOBU"
+      ]
+    },
+  
+    {
+      "name": "RNAV (RNP) Y RWY 09",
+      "runway": "RWY09",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "VESBI",
+          "waypoints": [
+            "VIBMA",
+            "VESBI",
+            "UKNUM",
+            "URTIT",
+            "VYSTA"
+          ]
+        },
+        {
+          "name": "NUGUM",
+          "waypoints": [
+            "NUGUM",
+            "VYSTA"
+          ]
+        },
+        {
+          "name": "ANERA",
+          "waypoints": [
+            "ANERA",
+            "URPUS",
+            "VYSTA"
+          ]
+        }
+      ],
+      "waypoints": [
+        "VYSTA",
+        "OTOBU"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) Z RWY 15",
+      "runway": "RWY15",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "VOKAP",
+          "waypoints": [
+            "VOKAP",
+            "UDMUV"
+          ]
+        },
+        {
+          "name": "TOXIB",
+          "waypoints": [
+            "TOXIB",
+            "UDMUV"
+          ]
+        }
+      ],
+      "waypoints": [
+        "UDMUV",
+        "VOGIN",
+        "NUGAB",
+        "KIRUX"
+      ]
+    },
+    {
+      "name": "RNAV (GNSS) X RWY 15",
+      "runway": "RWY15",
+      "type": "RNAV",
+      "transitions": [
+        {
+          "name": "VOKAP",
+          "waypoints": [
+            "VOKAP",
+            "UDMUV"
+          ]
+        },
+        {
+          "name": "TOXIB",
+          "waypoints": [
+            "TOXIB",
+            "UDMUV"
+          ]
+        }
+      ],
+      "waypoints": [
+        "UDMUV",
+        "VOGIN"
+      ]
+    },
+
+    
+    {
+      "name": "RNAV (RNP) Y RWY 15",
+      "runway": "RWY15",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "DURSA",
+          "waypoints": [
+            "DURSA",
+            "MUXIK",
+            "TUBEL"
+          ]
+        },
+        {
+          "name": "UDMUV",
+          "waypoints": [
+            "UDMUV",
+            "OTSOX",
+            "TUBEL"
+          ]
+        },
+        {
+          "name": "URSEP",
+          "waypoints": [
+            "URSEP",
+            "XETIR",
+            "UDGIT",
+            "TUBEL"
+          ]
+        },
+        {
+          "name": "BOBNA",
+          "waypoints": [
+            "BOBNA",
+            "PUPUS",
+            "MUXIK",
+            "TUBEL"
+          ]
+        }
+      ],
+      "waypoints": [
+        "VIBMA",
+        "NOSUL",
+        "TUBEL",
+        "TOXIB"
+      ]
+    },
+
+    {
+      "name": "RNAV (GNSS) Z RWY 27",
+      "runway": "RWY27",
+      "type": "RNAV",
+      "waypoints": [
+        "EMOKO",
+        "HADRI",
+        "PELBI",
+        "ITKUD",
+        "VIBMA",
+        "NOSUL",
+        "NUGUM",
+        "MIROB",
+        "OTOBU"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 27",
+      "runway": "RWY27",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "PELBI",
+          "waypoints": [
+            "PELBI",
+            "ALNAL",
+            "SEDOL"
+          ]
+        },
+        {
+          "name": "OTOBU",
+          "waypoints": [
+            "OTOBU",
+            "SEDOL"
+          ]
+        }
+      ],
+      "waypoints": [
+        "HADRI",
+        "EMOKO",
+        "VIBMA",
+        "NOSUL",
+        "NUGUM"
+      ]
+    },
+    {
+      "name": "RNAV (RNP) Y RWY 33",
+      "runway": "RWY33",
+      "type": "RNP",
+      "transitions": [
+        {
+          "name": "KISIM",
+          "waypoints": [
+            "KISIM",
+            "XOXAX",
+            "AMIXU",
+            "IRDEP",
+            "OVBEB"
+          ]
+        },
+        {
+          "name": "OMOLA",
+          "waypoints": [
+            "OMOLA",
+            "IRDEP",
+            "OVBEB"
+          ]
+        }
+      ],
+      "waypoints": [
+        "NOSUL",
+        "VIBMA",
+        "OVBEB",
+        "VIVAV",
+        "UDMUV"
+      ]
+    }
+  ]
+}
