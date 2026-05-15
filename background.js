@@ -387,10 +387,22 @@ async function loadAustraliaProcedures() {
 
       const icao = match[1].toUpperCase();
 
+      const rawProcs = data.procedures || {};
+      const procedures = {};
+      for (const [name, val] of Object.entries(rawProcs)) {
+        if (Array.isArray(val)) {
+          procedures[name] = val;
+        } else if (val && typeof val === "object") {
+          procedures[name] = [...(val.waypoints || []), ...(val.transitions || [])];
+        } else {
+          procedures[name] = [];
+        }
+      }
+
       AUS_PROC_BY_ICAO[icao] = {
         icao,
         airportName,
-        procedures: data.procedures || {},
+        procedures,
         comms: data.comms || []
       };
     }

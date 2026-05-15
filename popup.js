@@ -1259,6 +1259,41 @@ if (useIntl) {
   } catch (e) {
     console.warn("Intl procedure search failed:", e);
   }
+
+  // Chart name search — airports with ghoshaan charts already loaded
+  for (const a of (MASTER_RESULTS || [])) {
+    const charts = a.__ghoshaanCharts;
+    if (!charts?.length) continue;
+    const icao = String(a.ident || "").toUpperCase();
+    const chartCountryDisplay = a.__ghoshaanCountry || "";
+    for (const chartPath of charts) {
+      const pathParts = chartPath.split("/");
+      const chartCountry = pathParts[2] || "";
+      const folder = pathParts[3] || "";
+      const filename = pathParts[4] || "";
+      if (!filename) continue;
+      const displayName = filename.replace(/\.pdf$/i, "").replace(/_/g, " ").toUpperCase();
+      const score = soundScore(displayName, query);
+      if (score <= 0) continue;
+      const key = `chart|${icao}|${filename}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const chartUrl = `https://ghoshaan.github.io/aip-charts/${chartCountry}-${folder}.html#view=${filename}`;
+      let chartType = "CHART";
+      if (/\bDEP\b|\bSID\b/i.test(displayName)) chartType = "SID";
+      else if (/\bARR\b|\bSTAR\b/i.test(displayName)) chartType = "STAR";
+      matches.push({
+        fix: displayName,
+        navName: "",
+        airport: icao,
+        procedure: "",
+        type: chartType,
+        score,
+        country: chartCountryDisplay,
+        chartUrl
+      });
+    }
+  }
 }
 
   if (!matches.length) {
@@ -1286,6 +1321,7 @@ let tagClass = "procSID";
 if (m.type === "STAR") tagClass = "procSTAR";
 if (m.type === "IAP") tagClass = "procAPP";
 if (m.type === "NAVAID") tagClass = "procAIRWAY";
+if (m.type === "CHART") tagClass = "procAPP";
 
 const countryLabel = m.country ? ` · ${m.country}` : "";
 
@@ -1305,6 +1341,10 @@ div.innerHTML = `
     div.style.cursor = "pointer";
 
 div.addEventListener("click", async () => {
+  if (m.chartUrl) {
+    chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url: m.chartUrl });
+    return;
+  }
   await copyWithFeedback(
     div,
     m.navName ? m.navName.toUpperCase() : m.fix
@@ -2076,6 +2116,18 @@ for (const a of list) {
       a.__caData = null;
     }
   }
+
+  if (ident.startsWith("CY") && a.__ghoshaanCharts === undefined) {
+    try {
+      const resp = await new Promise(resolve =>
+        chrome.runtime.sendMessage({ type: "GET_GHOSHAAN_CHARTS", icao: ident }, resolve)
+      );
+      a.__ghoshaanCharts = resp?.charts || [];
+      a.__ghoshaanCountry = resp?.country || null;
+    } catch (e) {
+      a.__ghoshaanCharts = [];
+    }
+  }
 }
 /* -----------------------------
    IAP FILTER
@@ -2104,7 +2156,10 @@ if (hideNoApp) {
 
     const hasCanadaIap = (a.__caData?.iaps?.length || a.__caData?.approaches?.length || 0) > 0;
 
-    return hasUsIap || hasAusIap || hasSwissIap || hasIrelandIap || hasNlIap || hasCanadaIap;
+    const hasGhoshaanIap = a.__ghoshaanCountry === "canada" &&
+      (a.__ghoshaanCharts || []).some(path => classifyGhoshaanChart(path.split("/")[4]) === "IAP");
+
+    return hasUsIap || hasAusIap || hasSwissIap || hasIrelandIap || hasNlIap || hasCanadaIap || hasGhoshaanIap;
   });
 }
 
@@ -2560,6 +2615,10 @@ renderNlProcsByRunway(dpWrap, nlData?.sids || [], "SID");
 
 renderCanadaSIDs(dpWrap, caData?.sids || []);
 
+if (ghoshaanCountry === "canada" && ghoshaanCharts?.length) {
+  renderGhoshaanProcChips(dpWrap, ghoshaanCharts, "SID");
+}
+
 if (!deps.length && !dpWrap.children.length) {
   dpWrap.textContent = "(none found)";
 }
@@ -2607,6 +2666,10 @@ renderIrelandProcsByRunway(stWrap, eiData?.STARs || [], "STAR");
 }
 
 renderCanadaSTARs(stWrap, caData?.stars || []);
+
+if (ghoshaanCountry === "canada" && ghoshaanCharts?.length) {
+  renderGhoshaanProcChips(stWrap, ghoshaanCharts, "STAR");
+}
 
 if (!arrs.length && !stWrap.children.length) {
   stWrap.textContent = "(none found)";
@@ -2678,7 +2741,14 @@ renderIrelandIAPsByRunwayPair(apWrap, eiData?.IAPs || []);
 
 renderNlIAPsByRunway(apWrap, nlData?.iaps || []);
 
+if (ghoshaanCountry === "canada" && ghoshaanCharts?.length) {
+  apWrap.__ghoshaanCharts = ghoshaanCharts;
+}
 renderCanadaIAPsByRunwayPair(apWrap, caData?.iaps || caData?.approaches || []);
+
+if (ghoshaanCountry === "canada" && ghoshaanCharts?.length) {
+  renderGhoshaanProcChips(apWrap, ghoshaanCharts, "IAP");
+}
 
 if (!aps.length && !apWrap.children.length) {
   apWrap.textContent =
@@ -2758,11 +2828,6 @@ if (airportIdent.startsWith("Y") && (dapLinks || ausData?.procedures)) {
 
 /* ---------------- Charts (Canada / Ireland / Netherlands / Switzerland) ---------------- */
 if (ghoshaanCharts?.length && ghoshaanCountry) {
-  const ghLabel = document.createElement("div");
-  ghLabel.className = "section-title";
-  ghLabel.textContent = "Charts";
-  proc.appendChild(ghLabel);
-
   const ghWrap = document.createElement("div");
   ghWrap.style.cssText = "padding:2px 0 4px 0;";
 
@@ -2772,6 +2837,8 @@ if (ghoshaanCharts?.length && ghoshaanCountry) {
     const country = pathParts[2];
     const folder = pathParts[3];
     const filename = pathParts[4];
+    if (!filename) continue;
+    if (ghoshaanCountry === "canada" && classifyGhoshaanChart(filename)) continue;
     const url = `https://ghoshaan.github.io/aip-charts/${country}-${folder}.html#view=${filename}`;
     const displayName = filename.replace(/\.pdf$/i, "").replace(/_/g, " ");
 
@@ -2800,10 +2867,17 @@ if (ghoshaanCharts?.length && ghoshaanCountry) {
     ghWrap.appendChild(row);
   }
 
-  const ghPanel = document.createElement("div");
-  ghPanel.className = "section-panel";
-  ghPanel.appendChild(ghWrap);
-  proc.appendChild(ghPanel);
+  if (ghWrap.children.length) {
+    const ghLabel = document.createElement("div");
+    ghLabel.className = "section-title";
+    ghLabel.textContent = "Charts";
+    proc.appendChild(ghLabel);
+
+    const ghPanel = document.createElement("div");
+    ghPanel.className = "section-panel";
+    ghPanel.appendChild(ghWrap);
+    proc.appendChild(ghPanel);
+  }
 }
 
 /* ---------------- Visual Approaches ---------------- */
@@ -5033,6 +5107,76 @@ function renderCanadaIAPsByRunwayPair(container, iaps) {
   }
 
   container.appendChild(content);
+
+  if (container.__ghoshaanCharts?.length) {
+    renderGhoshaanProcChips(container, container.__ghoshaanCharts, "IAP");
+  }
+}
+
+function classifyGhoshaanChart(filename) {
+  const base = filename.replace(/\.pdf$/i, "").replace(/_/g, " ");
+  if (/\b(SID|dep|departure)\b/i.test(base)) return "SID";
+  if (/\b(STAR|arr|arrival)\b/i.test(base)) return "STAR";
+  if (/\bRWY\b/i.test(base)) return "IAP";
+  return null;
+}
+
+function normalizeChipLabel(s) {
+  return s.toLowerCase().replace(/[()]/g, "").replace(/↗\s*$/, "").replace(/\s+/g, " ").trim();
+}
+
+function ghoshaanProcChip(displayName, url, type) {
+  const span = makeChip(displayName + " ↗", "pointer");
+  if (type === "SID") span.classList.add("procSID");
+  else if (type === "STAR") span.classList.add("procSTAR");
+  else span.classList.add("procAPP");
+  span.addEventListener("click", e => {
+    e.stopPropagation();
+    chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url });
+  });
+  return span;
+}
+
+function renderGhoshaanProcChips(container, charts, procType) {
+  const chipClass = procType === "SID" ? "procSID" : procType === "STAR" ? "procSTAR" : "procAPP";
+
+  for (const chartPath of charts) {
+    const pathParts = chartPath.split("/");
+    const country = pathParts[2];
+    const folder = pathParts[3];
+    const filename = pathParts[4];
+    if (!filename) continue;
+    if (classifyGhoshaanChart(filename) !== procType) continue;
+    const url = `https://ghoshaan.github.io/aip-charts/${country}-${folder}.html#view=${filename}`;
+    const icaoPrefix = folder.split("-")[0];
+    const displayName = filename.replace(/\.pdf$/i, "").replace(/_/g, " ")
+      .replace(new RegExp(`^${icaoPrefix}\\s+`, "i"), "").trim();
+    const normalizedChart = normalizeChipLabel(displayName);
+
+    // Find an existing chip whose label matches after stripping parentheses
+    let matched = null;
+    for (const chip of container.querySelectorAll(`.${chipClass}`)) {
+      if (normalizeChipLabel(chip.textContent) === normalizedChart) {
+        matched = chip;
+        break;
+      }
+    }
+
+    if (matched && !matched.dataset.chartUrl) {
+      matched.dataset.chartUrl = url;
+      const link = document.createElement("a");
+      link.textContent = "↗";
+      link.style.cssText = "font-size:0.65em;opacity:0.5;cursor:pointer;text-decoration:none;vertical-align:super;margin-left:-2px;margin-right:3px;color:inherit;";
+      link.title = "View chart";
+      link.addEventListener("click", e => {
+        e.stopPropagation();
+        chrome.runtime.sendMessage({ type: "OPEN_CHART_URL", url });
+      });
+      matched.insertAdjacentElement("afterend", link);
+    } else if (!matched) {
+      container.appendChild(ghoshaanProcChip(displayName, url, procType));
+    }
+  }
 }
 
 /* =============================
@@ -5042,6 +5186,7 @@ function renderCanadaIAPsByRunwayPair(container, iaps) {
 const overlayRoot = document.getElementById("overlayRoot");
 const facilityPanel = document.getElementById("facilityPanel");
 const lbxPanel = document.getElementById("lbxPanel");
+const communityPanel = document.getElementById("communityPanel");
 const facilityHeader = facilityPanel?.querySelector(".panel-header");
 const lbxHeader = document.getElementById("lbxTitle");
 
@@ -5057,6 +5202,7 @@ const PANEL_DEFS = [
   { el: lbxPanel,           openClass: "lbx-open",          headerSel: "#lbxTitle",             storageKey: "lbxOpen" },
   { el: airportSearchPanel, openClass: "airportsearch-open", headerSel: "#airportSearchTitle",  storageKey: "airportSearchOpen" },
   { el: routePanel,         openClass: "route-open",         headerSel: "#routeTitle",           storageKey: "routeOpen" },
+  { el: communityPanel,    openClass: "community-open",     headerSel: "#communityTitle",       storageKey: "communityOpen" },
 ];
 
 function collapseAllPanels(exceptClass) {
@@ -5074,7 +5220,7 @@ function savePanelState() {
 }
 
 // Restore saved panel state (only one at a time — honour last-saved open panel)
-chrome.storage.local.get(["facilityOpen", "lbxOpen", "airportSearchOpen", "routeOpen"], (data) => {
+chrome.storage.local.get(["facilityOpen", "lbxOpen", "airportSearchOpen", "routeOpen", "communityOpen"], (data) => {
   // Find the last panel that was open and restore only that one
   for (const p of PANEL_DEFS) {
     if (data[p.storageKey]) {
@@ -5100,8 +5246,248 @@ for (const p of PANEL_DEFS) {
     savePanelState();
   });
 }
+// Panel tab bar buttons
+const TAB_PANEL_MAP = {
+  facility:  PANEL_DEFS.find(p => p.openClass === "facility-open"),
+  search:    PANEL_DEFS.find(p => p.openClass === "airportsearch-open"),
+  route:     PANEL_DEFS.find(p => p.openClass === "route-open"),
+  lbx:       PANEL_DEFS.find(p => p.openClass === "lbx-open"),
+  community: PANEL_DEFS.find(p => p.openClass === "community-open"),
+};
+
+document.querySelectorAll(".panel-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const def = TAB_PANEL_MAP[btn.dataset.panel];
+    if (!def) return;
+    const isOpen = overlayRoot.classList.contains(def.openClass);
+    if (isOpen) {
+      overlayRoot.classList.remove(def.openClass);
+    } else {
+      collapseAllPanels(def.openClass);
+      overlayRoot.classList.add(def.openClass);
+      if (btn.dataset.panel === "community") {
+        fetchCommunityFeed();
+        commRefreshGkDisplays();
+      }
+    }
+    savePanelState();
+  });
+});
+
 // React to changes even while overlay is open
 
+/* ===========================
+   COMMUNITY FEED
+   =========================== */
+
+// Replace PROJECT_ID after creating your Firebase project at console.firebase.google.com
+const COMM_FIRESTORE = "https://firestore.googleapis.com/v1/projects/atc-feed/databases/(default)/documents";
+// Pick a secret unguessable topic name and subscribe to it in the ntfy app (ntfy.sh)
+const COMM_NTFY_TOPIC = "sandcat-atc-2003";
+
+let commAllDocs = [];
+let commActiveCat = "all";
+
+async function fetchCommunityFeed() {
+  const el = document.getElementById("commFeedItems");
+  if (!el) return;
+  try {
+    // Pre-fill search with current airport ICAO from the active GK
+    const gk = await commGetCurrentGk();
+    const icao = extractICAOFromKey(gk);
+    const searchEl = document.getElementById("commFeedSearch");
+    if (searchEl && icao) searchEl.value = icao;
+
+    const res = await fetch(`${COMM_FIRESTORE}/feed`, { cache: "no-store" });
+    const data = await res.json();
+    commAllDocs = (data.documents || []).sort((a, b) => {
+      const ta = a.fields?.timestamp?.timestampValue || "";
+      const tb = b.fields?.timestamp?.timestampValue || "";
+      return tb.localeCompare(ta);
+    });
+    commApplyFeedFilter();
+  } catch {
+    if (el.textContent.trim() === "Loading…") {
+      el.innerHTML = '<div class="comm-empty">Could not load feed.</div>';
+    }
+  }
+}
+
+function commApplyFeedFilter() {
+  const el = document.getElementById("commFeedItems");
+  if (!el) return;
+  const query = (document.getElementById("commFeedSearch")?.value || "").toLowerCase().trim();
+  const filtered = commAllDocs.filter(doc => {
+    const f = doc.fields || {};
+    const cat = f.category?.stringValue || "";
+    const isAnnouncement = cat === "announcement";
+    if (commActiveCat !== "all" && cat !== commActiveCat) return false;
+    // Announcements always pass the search filter — they're global by nature
+    if (query && !isAnnouncement) {
+      const text = [f.title?.stringValue, f.body?.stringValue].join(" ").toLowerCase();
+      if (!text.includes(query)) return false;
+    }
+    return true;
+  });
+  if (!filtered.length) {
+    el.innerHTML = `<div class="comm-empty">${commAllDocs.length ? "No matches." : "No posts yet."}</div>`;
+    return;
+  }
+  const BODY_LIMIT = 120;
+  el.innerHTML = "";
+  filtered.forEach(doc => {
+    const f = doc.fields || {};
+    const cat = f.category?.stringValue || "";
+    const body = f.body?.stringValue || "";
+    const needsTrunc = body.length > BODY_LIMIT;
+
+    const item = document.createElement("div");
+    item.className = "comm-feed-item";
+    item.innerHTML = `
+      <div class="comm-feed-title">${escapeHtmlLocal(f.title?.stringValue || "")}</div>
+      <div class="comm-feed-body${needsTrunc ? " truncated" : ""}">${escapeHtmlLocal(body)}</div>
+      ${needsTrunc ? `<button class="comm-expand-btn">Show more</button>` : ""}
+      <div class="comm-feed-meta">${escapeHtmlLocal(f.date?.stringValue || "")}${cat ? ` · <span class="comm-badge ${escapeHtmlLocal(cat)}">${escapeHtmlLocal(cat.replace("_", " "))}</span>` : ""}</div>
+    `;
+    if (needsTrunc) {
+      const bodyEl = item.querySelector(".comm-feed-body");
+      const expandBtn = item.querySelector(".comm-expand-btn");
+      expandBtn.addEventListener("click", () => {
+        const collapsed = bodyEl.classList.toggle("truncated");
+        expandBtn.textContent = collapsed ? "Show more" : "Show less";
+      });
+    }
+    el.appendChild(item);
+  });
+}
+
+async function commGetCurrentGk() {
+  const { lb_pageKey, lb_manualKey } = await chrome.storage.local.get(["lb_pageKey", "lb_manualKey"]);
+  return lb_pageKey || lb_manualKey || "";
+}
+
+async function commRefreshGkDisplays() {
+  const gk = await commGetCurrentGk();
+  const short = gk.length > 28 ? gk.slice(0, 26) + "…" : gk;
+  const wpEl = document.getElementById("commGkDisplay");
+  const ecEl = document.getElementById("commEcGkDisplay");
+  if (wpEl) { wpEl.textContent = short || "—"; wpEl.title = gk; }
+  if (ecEl) { ecEl.textContent = short || "—"; ecEl.title = gk; }
+}
+
+async function commSubmitWaypoint() {
+  const btn = document.getElementById("commWpSubmitBtn");
+  const statusEl = document.getElementById("commWpStatus");
+  const name = document.getElementById("commWpName")?.value.trim();
+  if (!name) { statusEl.textContent = "Enter a name first."; statusEl.className = "comm-status err"; return; }
+  btn.disabled = true;
+  statusEl.textContent = "Submitting…";
+  statusEl.className = "comm-status";
+  try {
+    const gk = await commGetCurrentGk();
+    const body = { fields: {
+      globalKey: { stringValue: gk },
+      name:      { stringValue: name },
+      wpType:    { stringValue: document.getElementById("commWpType")?.value || "waypoint" },
+      notes:     { stringValue: document.getElementById("commWpNotes")?.value.trim() || "" },
+      timestamp: { timestampValue: new Date().toISOString() },
+    }};
+    const res = await fetch(`${COMM_FIRESTORE}/waypoint_submissions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(res.status);
+    statusEl.textContent = "Submitted — thank you!";
+    statusEl.className = "comm-status ok";
+    document.getElementById("commWpName").value = "";
+    document.getElementById("commWpNotes").value = "";
+    fetch(`https://ntfy.sh/${COMM_NTFY_TOPIC}`, {
+      method: "POST",
+      headers: { "Title": "New Waypoint Submission", "Priority": "default" },
+      body: `${name} (${document.getElementById("commWpType")?.value || "waypoint"})${gk ? "\nAudio: " + gk : ""}`,
+    }).catch(() => {});
+  } catch {
+    statusEl.textContent = "Submit failed. Try again.";
+    statusEl.className = "comm-status err";
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function commSubmitEdgeCase() {
+  const btn = document.getElementById("commEcSubmitBtn");
+  const statusEl = document.getElementById("commEcStatus");
+  const phrase = document.getElementById("commEcPhrase")?.value.trim();
+  if (!phrase) { statusEl.textContent = "Enter a phrase first."; statusEl.className = "comm-status err"; return; }
+  btn.disabled = true;
+  statusEl.textContent = "Submitting…";
+  statusEl.className = "comm-status";
+  try {
+    const gk = await commGetCurrentGk();
+    const body = { fields: {
+      globalKey:  { stringValue: gk },
+      phrase:     { stringValue: phrase },
+      resolution: { stringValue: document.getElementById("commEcResolution")?.value.trim() || "" },
+      notes:      { stringValue: document.getElementById("commEcNotes")?.value.trim() || "" },
+      timestamp:  { timestampValue: new Date().toISOString() },
+    }};
+    const res = await fetch(`${COMM_FIRESTORE}/edge_case_submissions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(res.status);
+    statusEl.textContent = "Submitted — thank you!";
+    statusEl.className = "comm-status ok";
+    document.getElementById("commEcPhrase").value = "";
+    document.getElementById("commEcResolution").value = "";
+    document.getElementById("commEcNotes").value = "";
+    const resolution = document.getElementById("commEcResolution")?.value.trim() || "";
+    fetch(`https://ntfy.sh/${COMM_NTFY_TOPIC}`, {
+      method: "POST",
+      headers: { "Title": "New Edge Case Submission", "Priority": "default" },
+      body: `"${phrase}"${resolution ? " → " + resolution : ""}${gk ? "\nAudio: " + gk : ""}`,
+    }).catch(() => {});
+  } catch {
+    statusEl.textContent = "Submit failed. Try again.";
+    statusEl.className = "comm-status err";
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// Sub-tab switching
+const COMM_VIEW_IDS = { feed: "commFeedView", waypoint: "commWaypointView", edgecase: "commEcView" };
+document.querySelectorAll(".comm-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".comm-tab").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    Object.values(COMM_VIEW_IDS).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    });
+    const viewId = COMM_VIEW_IDS[btn.dataset.view];
+    if (viewId) document.getElementById(viewId).style.display = "";
+    if (btn.dataset.view === "waypoint" || btn.dataset.view === "edgecase") {
+      commRefreshGkDisplays();
+    }
+  });
+});
+
+document.getElementById("commWpSubmitBtn")?.addEventListener("click", commSubmitWaypoint);
+document.getElementById("commEcSubmitBtn")?.addEventListener("click", commSubmitEdgeCase);
+
+document.getElementById("commFeedSearch")?.addEventListener("input", commApplyFeedFilter);
+
+document.querySelectorAll(".comm-filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".comm-filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    commActiveCat = btn.dataset.cat;
+    commApplyFeedFilter();
+  });
+});
 
 (async function initPopup() {
 const saved = await chrome.storage.local.get("last_loaded_airport");

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SandCat Community Admin</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+  #app { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 20px; color: #fb923c; margin-bottom: 4px; }
+  .subtitle { font-size: 12px; color: #4b5563; margin-bottom: 24px; }
+
+  #loginSection { display: flex; flex-direction: column; align-items: center; gap: 16px; padding-top: 60px; }
+  #loginSection p { color: #6b7280; }
+  #signInBtn { padding: 10px 24px; border-radius: 8px; border: 1px solid rgba(251,146,60,0.4); background: rgba(251,146,60,0.12); color: #fb923c; font-size: 14px; font-weight: 600; cursor: pointer; }
+  #signInBtn:hover { background: rgba(251,146,60,0.22); }
+
+  #adminSection { display: none; flex-direction: column; gap: 24px; }
+
+  .user-bar { display: flex; align-items: center; gap: 12px; font-size: 12px; color: #6b7280; margin-bottom: 8px; }
+  #signOutBtn { padding: 4px 10px; border-radius: 6px; border: 1px solid #2b313c; background: #1b1f26; color: #94a3b8; font-size: 11px; cursor: pointer; }
+  #signOutBtn:hover { color: #e2e8f0; }
+
+  .tabs { display: flex; gap: 8px; border-bottom: 1px solid #1f2937; padding-bottom: 12px; }
+  .tab-btn { padding: 6px 16px; border-radius: 6px; border: 1px solid #2b313c; background: #1b1f26; color: #6b7280; font-size: 13px; cursor: pointer; }
+  .tab-btn.active { background: rgba(251,146,60,0.15); border-color: rgba(251,146,60,0.45); color: #fb923c; }
+
+  .tab-panel { display: none; flex-direction: column; gap: 12px; }
+  .tab-panel.active { display: flex; }
+
+  .submission-card {
+    background: #1b1f26;
+    border: 1px solid #2b313c;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .submission-card .field { font-size: 12px; color: #94a3b8; }
+  .submission-card .field strong { color: #e2e8f0; }
+  .submission-card .gk-val { font-family: monospace; font-size: 11px; color: #fb923c; word-break: break-all; }
+  .submission-card .ts { font-size: 10px; color: #4b5563; }
+
+  .card-actions { display: flex; gap: 8px; margin-top: 4px; }
+  .approve-btn { padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(34,197,94,0.4); background: rgba(34,197,94,0.12); color: #86efac; font-size: 12px; cursor: pointer; }
+  .approve-btn:hover { background: rgba(34,197,94,0.22); }
+  .reject-btn { padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(239,68,68,0.4); background: rgba(239,68,68,0.10); color: #fca5a5; font-size: 12px; cursor: pointer; }
+  .reject-btn:hover { background: rgba(239,68,68,0.20); }
+
+  .empty-msg { color: #4b5563; font-size: 13px; padding: 16px 0; text-align: center; }
+
+  /* Direct post form */
+  .direct-post-form {
+    background: #151b24;
+    border: 1px solid #2b313c;
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .direct-post-form h3 { font-size: 13px; color: #fb923c; margin-bottom: 2px; }
+  .direct-post-form input,
+  .direct-post-form select,
+  .direct-post-form textarea {
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: 1px solid #2b313c;
+    background: #1b1f26;
+    color: #e6e8eb;
+    font-size: 12px;
+    font-family: inherit;
+    resize: vertical;
+  }
+  .direct-post-form button {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(251,146,60,0.4);
+    background: rgba(251,146,60,0.15);
+    color: #fb923c;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .direct-post-form button:hover { background: rgba(251,146,60,0.25); }
+  #directPostStatus { font-size: 11px; color: #4b5563; min-height: 14px; }
+
+  /* Published feed tab */
+  .feed-card {
+    background: #1b1f26;
+    border: 1px solid #2b313c;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .feed-card .feed-title { font-size: 13px; font-weight: 700; color: #e2e8f0; }
+  .feed-card .feed-body { font-size: 12px; color: #94a3b8; white-space: pre-wrap; }
+  .feed-card .feed-meta { font-size: 10px; color: #4b5563; }
+  .delete-btn { align-self: flex-start; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(239,68,68,0.35); background: rgba(239,68,68,0.08); color: #fca5a5; font-size: 11px; cursor: pointer; margin-top: 4px; }
+  .delete-btn:hover { background: rgba(239,68,68,0.18); }
+
+  .badge { border-radius: 4px; padding: 1px 5px; font-size: 9px; font-weight: 700; text-transform: uppercase; }
+  .badge.edge_case   { background: rgba(251,146,60,0.18); color: #fb923c; }
+  .badge.waypoint    { background: rgba(59,130,246,0.18);  color: #93c5fd; }
+  .badge.announcement { background: rgba(34,197,94,0.18); color: #86efac; }
+  .badge.guideline   { background: rgba(168,85,247,0.18); color: #c4b5fd; }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>SandCat Community Admin</h1>
+  <p class="subtitle">Review submissions and manage the community feed.</p>
+
+  <div id="loginSection">
+    <p>Sign in with your Google account to continue.</p>
+    <button id="signInBtn">Sign in with Google</button>
+  </div>
+
+  <div id="adminSection">
+    <div class="user-bar">
+      <span id="userEmail"></span>
+      <button id="signOutBtn">Sign out</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="waypoints">Waypoint Submissions</button>
+      <button class="tab-btn" data-tab="edgecases">Edge Case Submissions</button>
+      <button class="tab-btn" data-tab="directpost">Direct Post</button>
+      <button class="tab-btn" data-tab="published">Published Feed</button>
+    </div>
+
+    <div id="tab-waypoints" class="tab-panel active">
+      <div id="waypointList"><div class="empty-msg">Loading…</div></div>
+    </div>
+
+    <div id="tab-edgecases" class="tab-panel">
+      <div id="edgecaseList"><div class="empty-msg">Loading…</div></div>
+    </div>
+
+    <div id="tab-directpost" class="tab-panel">
+      <div class="direct-post-form">
+        <h3>Post directly to feed</h3>
+        <input id="dpTitle" type="text" placeholder="Title" />
+        <textarea id="dpBody" rows="4" placeholder="Body / explanation"></textarea>
+        <select id="dpCategory">
+          <option value="announcement">Announcement</option>
+          <option value="guideline">Guideline</option>
+          <option value="edge_case">Edge Case</option>
+          <option value="waypoint">Waypoint</option>
+        </select>
+        <button id="dpSubmitBtn">Publish to feed</button>
+        <div id="directPostStatus"></div>
+      </div>
+    </div>
+
+    <div id="tab-published" class="tab-panel">
+      <div id="publishedList"><div class="empty-msg">Loading…</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK (compat mode — no build step needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -631,6 +631,8 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   width: 100%;
   resize: none;
   overflow: hidden;
+  max-height: 80px;
+  overflow-y: auto;
 
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 600;
@@ -753,60 +755,13 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   position: relative;
 }
 
-/* Collapsed state */
+/* Collapsed state — hidden; tab bar takes over */
 #overlayRoot:not(.facility-open) #facilityPanel {
-  flex: 0 0 28px;
-  width: 28px;
+  flex: 0 0 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
   padding: 0;
-  cursor: pointer;
-  background: linear-gradient(145deg, #111827, #0f172a);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Hide body */
-#overlayRoot:not(.facility-open) #facilityPanel .panel-body {
-  display: none;
-}
-
-/* Vertical label */
-#overlayRoot:not(.facility-open) #facilityPanel .panel-header {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-weight: 700;
-  font-size: 11px;
-  color: #facc15;
-  letter-spacing: 0.3px;
-  text-align: center;
-}
-
-
-#overlayRoot:not(.airportsearch-open) #airportSearchPanel .panel-header {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-weight: 700;
-  font-size: 11px;
-  color: #3b82f6;
-  letter-spacing: 0.3px;
-  text-align: center;
-}
-
-#overlayRoot:not(.route-open) #routePanel .panel-header {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-weight: 700;
-  font-size: 11px;
-  color: #22c55e;
-  letter-spacing: 0.3px;
-  text-align: center;
-}
-
-
-/* Hover effect */
-#overlayRoot:not(.facility-open) #facilityPanel:hover {
-  background: #1f2937;
 }
 
 #overlayRoot.facility-open #facilityPanel {
@@ -847,29 +802,13 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   height: auto;
 }
 
-/* Collapsed state */
+/* Collapsed state — hidden; tab bar takes over */
 #overlayRoot:not(.lbx-open) #lbxPanel {
-  flex: 0 0 28px;
-  width: 28px;
+  flex: 0 0 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
   padding: 0;
-  cursor: pointer;
-}
-
-/* Hide content */
-#overlayRoot:not(.lbx-open) #lbxPanel > *:not(#lbxTitle) {
-  display: none;
-}
-
-/* Vertical title */
-#overlayRoot:not(.lbx-open) #lbxTitle {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  font-size: 11px;
-  letter-spacing: 0.3px;
 }
 
 .waypointRow {
@@ -1012,11 +951,18 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   color: #94a3b8;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
+  filter: none;
 }
 .routeModeBtn.active {
   background: #22c55e;
   color: #0a0a0a;
   border-color: #22c55e;
+  filter: none;
+}
+.routeModeBtn:hover:not(.active) {
+  background: #2d3748;
+  color: #e2e8f0;
+  filter: none;
 }
 
 /* Fixes mode */
@@ -1063,25 +1009,13 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
 #routeAirports { display: none; }
 #routeVfrWps { display: none; }
 
-/* Collapsed */
+/* Collapsed — hidden; tab bar takes over */
 #overlayRoot:not(.route-open) #routePanel {
-  flex: 0 0 28px;
-  width: 28px;
+  flex: 0 0 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
   padding: 0;
-  cursor: pointer;
-}
-
-#overlayRoot:not(.route-open) #routePanel > *:not(#routeTitle) {
-  display: none;
-}
-
-#overlayRoot:not(.route-open) #routeTitle {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
 }
 
 #routeInput {
@@ -1627,23 +1561,11 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
 }
 
 #overlayRoot:not(.airportsearch-open) #airportSearchPanel {
-  flex: 0 0 28px;
-  width: 28px;
+  flex: 0 0 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
   padding: 0;
-  cursor: pointer;
-}
-
-#overlayRoot:not(.airportsearch-open) #airportSearchPanel > *:not(#airportSearchTitle) {
-  display: none;
-}
-
-#overlayRoot:not(.airportsearch-open) #airportSearchTitle {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
 }
 
 #airportSearchResults {
@@ -1881,60 +1803,302 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
   text-decoration: underline;
 }
 
-/* ===== Collapsed Panel Base ===== */
-#overlayRoot:not(.facility-open) #facilityPanel::after,
-#overlayRoot:not(.airportsearch-open) #airportSearchPanel::after,
-#overlayRoot:not(.route-open) #routePanel::after,
-#overlayRoot:not(.lbx-open) #lbxPanel::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 20%;
-  bottom: 20%;
-  width: 3px;
-  border-radius: 2px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+/* ===== Panel Tab Bar ===== */
+#panelTabBar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 6px 4px 4px;
+  align-self: flex-start;
+  position: sticky;
+  top: 0;
 }
 
-/* colors */
-#facilityPanel::after { background: #facc15; }
-#airportSearchPanel::after { background: #3b82f6; }
-#routePanel::after { background: #22c55e; }
-#lbxPanel::after { background: #f472b6; }
-
-/* show on hover */
-#overlayRoot:not(.facility-open) #facilityPanel:hover::after,
-#overlayRoot:not(.airportsearch-open) #airportSearchPanel:hover::after,
-#overlayRoot:not(.route-open) #routePanel:hover::after,
-#overlayRoot:not(.lbx-open) #lbxPanel:hover::after {
-  opacity: 1;
+.panel-tab {
+  display: block;
+  width: 48px;
+  min-height: 70px;
+  padding: 0 4px;
+  border-radius: 8px;
+  border: 1px solid #2b313c;
+  background: #111827;
+  color: #94a3b8;
+  font-size: 6px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  white-space: normal;
+  word-break: keep-all;
+  overflow: hidden;
+  letter-spacing: 0.03em;
+  transition: background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#overlayRoot:not(.facility-open) #facilityPanel:hover {
-  background: #1f2937;
-  box-shadow: 0 0 0 1px rgba(250,204,21,0.25),
-              0 6px 14px rgba(0,0,0,0.4);
-  transform: translateX(-2px);
+.panel-tab[data-panel="facility"]:hover { background: rgba(250,204,21,0.20); border-color: rgba(250,204,21,0.50); }
+.panel-tab[data-panel="search"]:hover   { background: rgba(59,130,246,0.20);  border-color: rgba(59,130,246,0.50); }
+.panel-tab[data-panel="route"]:hover    { background: rgba(34,197,94,0.20);   border-color: rgba(34,197,94,0.50); }
+.panel-tab[data-panel="lbx"]:hover       { background: rgba(244,114,182,0.20); border-color: rgba(244,114,182,0.50); }
+.panel-tab[data-panel="community"]:hover { background: rgba(251,146,60,0.20);   border-color: rgba(251,146,60,0.50); }
+
+/* Always color-coded */
+.panel-tab[data-panel="facility"]  { background: rgba(250,204,21,0.10); border-color: rgba(250,204,21,0.30); color: #facc15; }
+.panel-tab[data-panel="search"]    { background: rgba(59,130,246,0.10);  border-color: rgba(59,130,246,0.30);  color: #93c5fd; }
+.panel-tab[data-panel="route"]     { background: rgba(34,197,94,0.10);   border-color: rgba(34,197,94,0.30);   color: #86efac; }
+.panel-tab[data-panel="lbx"]       { background: rgba(244,114,182,0.10); border-color: rgba(244,114,182,0.30); color: #f9a8d4; }
+.panel-tab[data-panel="community"] { background: rgba(251,146,60,0.10);  border-color: rgba(251,146,60,0.30);  color: #fb923c; }
+
+/* Active states — brighter when open */
+#overlayRoot.facility-open      .panel-tab[data-panel="facility"]   { background: rgba(250,204,21,0.20); border-color: rgba(250,204,21,0.60); color: #facc15; }
+#overlayRoot.airportsearch-open .panel-tab[data-panel="search"]     { background: rgba(59,130,246,0.20);  border-color: rgba(59,130,246,0.60);  color: #3b82f6; }
+#overlayRoot.route-open         .panel-tab[data-panel="route"]      { background: rgba(34,197,94,0.20);   border-color: rgba(34,197,94,0.60);   color: #22c55e; }
+#overlayRoot.lbx-open           .panel-tab[data-panel="lbx"]        { background: rgba(244,114,182,0.20); border-color: rgba(244,114,182,0.60); color: #f472b6; }
+#overlayRoot.community-open     .panel-tab[data-panel="community"]  { background: rgba(251,146,60,0.20);  border-color: rgba(251,146,60,0.60);  color: #f97316; }
+
+/* ===== Community Panel ===== */
+#communityPanel {
+  flex: 0 0 260px;
+  width: 260px;
+  background: #0f172a;
+  border-left: 1px solid #1f2937;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  overflow: visible;
+  min-height: auto;
+  height: auto;
 }
-#overlayRoot:not(.airportsearch-open) #airportSearchPanel:hover {
-  background: #1f2937;
-  box-shadow: 0 0 0 1px rgba(59,130,246,0.35),
-              0 6px 14px rgba(0,0,0,0.4);
-  transform: translateX(-2px);
+
+#overlayRoot:not(.community-open) #communityPanel {
+  flex: 0 0 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
 }
-#overlayRoot:not(.route-open) #routePanel:hover {
-  background: #1f2937;
-  box-shadow: 0 0 0 1px rgba(34,197,94,0.35),
-              0 6px 14px rgba(0,0,0,0.4);
-  transform: translateX(-2px);
+
+#communityPanel .panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  flex: 1;
 }
-#overlayRoot:not(.lbx-open) #lbxPanel:hover {
-  background: #1f2937;
-  box-shadow: 0 0 0 1px rgba(244,114,182,0.35),
-              0 6px 14px rgba(0,0,0,0.4);
-  transform: translateX(-2px);
+
+.comm-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
 }
+
+#communityPanel .comm-tab {
+  flex: 1;
+  padding: 3px 0;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #2d3748;
+  background: #1e293b;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  filter: none;
+}
+#communityPanel .comm-tab:hover:not(.active) {
+  background: #2d3748;
+  color: #e2e8f0;
+  filter: none;
+}
+
+/* Feed — blue */
+#communityPanel .comm-tab[data-view="feed"].active   { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+
+/* Waypoint — green */
+#communityPanel .comm-tab[data-view="waypoint"].active { background: #22c55e; color: #0a0a0a; border-color: #22c55e; }
+
+/* Edge Case — orange */
+#communityPanel .comm-tab[data-view="edgecase"].active { background: #f97316; color: #0a0a0a; border-color: #f97316; }
+
+.comm-view {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comm-feed-item {
+  background: #1b1f26;
+  border: 1px solid #2b313c;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.comm-feed-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.comm-feed-body {
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.comm-feed-body.truncated {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: normal;
+}
+
+.comm-expand-btn {
+  font-size: 10px;
+  color: #3b82f6;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-weight: 600;
+  align-self: flex-start;
+  filter: none;
+}
+.comm-expand-btn:hover { color: #60a5fa; filter: none; }
+
+.comm-feed-meta {
+  font-size: 10px;
+  color: #4b5563;
+  margin-top: 2px;
+}
+
+.comm-badge {
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.comm-badge.edge_case  { background: rgba(251,146,60,0.18); color: #fb923c; }
+.comm-badge.waypoint   { background: rgba(59,130,246,0.18);  color: #93c5fd; }
+.comm-badge.announcement { background: rgba(34,197,94,0.18); color: #86efac; }
+.comm-badge.guideline  { background: rgba(168,85,247,0.18); color: #c4b5fd; }
+
+.comm-empty {
+  font-size: 11px;
+  color: #4b5563;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.comm-autofill-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #151b24;
+  border: 1px solid #2b313c;
+  border-radius: 6px;
+  padding: 5px 8px;
+}
+
+.comm-label {
+  font-size: 10px;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.comm-gk-value {
+  font-size: 10px;
+  color: #fb923c;
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.comm-filter-row {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+#communityPanel .comm-filter-btn {
+  padding: 2px 7px;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 5px;
+  border: 1px solid #2d3748;
+  background: #1e293b;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  filter: none;
+}
+#communityPanel .comm-filter-btn:hover:not(.active) { background: #2d3748; color: #e2e8f0; filter: none; }
+#communityPanel .comm-filter-btn.active              { background: #3b82f6; color: #fff; border-color: #3b82f6; filter: none; }
+
+#communityPanel input[type="text"],
+#communityPanel select,
+#communityPanel textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #2b313c;
+  background: #1b1f26;
+  color: #e6e8eb;
+  font-size: 11px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+#communityPanel select {
+  cursor: pointer;
+}
+
+#communityPanel button.comm-submit-btn {
+  width: 100%;
+  padding: 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(251,146,60,0.35);
+  background: rgba(251,146,60,0.12);
+  color: #fb923c;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+#communityPanel button.comm-submit-btn:hover {
+  background: rgba(251,146,60,0.22);
+  border-color: rgba(251,146,60,0.55);
+}
+
+#communityPanel button.comm-submit-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.comm-status {
+  font-size: 10px;
+  text-align: center;
+  min-height: 14px;
+  color: #4b5563;
+}
+
+.comm-status.ok  { color: #86efac; }
+.comm-status.err { color: #fca5a5; }
 
 /* ===== Colored procedure chips (stronger selectors) ===== */
 
@@ -2483,6 +2647,70 @@ overflow-y: auto;   /* 🔥 THIS IS THE FIX */
     <button id="updateDataBtn" class="lbxSubtleBtn" style="width:100%">Update Data</button>
     <div id="updateDataStatus" style="font-size:11px;color:#94a3b8;margin-top:4px;text-align:center;min-height:14px"></div>
   </div>
+</div>
+
+<div id="communityPanel" class="panel collapsible">
+  <div class="panel-header" id="communityTitle">Community Feed</div>
+  <div class="panel-body">
+
+    <div class="comm-tabs">
+      <button class="comm-tab active" data-view="feed">Feed</button>
+      <button class="comm-tab" data-view="waypoint">Waypoint</button>
+      <button class="comm-tab" data-view="edgecase">Edge Case</button>
+    </div>
+
+    <div id="commFeedView" class="comm-view">
+      <input id="commFeedSearch" type="text" placeholder="Search feed…" autocomplete="off" />
+      <div class="comm-filter-row">
+        <button class="comm-filter-btn active" data-cat="all">All</button>
+        <button class="comm-filter-btn" data-cat="announcement">Announcements</button>
+        <button class="comm-filter-btn" data-cat="guideline">Guidelines</button>
+        <button class="comm-filter-btn" data-cat="waypoint">Waypoints</button>
+        <button class="comm-filter-btn" data-cat="edge_case">Edge Cases</button>
+      </div>
+      <div id="commFeedItems"><div class="comm-empty">Loading…</div></div>
+    </div>
+
+    <div id="commWaypointView" class="comm-view" style="display:none">
+      <div class="comm-autofill-row">
+        <span class="comm-label">Global Key</span>
+        <span id="commGkDisplay" class="comm-gk-value" title="">—</span>
+      </div>
+      <input id="commWpName" type="text" placeholder="Waypoint / procedure name (e.g. RIVET, RIVET1A)" />
+      <select id="commWpType">
+        <option value="waypoint">Waypoint / Fix</option>
+        <option value="sid">SID</option>
+        <option value="star">STAR</option>
+        <option value="approach">Approach</option>
+        <option value="navaid">VOR / NDB / DME</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea id="commWpNotes" placeholder="Any context or notes (optional)" rows="2"></textarea>
+      <button id="commWpSubmitBtn" class="comm-submit-btn">Submit for review</button>
+      <div id="commWpStatus" class="comm-status"></div>
+    </div>
+
+    <div id="commEcView" class="comm-view" style="display:none">
+      <div class="comm-autofill-row">
+        <span class="comm-label">Global Key</span>
+        <span id="commEcGkDisplay" class="comm-gk-value" title="">—</span>
+      </div>
+      <input id="commEcPhrase" type="text" placeholder="Word or phrase heard" />
+      <input id="commEcResolution" type="text" placeholder="Suggested transcription" />
+      <textarea id="commEcNotes" placeholder="Context / why this is an edge case (optional)" rows="2"></textarea>
+      <button id="commEcSubmitBtn" class="comm-submit-btn">Submit for review</button>
+      <div id="commEcStatus" class="comm-status"></div>
+    </div>
+
+  </div>
+</div>
+
+<div id="panelTabBar">
+  <button class="panel-tab" data-panel="facility">Facility Info</button>
+  <button class="panel-tab" data-panel="search">Airport Search</button>
+  <button class="panel-tab" data-panel="route">Active Flight</button>
+  <button class="panel-tab" data-panel="lbx">LBX Helper</button>
+  <button class="panel-tab" data-panel="community">Feed</button>
 </div>
 
 </div>

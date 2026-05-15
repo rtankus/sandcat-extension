@@ -9737,10 +9737,15 @@
             "VOR RWY 24": []
         },
         "comms": [
+                        {
+                "label": "PERTH Center",
+                "freq": "135.25"
+            },
             {
                 "label": "PERTH APPROACH Approach",
                 "freq": "123.60"
             },
+
             {
                 "label": "PERTH APPROACH Approach",
                 "freq": "132.95"
@@ -9846,6 +9851,10 @@
             "NDB-B": []
         },
         "comms": [
+                                    {
+                "label": "PERTH Center",
+                "freq": "135.25"
+            },
             {
                 "label": "PERTH JANDAKOT ATIS",
                 "freq": "128.65"

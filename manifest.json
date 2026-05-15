@@ -23,7 +23,9 @@
     "https://ourairports.com/*",
     "https://skyvector.com/*",
     "https://raw.githubusercontent.com/*",
-    "https://www.airservicesaustralia.com/*"
+    "https://www.airservicesaustralia.com/*",
+    "https://firestore.googleapis.com/*",
+    "https://ntfy.sh/*"
   ],
 
   "icons": {
